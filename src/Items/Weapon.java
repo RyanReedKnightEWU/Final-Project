@@ -18,6 +18,10 @@ public class Weapon extends Items{
         this.valueVaryDivider = valueVaryDivider;
     }
 
+    protected void setConditionValue(int condition){
+        this.condition = condition;
+    }
+
     protected int getCondition(){
         return condition;
     }
@@ -56,14 +60,12 @@ public class Weapon extends Items{
         }
     }
 
-
-
     //Vary is how the damage varies if it is new or old
     protected void setVary(int vary){
         this.vary = vary;
     }
 
-    protected void setDamage(int minDamage, int maxDamage){
+    public void setDamage(int minDamage, int maxDamage){
         setMinDamage(minDamage);
         setMaxDamage(maxDamage);
     }

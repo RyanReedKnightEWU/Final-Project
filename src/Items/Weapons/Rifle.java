@@ -9,4 +9,8 @@ public class Rifle extends Weapon {
         setCondition(luck, "New ", "Rusty ");
         setDescription(String.format("%s is a rifle that was made before the Great War.", getName()));
     }
+    public Rifle(String name, int minDamage, int maxDamage, int value, int condition){
+        super(name, minDamage, maxDamage, value);
+        setConditionValue(condition);
+    }
 }

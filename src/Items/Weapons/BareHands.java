@@ -7,9 +7,12 @@ public class BareHands extends Weapon {
         super("Bare hands", 1, 3, 0);
         setDescription(String.format("%s is better than nothing.", getName()));
     }
-
     public BareHands(){
         super("Bare hands", 1, 3, 0);
         setDescription(String.format("%s is better than nothing.", getName()));
+    }
+    public BareHands(String name, int minDamage, int maxDamage, int value, int condition){
+        super(name, minDamage, maxDamage, value);
+        setConditionValue(condition);
     }
 }
