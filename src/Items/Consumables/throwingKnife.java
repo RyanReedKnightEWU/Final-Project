@@ -8,8 +8,4 @@ public class throwingKnife extends Consumable {
         setDamage(20, 25);
         setDescription(String.format("Throwing knives are self explanatory."));
     }
-
-    public String toString(){
-        return String.format("Name: %s\nDamage %d-%d\nUses: %d", getName(), getMinDamage(), getMaxDamage(), getAmount());
-    }
 }

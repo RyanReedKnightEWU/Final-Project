@@ -39,9 +39,4 @@ public class healthPotion extends Consumable {
             clean(cleanName);
         }
     }
-
-    public String toString(){
-        return String.format("Name: %s\nHeals: %d health\nUses: %d", getName(), getHeal(), getAmount());
-    }
-
 }

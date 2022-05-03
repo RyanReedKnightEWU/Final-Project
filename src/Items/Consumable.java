@@ -61,4 +61,30 @@ public class Consumable extends Items{
         }
     }
 
+    public String toString(){
+        String value = "";
+        if(getMaxDamage() != 0 && getHeal() == 0){
+            if(getMinDamage() == getMaxDamage()){
+                value = String.format("Name: %s\nDamage: %d\nAmount: %d\nValue of each: %d", getName(), getMaxDamage(), getAmount(), getValue());
+                return value;
+            }else {
+                value = String.format("Name: %s\nDamage: %d-%d\nAmount: %d\nValue of each: %d", getName(), getMinDamage(), getMaxDamage(), getAmount(), getValue());
+                return value;
+            }
+        }
+        if(getMaxDamage() == 0 && getHeal() != 0){
+            value = String.format("Name: %s\nHeals: %d\nAmount: %d\nValue of each: %d", getName(), getHeal(), getAmount(), getValue());
+        }
+        if(getMaxDamage() != 0 && getHeal() != 0){
+            if(getMinDamage() == getMaxDamage()){
+                value = String.format("Name: %s\nDamage: %d\nHeals: %d\nAmount: %d\nValue of each: %d", getName(), getMaxDamage(), getHeal(), getAmount(), getValue());
+                return value;
+            }else {
+                value = String.format("Name: %s\nDamage: %d-%d\nHeals: %d\nAmount: %d\nValue of each: %d", getName(), getMinDamage(), getMaxDamage(), getHeal(), getAmount(), getValue());
+                return value;
+            }
+        }
+        return value;
+    }
+
 }
