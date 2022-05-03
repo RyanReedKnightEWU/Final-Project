@@ -1,5 +1,9 @@
 package SaveLoader;
 
-public class Load {
+public class Load extends SaveLoader{
+
+    public Load(){
+
+    }
 
 }
