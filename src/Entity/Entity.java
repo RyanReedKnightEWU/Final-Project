@@ -74,11 +74,7 @@ public abstract class Entity {
     }
 
     // ADDED BY RYAN (PLEASE DO NOT ADD SETTER.)
-    public String getName() {
-
-        return this.name;
-
-    }
+    public String getName() { return this.name; }
 
     public int getHealth() { return health; }
 
@@ -88,11 +84,11 @@ public abstract class Entity {
 
     public void setMaxHealth(int maxHealth) { this.maxHealth = maxHealth; }
 
-    public int getDamage() { return damage; }
+    public int getDamage() { return (damage + getWeapon().getDamage()); }
 
     public void setDamage(int damage) { this.damage = damage; }
 
-    public int getDefense() { return defense; }
+    public int getDefense() { return (defense + getArmor().getArmorValue()); }
 
     public void setDefense(int defense) { this.defense = defense; }
 
@@ -105,20 +101,18 @@ public abstract class Entity {
         System.out.println(heal + " health restored and " + getHealth() + " health remaining");
     }
 
-    public void takeDamage(int damage) {
+    public int takeDamage(int damage) {
         int damageTaken = damage - getDefense();
-
         if (damageTaken < 1) { damageTaken = 1; }
-
         setHealth(getHealth()-damageTaken);
-
         System.out.println(damageTaken + " damage taken and " + getHealth() + " health remaining");
+
+        return damageTaken;
     }
 
-    public void basicAttack() {
-        int damageDealt = getDamage();
-        damageDealt += getWeapon().getDamage();
-        System.out.println(getDamage() + " base damage + " + getWeapon().getDamage() + " weapon damage");
+    public int basicAttack() {
+        System.out.println(getDamage() + " damage calculated");
+        return getDamage();
     }
 
     public String toString() {
@@ -126,7 +120,8 @@ public abstract class Entity {
         info += this.health + " health, ";
         info += this.damage + " damage, and ";
         info += this.defense + " defense.\n";
-        info += this.name + " wields " + this.weapon.getName().toLowerCase() + " and wears " + this.armor + ".";
+        info += this.name + " wields " + this.weapon.getName().toLowerCase() +
+                " and wears " + this.armor.getName().toLowerCase() + ".";
         return info;
     }
 
