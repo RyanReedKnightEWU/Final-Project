@@ -27,7 +27,7 @@ public class Main {
         System.out.println(a.getLinkedTileKeys());
 
         Navigator nav = Navigator.getInstance(entity,a);
-        nav.moveTile();
+        nav.startTurn();
         System.out.println(nav.getCurrentTile().getLabel());
     }
 

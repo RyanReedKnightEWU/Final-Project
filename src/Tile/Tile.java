@@ -155,6 +155,15 @@ public abstract class Tile {
         return getKeys(this.entityMap);
     }
 
+    // Get map methods
+    public HashMap<String, Entity> getEntityMap() {
+        return this.entityMap;
+    }
+
+    public HashMap<String, Tile> getLinkedTiles() {
+        return this.linkedTiles;
+    }
+
     public abstract void attackEntity();
     public abstract void barterWithEntity(String key);
 
