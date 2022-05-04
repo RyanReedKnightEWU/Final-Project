@@ -16,9 +16,9 @@ public abstract class Entity {
 
     private boolean isAlive;
     private ArrayList<Items> inventory;
-    private Weapon weapon = null;
-    private Armor armor = null;
-    private Consumable consumable = null;
+    private Weapon weapon;
+    private Armor armor;
+    private Consumable consumable;
 
     public Entity(int health, int damage, int defense, String name)
     {

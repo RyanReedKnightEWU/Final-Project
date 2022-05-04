@@ -5,18 +5,18 @@ import Items.Armors.Clothes;
 import Items.Weapon;
 import Items.Weapons.BareHands;
 
-public class Goblin extends Entity {
+public class Zombie extends Entity {
 
-    public Goblin(String name) {
-        super(75, 15, 3, name);
+    public Zombie(String name) {
+        super(125, 12, 0, name);
         Weapon weapon = new BareHands();
         setWeapon(weapon);
         Armor armor = new Clothes(0);
         setArmor(armor);
     }
 
-    public Goblin(String name, Weapon weapon, Armor armor) {
-        super(75,15,3,name);
+    public Zombie(String name, Weapon weapon, Armor armor) {
+        super(125,12,0,name);
         setWeapon(weapon);
         setArmor(armor);
     }
