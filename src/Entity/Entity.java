@@ -8,11 +8,11 @@ import Items.Weapon;
 import java.util.ArrayList;
 
 public abstract class Entity {
-    private int health = 100;
-    private int maxHealth = 100;
-    private int damage = 10;
-    private int defense = 5;
-    private String name = "BadGuy";
+    private int health;
+    private int maxHealth;
+    private int damage;
+    private int defense;
+    private String name;
 
     // ADDED BY RYAN
     private static ArrayList<String> takenNames;
@@ -22,10 +22,6 @@ public abstract class Entity {
     private Weapon weapon = null;
     private Armor armor = null;
     private Consumable consumable = null;
-
-    public abstract void heal(int heal);
-    public abstract void takeDamage(int damage);
-    public abstract void basicAttack();
 
     public Entity(int health, int damage, int defense, String name)
     {
@@ -99,6 +95,31 @@ public abstract class Entity {
     public int getDefense() { return defense; }
 
     public void setDefense(int defense) { this.defense = defense; }
+
+    public void heal(int heal) {
+        if ((getHealth() + heal) >= getMaxHealth()) {
+            setHealth(getMaxHealth());
+        }else {
+            setHealth(getHealth() + heal);
+        }
+        System.out.println(heal + " health restored and " + getHealth() + " health remaining");
+    }
+
+    public void takeDamage(int damage) {
+        int damageTaken = damage - getDefense();
+
+        if (damageTaken < 1) { damageTaken = 1; }
+
+        setHealth(getHealth()-damageTaken);
+
+        System.out.println(damageTaken + " damage taken and " + getHealth() + " health remaining");
+    }
+
+    public void basicAttack() {
+        int damageDealt = getDamage();
+        damageDealt += getWeapon().getDamage();
+        System.out.println(getDamage() + " base damage + " + getWeapon().getDamage() + " weapon damage");
+    }
 
     public String toString() {
         String info = this.name + " has ";
