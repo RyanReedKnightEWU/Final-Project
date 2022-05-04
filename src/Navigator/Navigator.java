@@ -1,19 +1,21 @@
 package Navigator;
 
 import Entity.Entity;
-import Tile.Tile;
+import Tile.MapBase;
+import Tile.TileBase;
 
 import java.util.Scanner;
 
 public class Navigator {
 
     private static Navigator uniqueInstance;
-    private Tile currentTile;
+    private MapBase currentMap;
+    private TileBase currentTile;
     private Entity player;
 
 
     // Private constructor.
-    private Navigator(Entity player, Tile currentTile) {
+    private Navigator(Entity player, TileBase currentTile) {
 
         this.player = player;
         this.currentTile = currentTile;
@@ -21,7 +23,7 @@ public class Navigator {
     }
 
     // Getters and setters.
-    public static Navigator getInstance(Entity player, Tile currentTile) {
+    public static Navigator getInstance(Entity player, TileBase currentTile) {
 
         if (Navigator.uniqueInstance == null) {
 
@@ -41,11 +43,11 @@ public class Navigator {
         this.player = player;
     }
 
-    public Tile getCurrentTile() {
+    public TileBase getCurrentTile() {
         return currentTile;
     }
 
-    public void setCurrentTile(Tile currentTile) {
+    public void setCurrentTile(TileBase currentTile) {
         this.currentTile = currentTile;
     }
 

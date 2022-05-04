@@ -3,8 +3,7 @@ package Main;
 import Entity.Entity;
 import Entity.Goblin;
 import Navigator.Navigator;
-import Tile.Tile;
-import Tile.Store;
+import Tile.TileBase;
 
 public class Main {
 
@@ -18,11 +17,11 @@ public class Main {
         entity.takeDamage(0);
         entity.takeDamage(70);
 
-        Tile a = new Store("a"), b = new Store("b"), c = new Store("c");
+        TileBase a = new Store("a"), b = new Store("b"), c = new Store("c");
 
         b.addEntity(entity);
 
-        a.addLinkedTile(new Tile[]{b, c});
+        a.addLinkedTile(new TileBase[]{b, c});
 
         System.out.println(a.getLinkedTileKeys());
 
