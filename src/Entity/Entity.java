@@ -14,9 +14,6 @@ public abstract class Entity {
     private int defense = 5;
     private String name = "BadGuy";
 
-    // ADDED BY RYAN
-    private static ArrayList<String> takenNames;
-
     private boolean isAlive;
     private ArrayList<Items> inventory;
     private Weapon weapon = null;
@@ -32,25 +29,12 @@ public abstract class Entity {
         if(health <= 0 || damage < 0 || defense < 0 || name.isEmpty())
             throw new IllegalArgumentException("Bad Parameter(s) --- Entity Parent Constructor");
 
-        // ADDED BY RYAN
-        if (Entity.takenNames == null) {
-
-            Entity.takenNames = new ArrayList<>();
-
-        }
-        else if (Entity.takenNames.contains(name)) {
-
-            throw new IllegalArgumentException("bad param, duplicate name");
-
-        }
-        // ADDED BY RYAN
-        Entity.takenNames.add(name);
-
         this.health = health;
         this.maxHealth = health;
         this.damage = damage;
         this.defense = defense;
         this.name = name;
+        this.isAlive = true;
     }//end Entity Constructor
 
     public Weapon getWeapon() {
@@ -59,6 +43,14 @@ public abstract class Entity {
 
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
+    }
+
+    public boolean isAlive() {
+        return this.isAlive;
+    }
+
+    public void setIsAlive(boolean isAlive) {
+        this.isAlive = isAlive;
     }
 
     public Armor getArmor() {
