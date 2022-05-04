@@ -8,21 +8,17 @@ import Items.Weapon;
 import java.util.ArrayList;
 
 public abstract class Entity {
-    private int health = 100;
-    private int maxHealth = 100;
-    private int damage = 10;
-    private int defense = 5;
-    private String name = "BadGuy";
+    private int health;
+    private int maxHealth;
+    private int damage;
+    private int defense;
+    private String name;
 
     private boolean isAlive;
     private ArrayList<Items> inventory;
     private Weapon weapon = null;
     private Armor armor = null;
     private Consumable consumable = null;
-
-    public abstract void heal(int heal);
-    public abstract void takeDamage(int damage);
-    public abstract void basicAttack();
 
     public Entity(int health, int damage, int defense, String name)
     {
@@ -70,11 +66,7 @@ public abstract class Entity {
     }
 
     // ADDED BY RYAN (PLEASE DO NOT ADD SETTER.)
-    public String getName() {
-
-        return this.name;
-
-    }
+    public String getName() { return this.name; }
 
     public int getHealth() { return health; }
 
@@ -84,20 +76,44 @@ public abstract class Entity {
 
     public void setMaxHealth(int maxHealth) { this.maxHealth = maxHealth; }
 
-    public int getDamage() { return damage; }
+    public int getDamage() { return (damage + getWeapon().getDamage()); }
 
     public void setDamage(int damage) { this.damage = damage; }
 
-    public int getDefense() { return defense; }
+    public int getDefense() { return (defense + getArmor().getArmorValue()); }
 
     public void setDefense(int defense) { this.defense = defense; }
+
+    public void heal(int heal) {
+        if ((getHealth() + heal) >= getMaxHealth()) {
+            setHealth(getMaxHealth());
+        }else {
+            setHealth(getHealth() + heal);
+        }
+        System.out.println(heal + " health restored and " + getHealth() + " health remaining");
+    }
+
+    public int takeDamage(int damage) {
+        int damageTaken = damage - getDefense();
+        if (damageTaken < 1) { damageTaken = 1; }
+        setHealth(getHealth()-damageTaken);
+        System.out.println(damageTaken + " damage taken and " + getHealth() + " health remaining");
+
+        return damageTaken;
+    }
+
+    public int basicAttack() {
+        System.out.println(getDamage() + " damage calculated");
+        return getDamage();
+    }
 
     public String toString() {
         String info = this.name + " has ";
         info += this.health + " health, ";
         info += this.damage + " damage, and ";
         info += this.defense + " defense.\n";
-        info += this.name + " wields " + this.weapon.getName().toLowerCase() + " and wears " + this.armor + ".";
+        info += this.name + " wields " + this.weapon.getName().toLowerCase() +
+                " and wears " + this.armor.getName().toLowerCase() + ".";
         return info;
     }
 
