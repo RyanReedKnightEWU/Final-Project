@@ -53,6 +53,12 @@ public abstract class MapBase {
         return columns;
     }
 
+    public TileBase getTile(int row, int colum) throws IllegalArgumentException {
+        this.checkBounds(row, colum);
+
+        return this.tileMatrix[row][colum];
+    }
+
 
     public void addEntity(Entity entity, int row, int column) throws Exception {
 
@@ -70,7 +76,7 @@ public abstract class MapBase {
         if (row < 0 || row >= this.rows || column < 0 || column >= this.columns) {
             throw new IllegalArgumentException("bad param addTile, row must be no less than 0 and no greater than " +
                     Integer.toString(this.rows - 1) + ".\ncolumn must be no less than 0 and no greater than " +
-                    Integer.toString(this.columns - 1) + ".");
+                    Integer.toString(this.columns - 1) + ". (row is " + Integer.toString(row) + "\tcolumn is " + Integer.toString(column) + ").");
         }
     }
 
@@ -78,28 +84,43 @@ public abstract class MapBase {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        int squareSize = 5,i,j;
-        for (i = 0; i < squareSize*this.rows; i++) {
-            for (j = 0; j < squareSize*this.columns; j++) {
+        StringBuilder tst = new StringBuilder();
 
-                if(squareSize%(i+1) == 0 || (i+1)%squareSize == 0 ||
-                        squareSize%(j+1) == 0|| (j+1)%squareSize == 0) {
+        int squareSize = 10,i,j,n = 0,m = 0;
+        for (i = 0; i < squareSize*(this.rows + 1); i++) {
+            for (j = 0; j < squareSize*(this.columns +1); j++) {
 
+                if( (toStringHelper(i,squareSize)|| toStringHelper(j,squareSize)) && i >= (squareSize-1) && j >= (squareSize -1)) {
                     stringBuilder.append("*  ");
                 }
-
+                else if(this.tileMatrix[n][m].getPrimaryOccupant() != null) {
+                    stringBuilder.append(this.tileMatrix[n][m].getPrimaryOccupant().getName());
+                        j += this.getTile(n, m).getPrimaryOccupant().getName().length();
+                }
                 else {
                     stringBuilder.append("   ");
                 }
-
-
-
+                if ((j+1)%squareSize == 0 && j >= (squareSize -1) && j < this.columns) {
+                    ++m;
+                }
             }
+            m = 0;
+
+            if ((i+1)%squareSize == 0 && i >= (squareSize -1) && i < this.rows) {
+                ++n;
+            }
+            tst.append(n).append('\t').append(m).append('\n');
             stringBuilder.append("\n");
         }
 
+        System.out.println(tst);
+
         return stringBuilder.toString();
 
+    }
+
+    private boolean toStringHelper(int n, int squareSize) {
+        return squareSize%(n+1) == 0 || (n+1)%squareSize == 0;
     }
 
 }
