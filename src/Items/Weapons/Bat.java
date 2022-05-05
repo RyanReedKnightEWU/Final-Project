@@ -9,8 +9,4 @@ public class Bat extends Weapon {
         setCondition(luck, "New ", "Worn out ");
         setDescription(String.format("%s is better than nothing.", getName()));
     }
-    public Bat(String name, int minDamage, int maxDamage, int value, int condition){
-        super(name, minDamage, maxDamage, value);
-        setConditionValue(condition);
-    }
 }

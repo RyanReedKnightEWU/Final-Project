@@ -14,6 +14,14 @@ public class Weapon extends Items{
         setValue(value);
     }
 
+    public Weapon(String name, int minDamage, int maxDamage, int value, int condition){
+        setValue(value);
+        setName(name);
+        setDamage(minDamage, maxDamage);
+        setValue(value);
+        setConditionValue(condition);
+    }
+
     protected void setValueVaryDivider(int valueVaryDivider){
         this.valueVaryDivider = valueVaryDivider;
     }
@@ -78,8 +86,13 @@ public class Weapon extends Items{
     @Override
     public String toString(){
         String value;
-        value = String.format("Name: %s\nDamage: %d-%d\nValue: %d", getName(), getMinDamage(), getMaxDamage(), getValue());
-        return value;
+        if(getMinDamage() == getMaxDamage()){
+            value = String.format("Name: %s\nDamage: %d\nValue: %d", getName(), getMaxDamage(), getValue());
+            return value;
+        }else {
+            value = String.format("Name: %s\nDamage: %d-%d\nValue: %d", getName(), getMinDamage(), getMaxDamage(), getValue());
+            return value;
+        }
     }
 
 }

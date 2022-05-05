@@ -9,8 +9,4 @@ public class Knife extends Weapon {
         setCondition(luck, "New ", "Rusty ");
         setDescription(String.format("%s is a typical kitchen knife.", getName()));
     }
-    public Knife(String name, int minDamage, int maxDamage, int value, int condition){
-        super(name, minDamage, maxDamage, value);
-        setConditionValue(condition);
-    }
 }

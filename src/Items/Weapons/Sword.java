@@ -16,8 +16,4 @@ public class Sword extends Weapon {
             setDescription(String.format("%s is just a regular weapon that is unexciting.", getName()));
         }
     }
-    public Sword(String name, int minDamage, int maxDamage, int value, int condition){
-        super(name, minDamage, maxDamage, value);
-        setConditionValue(condition);
-    }
 }
