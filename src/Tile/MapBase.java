@@ -1,9 +1,18 @@
 package Tile;
 
+import Entity.Entity;
+
 public abstract class MapBase {
 
     private TileBase [][] tileMatrix;
     private final int rows, columns;
+
+    /*
+    private class MapLinks {
+        protected MapBase linkedMap;
+        protected int[] currentMapTileCoordinate;
+        protected int linkedMapTileCoordinate;
+    }*/
 
     protected MapBase(int rows, int columns) throws IllegalArgumentException {
 
@@ -29,11 +38,7 @@ public abstract class MapBase {
 
         // Throw illegal argument exception if index is out of bounds,
         // so this will not disrupt gameplay.
-        if (row < 0 || row >= this.rows || column < 0 || column >= this.columns) {
-            throw new IllegalArgumentException("bad param addTile, row must be no less than 0 and no greater than " +
-                    Integer.toString(this.rows - 1) + ".\ncolumn must be no less than 0 and no greter than " +
-                    Integer.toString(this.columns - 1) + ".");
-        }
+       this.checkBounds(row, column);
 
         this.tileMatrix[row][column] = tile;
 
@@ -48,12 +53,53 @@ public abstract class MapBase {
         return columns;
     }
 
-    @Override
-    public String toString() {
 
-        return "blah";
+    public void addEntity(Entity entity, int row, int column) throws Exception {
+
+        this.checkBounds(row,column);
+
+        if (this.tileMatrix[row][column].getPrimaryOccupant() != null) {
+            throw new Exception("cannot add Entity to occupied tile.");
+        }
+
+        this.tileMatrix[row][column].setPrimaryOccupant(entity);
 
     }
 
+    private void checkBounds(int row, int column) throws IllegalArgumentException {
+        if (row < 0 || row >= this.rows || column < 0 || column >= this.columns) {
+            throw new IllegalArgumentException("bad param addTile, row must be no less than 0 and no greater than " +
+                    Integer.toString(this.rows - 1) + ".\ncolumn must be no less than 0 and no greater than " +
+                    Integer.toString(this.columns - 1) + ".");
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        int squareSize = 5,i,j;
+        for (i = 0; i < squareSize*this.rows; i++) {
+            for (j = 0; j < squareSize*this.columns; j++) {
+
+                if(squareSize%(i+1) == 0 || (i+1)%squareSize == 0 ||
+                        squareSize%(j+1) == 0|| (j+1)%squareSize == 0) {
+
+                    stringBuilder.append("*  ");
+                }
+
+                else {
+                    stringBuilder.append("   ");
+                }
+
+
+
+            }
+            stringBuilder.append("\n");
+        }
+
+        return stringBuilder.toString();
+
+    }
 
 }

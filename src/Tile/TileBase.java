@@ -7,8 +7,10 @@ import java.util.HashMap;
 
 public abstract class TileBase {
 
-    // Linked tiles
-    private HashMap<Direction, TileBase> linkedTiles;
+    // Map link and map link tile, usually null
+    private MapBase linkToMap;
+    private TileBase linkMapTile;
+
     // Primary occupant, must be alive.
     private Entity primaryOccupant;
     // Deceased occupants
@@ -47,6 +49,13 @@ public abstract class TileBase {
         }
     }
 
+    /**
+     * Set map link
+     * @param map - MapBase
+     * **/
+    public void setLinkToMap(MapBase map) {
 
+        this.linkToMap = map;
 
+    }
 }

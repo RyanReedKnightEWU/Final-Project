@@ -6,7 +6,7 @@ import Tile.TileBase;
 
 import java.util.Scanner;
 
-public class Navigator {
+public class Navigator {/*
 
     private static Navigator uniqueInstance;
     private MapBase currentMap;
@@ -169,5 +169,5 @@ public class Navigator {
         }
 
     }
-
+*/
 }

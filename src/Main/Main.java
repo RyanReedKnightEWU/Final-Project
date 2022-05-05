@@ -3,6 +3,9 @@ package Main;
 import Entity.Entity;
 import Entity.Goblin;
 import Navigator.Navigator;
+import Tile.GameMapFactory;
+import Tile.MapBase;
+import Tile.MapFactoryBase;
 import Tile.TileBase;
 
 public class Main {
@@ -17,17 +20,11 @@ public class Main {
         entity.takeDamage(0);
         entity.takeDamage(70);
 
-        TileBase a = new Store("a"), b = new Store("b"), c = new Store("c");
+        MapFactoryBase gameMapFactory = new GameMapFactory();
+        MapBase arena = gameMapFactory.createRectangularMap(10, 15),
+            dungens = gameMapFactory.createRectangularMap(4,6);
 
-        b.addEntity(entity);
-
-        a.addLinkedTile(new TileBase[]{b, c});
-
-        System.out.println(a.getLinkedTileKeys());
-
-        Navigator nav = Navigator.getInstance(entity,a);
-        nav.startTurn();
-        System.out.println(nav.getCurrentTile().getLabel());
+        System.out.println(arena);
     }
 
 }
