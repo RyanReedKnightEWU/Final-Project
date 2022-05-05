@@ -4,7 +4,7 @@ public abstract class Attire {
 
     // Defense if armor is in perfect condition.
     private Integer defaultDefense;
-    // Condition: number between 0 and 100 which holds the condition of the armor.
+    // WeaponCondition: number between 0 and 100 which holds the condition of the armor.
     private Integer condition;
 
 
