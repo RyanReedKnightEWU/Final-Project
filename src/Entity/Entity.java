@@ -70,7 +70,10 @@ public abstract class Entity {
 
     public int getHealth() { return health; }
 
-    public void setHealth(int health) { this.health = health; }
+    public void setHealth(int health) {
+        this.health = health;
+        if (this.health >= 0) { this.isAlive = false; }
+    }
 
     public int getMaxHealth() { return maxHealth; }
 
@@ -93,13 +96,11 @@ public abstract class Entity {
         System.out.println(heal + " health restored and " + getHealth() + " health remaining");
     }
 
-    public int takeDamage(int damage) {
+    public void takeDamage(int damage) {
         int damageTaken = damage - getDefense();
         if (damageTaken < 1) { damageTaken = 1; }
         setHealth(getHealth()-damageTaken);
         System.out.println(damageTaken + " damage taken and " + getHealth() + " health remaining");
-
-        return damageTaken;
     }
 
     public int basicAttack() {

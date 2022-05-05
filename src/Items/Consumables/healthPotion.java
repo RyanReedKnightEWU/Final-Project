@@ -7,13 +7,13 @@ import java.util.Random;
 public class healthPotion extends Consumable {
     healthPotion(int luck){
         super("Health Potion", 30);
-        setHeal(50);
+        setHeal(100);
         setCondition(luck, "Good ", "Weak ");
         setDescription(String.format("%s heals the user by %d", getName(), getHeal()));
     }
 
     private void old(String oldName){
-        setHeal(getHeal()-25);
+        setHeal(getHeal()-35);
         setValue(getValue()-getValue()/4);
         String temp = getName();
         temp = oldName+temp.toLowerCase();
@@ -21,7 +21,7 @@ public class healthPotion extends Consumable {
     }
 
     private void clean(String cleanName){
-        setHeal(getHeal()+25);
+        setHeal(getHeal()+35);
         setValue(getValue()+getValue()/4);
         String temp = getName();
         temp = cleanName+temp.toLowerCase();

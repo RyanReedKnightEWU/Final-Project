@@ -9,9 +9,8 @@ public class Player extends Entity{
 
     }
 
-    public int takeDamage(int damage) {
-
-        return 0;
+    public void takeDamage(int damage) {
+        
     }
 
     public int basicAttack() {

@@ -22,7 +22,7 @@ public class Main {
 
         MapFactoryBase gameMapFactory = new GameMapFactory();
         MapBase arena = gameMapFactory.createRectangularMap(10, 15),
-            dungens = gameMapFactory.createRectangularMap(4,6);
+            dungeons = gameMapFactory.createRectangularMap(4,6);
 
         System.out.println(arena);
     }

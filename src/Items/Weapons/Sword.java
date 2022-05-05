@@ -4,7 +4,7 @@ import Items.Weapon;
 
 public class Sword extends Weapon {
     public Sword(int luck){
-        super("Sword", 30, 40, 175);
+        super("Sword", 25, 35, 175);
         setValueVaryDivider(2);
         setVary(20);
         setCondition(luck, "Magic ", "Broken ");
