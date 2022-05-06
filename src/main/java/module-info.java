@@ -11,6 +11,6 @@ module com.example.finalprojectwithjavafx {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
 
-    opens com.example.finalprojectwithjavafx to javafx.fxml;
-    exports com.example.finalprojectwithjavafx;
+    opens FinalProject.Javafx to javafx.fxml;
+    exports FinalProject.Javafx;
 }
