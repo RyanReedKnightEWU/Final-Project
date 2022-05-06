@@ -1,5 +1,6 @@
 package FinalProject.Javafx;
 
+import GameApplication.MainMenuScene;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,6 +19,8 @@ public class ApplicationMain extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         gameWindow = stage;
-        System.exit(0);
+        stage.setTitle("Final Project Game");
+        MainMenuScene mainMenuScene = new MainMenuScene();
+        mainMenuScene.start();
     }
 }
