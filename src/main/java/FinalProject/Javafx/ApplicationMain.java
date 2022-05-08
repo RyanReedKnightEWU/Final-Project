@@ -1,6 +1,7 @@
 package FinalProject.Javafx;
 
 import GameApplication.MainMenuScene;
+import GameApplication.MapScene;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,7 +21,10 @@ public class ApplicationMain extends Application {
     public void start(Stage stage) throws IOException {
         gameWindow = stage;
         stage.setTitle("Final Project Game");
-        MainMenuScene mainMenuScene = new MainMenuScene();
-        mainMenuScene.start();
+        //MainMenuScene mainMenuScene = new MainMenuScene();
+        MapScene mapScene = new MapScene();
+        mapScene.start();
+        stage.show();
+        //mainMenuScene.start();
     }
 }
