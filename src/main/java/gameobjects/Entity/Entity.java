@@ -127,10 +127,11 @@ public abstract class Entity {
     }
 
     public String saveString() { //Prints every field that needs to be saved
-        String str = "Name: " + this.name + Integer.toString(this.health);
-        str += "\nHealth: " + Integer.toString(this.health);
+        String str = "Name: " + this.name + this.health;
+        str += "\nHealth: " + this.health;
         //...
-        //Flag for item and weapon start will be Item Start, Item End, Weapon Start, Weapon End
+        //Flag for item and weapon start will be Armor Start, Armor End, Weapon Start, Weapon End
+        //Consumables too.
 
         //Call Hunter's toString methods for weapons and armor
 
