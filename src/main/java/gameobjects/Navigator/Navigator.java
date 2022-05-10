@@ -1,32 +1,48 @@
 package gameobjects.Navigator;
 
-public class Navigator {/*
+import Map.MapBase;
+import gameobjects.Entity.Entity;
+import gameobjects.Tile.TileBase;
+
+public class Navigator {
 
     private static Navigator uniqueInstance;
     private MapBase currentMap;
     private TileBase currentTile;
+    private int[] position;
     private Entity player;
 
-
-    // Private constructor.
-    private Navigator(Entity player, TileBase currentTile) {
+    /**
+     * Defines Navigator, called in getInstance method if uniqueInstance is not null.
+     * @param player - Entity to represent user.
+     * @param map - the current map the player is on.
+     * @param currentTile - tile player occupies.
+     * @param xCoordinate - horizontal coordinate of tile on tile matrix
+     * @param yCoordinate - vertical coordinate of tile on tile matrix
+     * **/
+    private Navigator(Entity player, MapBase map, TileBase currentTile, int xCoordinate, int yCoordinate) {
 
         this.player = player;
+        this.currentMap = map;
         this.currentTile = currentTile;
-
+        this.position = new int[]{xCoordinate, yCoordinate};
     }
 
     // Getters and setters.
-    public static Navigator getInstance(Entity player, TileBase currentTile) {
+    public static Navigator getInstance(Entity player, MapBase map, TileBase currentTile, int xCoordinate, int yCoordinate) {
 
         if (Navigator.uniqueInstance == null) {
 
-            Navigator.uniqueInstance = new Navigator(player, currentTile);
+            Navigator.uniqueInstance = new Navigator(player, map, currentTile,xCoordinate,yCoordinate);
 
         }
 
         return Navigator.uniqueInstance;
 
+    }
+    //
+    public static Navigator getInstance() {
+        return Navigator.uniqueInstance;
     }
 
     public Entity getPlayer() {
@@ -46,6 +62,49 @@ public class Navigator {/*
     }
 
 
+    public int[] getPosition() {
+        return position;
+    }
+
+    public void setPosition(int xCoordinte, int yCoordinate) {
+        this.position[0] = xCoordinte;
+        this.position[1] = yCoordinate;
+    }
+
+    /**
+     * Move to tile at new coordinates, returns string which is processed by other functions,
+     * (e.g., if it returns "tile-occupied", another method will determine is that occupant is an enemy
+     * and respond accordingly)
+     * @param newXCoordinate - new x coordinate, cannot be more than one tile away from current x coordinate.
+     * @param newYCoordinate - new y coordinate, cannot be more than one tile away from current y coordinate.
+     * **/
+    public String moveTile(int newXCoordinate, int newYCoordinate) {
+
+        int distanceFromX = Math.abs(this.position[0] - newXCoordinate),
+                distanceFromY = Math.abs(this.position[1] - newYCoordinate);
+
+        if (newYCoordinate >= this.currentMap.getRows() || newXCoordinate >= this.currentMap.getColumns()
+                || newYCoordinate < 0 || newXCoordinate < 0 || (distanceFromY + distanceFromY)!=2) {
+            // Bad coordinates, do nothing.
+            return "bad-coordinates";
+        }
+
+        TileBase toMove = this.currentMap.getTile(newYCoordinate, newXCoordinate);
+
+        if (toMove.getPrimaryOccupant() == null) {
+            this.currentTile = toMove;
+            toMove.setPrimaryOccupant(this.player);
+            // move successful, map needs to be updated.
+            return "move-successful";
+        }
+        else {
+
+            return "tile-occupied";
+        }
+
+    }
+
+/*
     public void startTurn() {
 
         // Option keys

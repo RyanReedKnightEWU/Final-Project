@@ -85,6 +85,8 @@ public class MapScene {
                 b = new Button(tileDisplay(occupant));
                 b.setMinHeight(vBox.getPrefHeight());
                 b.setMinWidth(vBox.getPrefWidth());
+                b.setMaxHeight(vBox.getPrefWidth());
+                b.setMaxWidth(vBox.getPrefWidth());
                 grid.add(b, i, j);
             }
         }
