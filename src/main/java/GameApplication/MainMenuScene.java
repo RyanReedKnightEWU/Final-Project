@@ -30,7 +30,13 @@ public class MainMenuScene {
 
         //FOR TESTING
         Button skip = new Button("Skip");
-        skip.setOnAction(e -> Skip());
+        skip.setOnAction(e -> {
+            try {
+                Skip();
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         layout.getChildren().add(skip);
 
         layout.getChildren().add(newGame);
@@ -94,14 +100,14 @@ public class MainMenuScene {
 
     }
 
-    private void startMap(){
+    private void startMap() throws Exception {
         System.out.println("Starting the arena/map.");
         map = new MapScene();
         map.start();
     }
 
     //allows us to skip the main menu for testing purposes
-    private void Skip(){
+    private void Skip() throws Exception {
         startMap();
     }
 }

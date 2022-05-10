@@ -1,5 +1,8 @@
 package GameApplication;
 
+import Map.GameMapFactory;
+import Map.MapBase;
+import Map.MapFactoryBase;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -8,9 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import gameobjects.Tile.*;
 import gameobjects.Entity.*;
-import gameobjects.Items.*;
 
 import static FinalProject.Javafx.ApplicationMain.gameWindow;
 
@@ -20,15 +21,13 @@ public class MapScene {
     private HBox options = new HBox();
     private Button seeInventory, save;
 
-    public void start(){
+    public void start() {
 
         MapFactoryBase mapFactory = new GameMapFactory();
-        MapBase arenaMap = mapFactory.createRectangularMap(10,20);
-        try {
-            arenaMap.addEntity(new Goblin("Azog"), 5, 5);
-        } catch (Exception e) {
 
-        }
+        MapBase arenaMap;
+        arenaMap = mapFactory.createMap("first arena");
+
 
         grid.setPadding(new Insets(20,20,20,20));
         grid.setVgap(10);
@@ -41,7 +40,9 @@ public class MapScene {
         //map.getChildren().addAll(label);
         fillMap(grid, arenaMap);
 
-        Scene scene = new Scene(grid,400,400);
+        Scene scene = new Scene(grid);
+
+        scene.setRoot(grid);
 
         gameWindow.setScene(scene);
 
@@ -71,21 +72,53 @@ public class MapScene {
         grid.setAlignment(Pos.CENTER);
         Button b;
         Entity occupant;
-        String emptyTile = "       ";
 
         for(int i = 0; i < map.getRows(); i++){
             for (int j = 0; j < map.getColumns(); j++){
 
                 occupant = map.getTile(i,j).getPrimaryOccupant();
-
-                if (occupant != null ) {
-                    b = new Button(occupant.getName());
-                }
-                else {
-                    b = new Button(emptyTile + '\n' + emptyTile + '\n' + emptyTile);
-                }
+                b = new Button(tileDisplay(occupant));
                 grid.add(b, i, j);
             }
         }
+    }
+
+    private String tileDisplay(Entity entity) {
+
+        int length = 10, depth = 5, i, j;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        if (entity == null) {
+            for (i = 0; i < depth; i++) {
+                for (j = 0; j < length; j++) {
+                    stringBuilder.append(" ");
+                }
+                stringBuilder.append('\n');
+            }
+        }
+        else {
+            for (i = 0; i < 2; i++) {
+                for (j = 0; j < length; j++) {
+                    stringBuilder.append(" ");
+                }
+                stringBuilder.append('\n');
+            }
+
+            if (entity.getName().length() > length) {
+                stringBuilder.append(entity.getName(), 0, length-1).append('\n');
+            }
+            else {
+                stringBuilder.append(entity.getName(), 0, entity.getName().length());
+                stringBuilder.append(" ".repeat(Math.max(0, length - entity.getName().length()-1))).append('\n');
+            }
+            for (i = 4; i < 5; i++) {
+                for (j = 0; j < length; j++) {
+                    stringBuilder.append(" ");
+                }
+                stringBuilder.append('\n');
+            }
+        }
+
+        return stringBuilder.toString();
     }
 }
