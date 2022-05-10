@@ -48,6 +48,9 @@ public class Consumable extends Items{
         return amount;
     }
 
+    //METHOD ADDED BY BRENDAN
+    public void setAmount(int amount) { this.amount = amount; }
+
     public int getDamage(){
         Random rand = new Random();
         return rand.nextInt(getMaxDamage()-getMinDamage()+1)+getMinDamage();
