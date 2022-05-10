@@ -15,6 +15,12 @@ public class Weapon extends Items{
         setDescription(description);
     }
 
+    public Weapon(String name, int minDamage, int maxDamage, int value){
+        setName(name);
+        setDamage(minDamage, maxDamage);
+        setValue(value);
+    }
+
     public void setWeapon(Weapon weapon){
         setName(weapon.getName());
         setDamage(weapon.getMinDamage(), weapon.getMaxDamage());
