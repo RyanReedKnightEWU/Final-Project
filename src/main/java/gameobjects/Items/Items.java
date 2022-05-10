@@ -49,4 +49,8 @@ public abstract class Items {
         this.minDamage = minDamage;
     }
 
+    public String save() {
+        return null;
+    }
+
 }

@@ -42,4 +42,10 @@ public class Weapon extends Items{
         }
     }
 
+    public String save(){
+        String value = "WEAPON";
+        value += String.format("Name: %s\nDamage: %d-%d\nValue: %d\nDescription: %s", getName(), getMinDamage(), getMaxDamage(), getValue(), getDescription());
+        return value;
+    }
+
 }

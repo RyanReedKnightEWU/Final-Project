@@ -59,4 +59,10 @@ public class Armor extends Items{
         return value;
     }
 
+    public String save(){
+        String value = "ARMOR\n";
+        value += String.format("Name: %s\nArmor: %d\nValue: %d\nDescription: %n", getName(), getArmorValue(), getValue(), getDescription());
+        return value;
+    }
+
 }
