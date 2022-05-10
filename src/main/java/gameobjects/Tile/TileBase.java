@@ -1,9 +1,9 @@
 package gameobjects.Tile;
 
+import Map.MapBase;
 import gameobjects.Entity.Entity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public abstract class TileBase {
 

@@ -1,11 +1,5 @@
 package gameobjects.Navigator;
 
-import gameobjects.Entity.Entity;
-import gameobjects.Tile.MapBase;
-import gameobjects.Tile.TileBase;
-
-import java.util.Scanner;
-
 public class Navigator {/*
 
     private static Navigator uniqueInstance;
