@@ -33,6 +33,23 @@ public abstract class Entity {
         this.isAlive = true;
     }//end Entity Constructor
 
+    public Entity(int health, int maxHealth, int damage, int defense, String name,
+                  ArrayList<Items> inventory, Weapon weapon, Armor armor) {
+
+        this.health = health;
+        this.maxHealth = maxHealth;
+        this.damage = damage;
+        this.defense = defense;
+        this.name = name;
+        this.inventory = inventory;
+        this.weapon = weapon;
+        this.armor = armor;
+
+        if (health >= 0) {
+            this.isAlive = false;
+        }
+    }
+
     public Weapon getWeapon() {
         return weapon;
     }
@@ -118,4 +135,15 @@ public abstract class Entity {
         return info;
     }
 
+    public String saveString() { //Prints every field that needs to be saved
+        String str = "Name: " + this.name + this.health;
+        str += "\nHealth: " + this.health;
+        //...
+        //Flag for item and weapon start will be Armor Start, Armor End, Weapon Start, Weapon End
+        //Consumables too.
+
+        //Call Hunter's toString methods for weapons and armor
+
+        return null;
+    }
 }

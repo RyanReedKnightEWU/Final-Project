@@ -8,10 +8,11 @@ public class Weapon extends Items{
 
     }
 
-    public Weapon(String name, int minDamage, int maxDamage, int value){
+    public Weapon(String name, int minDamage, int maxDamage, int value, String description){
         setName(name);
         setDamage(minDamage, maxDamage);
         setValue(value);
+        setDescription(description);
     }
 
     public void setWeapon(Weapon weapon){
@@ -40,6 +41,13 @@ public class Weapon extends Items{
             value = String.format("Name: %s\nDamage: %d-%d\nValue: %d", getName(), getMinDamage(), getMaxDamage(), getValue());
             return value;
         }
+    }
+
+    public String save(){
+        String value = "WEAPON";
+        //value += String.format("Name: %s\nDamage: %d-%d\nValue: %d\nDescription: %s", getName(), getMinDamage(), getMaxDamage(), getValue(), getDescription());
+        value += String.format("%s\n%d\n%d\n%d\n%s", getName(), getMinDamage(), getMaxDamage(), getValue(), getDescription());
+        return value;
     }
 
 }

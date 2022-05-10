@@ -13,6 +13,14 @@ public class Consumable extends Items{
         setValue(value);
     }
 
+    public Consumable(String name, int minDamage, int maxDamage, int heal, int value, String description, int amount){
+        setName(name);
+        setHeal(heal);
+        setValue(value);
+        setDescription(description);
+        this.amount = amount;
+    }
+
     public void use(Entity entity){
         if(amount > 0){
             entity.takeDamage(getDamage());
@@ -84,6 +92,13 @@ public class Consumable extends Items{
                 return value;
             }
         }
+        return value;
+    }
+
+    public String save(){
+        String value = "CONSUMABLE";
+        //value += String.format("Name: %s\nDamage: %d-%d\nHeals: %d\nAmount: %d\nValue: %d\nDescription: %s", getName(), getMinDamage(), getMaxDamage(), getHeal(), getAmount(), getValue(), getDescription());
+        value += String.format("%s\n%d\n%d\n%d\n%d\n%d\n%s", getName(), getMinDamage(), getMaxDamage(), getHeal(), getAmount(), getValue(), getDescription());
         return value;
     }
 

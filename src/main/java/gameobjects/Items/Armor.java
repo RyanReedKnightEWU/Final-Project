@@ -6,11 +6,12 @@ public class Armor extends Items{
     int armorValue = 0;
     int vary = 5;
 
-    public Armor(String name, int armorValue, int value) {
+    public Armor(String name, int armorValue, int value, String description) {
         setArmorValue(armorValue);
         setValue(value);
         setName(name);
         setValue(value);
+        setDescription(description);
     }
 
     protected void setArmorValue(int armorValue){
@@ -56,6 +57,13 @@ public class Armor extends Items{
     public String toString(){
         String value;
         value = String.format("Name: %s\nArmor: %d\nValue: %d", getName(), getArmorValue(), getValue());
+        return value;
+    }
+
+    public String save(){
+        String value = "ARMOR\n";
+        //value += String.format("Name: %s\nArmor: %d\nValue: %d\nDescription: %n", getName(), getArmorValue(), getValue(), getDescription());
+        value += String.format("%s\n%d\n%d\n%n", getName(), getArmorValue(), getValue(), getDescription());
         return value;
     }
 
