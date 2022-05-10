@@ -12,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import gameobjects.Entity.*;
+import javafx.scene.layout.VBox;
 
 import static FinalProject.Javafx.ApplicationMain.gameWindow;
 
@@ -73,11 +74,17 @@ public class MapScene {
         Button b;
         Entity occupant;
 
+        VBox vBox = new VBox();
+        vBox.setPrefHeight(100);
+        vBox.setPrefWidth(100);
+
         for(int i = 0; i < map.getRows(); i++){
             for (int j = 0; j < map.getColumns(); j++){
 
                 occupant = map.getTile(i,j).getPrimaryOccupant();
                 b = new Button(tileDisplay(occupant));
+                b.setMinHeight(vBox.getPrefHeight());
+                b.setMinWidth(vBox.getPrefWidth());
                 grid.add(b, i, j);
             }
         }
@@ -85,7 +92,15 @@ public class MapScene {
 
     private String tileDisplay(Entity entity) {
 
-        int length = 10, depth = 5, i, j;
+        if (entity != null) {
+            return entity.getName();
+        }
+        else {
+            return "";
+        }
+
+        /*
+        int length = 5, depth = 5, i, j;
 
         StringBuilder stringBuilder = new StringBuilder();
         if (entity == null) {
@@ -119,6 +134,6 @@ public class MapScene {
             }
         }
 
-        return stringBuilder.toString();
+        return stringBuilder.toString();*/
     }
 }
