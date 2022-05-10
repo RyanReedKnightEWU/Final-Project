@@ -33,11 +33,20 @@ public abstract class Entity {
         this.isAlive = true;
     }//end Entity Constructor
 
-    public Entity(int health, int maxHealth, int damage, int defense, int name, ) { //Every field that needs to be loaded
+    public Entity(int health, int maxHealth, int damage, int defense, String name,
+                  ArrayList<Items> inventory, Weapon weapon, Armor armor) {
 
+        this.health = health;
+        this.maxHealth = maxHealth;
+        this.damage = damage;
+        this.defense = defense;
+        this.name = name;
+        this.inventory = inventory;
+        this.weapon = weapon;
+        this.armor = armor;
 
         if (health >= 0) {
-            isAlive = false;
+            this.isAlive = false;
         }
     }
 

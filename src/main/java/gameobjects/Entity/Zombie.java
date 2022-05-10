@@ -7,6 +7,8 @@ import gameobjects.Items.Items;
 import gameobjects.Items.Weapon;
 import gameobjects.Items.Weapons.BareHands;
 
+import java.util.ArrayList;
+
 public class Zombie extends Entity {
 
     public Zombie(String name) {
@@ -21,5 +23,9 @@ public class Zombie extends Entity {
         super(125,12,0,name);
         setWeapon(weapon);
         setArmor(armor);
+    }
+    public Zombie(int health, int maxHealth, int damage, int defense, String name, ArrayList inventory,
+                  Weapon weapon, Armor armor) {
+        super(health, maxHealth, damage, defense, name, inventory, weapon, armor);
     }
 }
