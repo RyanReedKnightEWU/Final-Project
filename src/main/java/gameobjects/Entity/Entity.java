@@ -18,7 +18,7 @@ public abstract class Entity {
     private ArrayList<Items> inventory;
     private Weapon weapon;
     private Armor armor;
-    private Consumable consumable;
+    private Consumable consumable; //I probably don't need this
 
     public Entity(int health, int damage, int defense, String name)
     {
@@ -46,9 +46,31 @@ public abstract class Entity {
         this.armor = armor;
 
         if (health >= 0) {
-            this.isAlive = false;
+            this.isAlive = true;
         }
     }
+
+    public void addItem(Items item) {
+        inventory.add(item);
+    }
+    public void removeItem(Items item) {
+        if (item.getClass() == Consumable.class || inventory.contains(item)) {
+
+        }
+    }
+
+    public void removeConsumable(Consumable consumable) {
+        //if (inventory.contains(item))
+
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i).getName() == consumable.getName()) {
+                consumable.setAmount(consumable.getAmount()-1);
+            }
+        }
+
+    }
+
+
 
     public Weapon getWeapon() {
         return weapon;
@@ -62,10 +84,6 @@ public abstract class Entity {
         return this.isAlive;
     }
 
-    public void setIsAlive(boolean isAlive) {
-        this.isAlive = isAlive;
-    }
-
     public Armor getArmor() {
         return armor;
     }
@@ -74,13 +92,9 @@ public abstract class Entity {
         this.armor = armor;
     }
 
-    public Consumable getConsumable() {
-        return consumable;
-    }
+    //public Consumable getConsumable() { return consumable; }
 
-    public void setConsumable(Consumable consumable) {
-        this.consumable = consumable;
-    }
+    //public void setConsumable(Consumable consumable) { this.consumable = consumable; }
 
     // ADDED BY RYAN (PLEASE DO NOT ADD SETTER.)
     public String getName() { return this.name; }
@@ -135,13 +149,19 @@ public abstract class Entity {
         return info;
     }
 
-    public String saveString() { //Prints every field that needs to be saved
-        String str = "Name: " + this.name + this.health;
-        str += "\nHealth: " + this.health;
-        //...
-        //Flag for item and weapon start will be Armor Start, Armor End, Weapon Start, Weapon End
-        //Consumables too.
+    public String saveInventory() {
+        String str = null;
 
+        return str;
+    }
+
+    public String saveString() { //Prints every field that needs to be saved
+        String str;
+        str = String.format("%d\n,%d\n,%d\n,%d\n,%s\n,%s\n,%s\n,%s\n",
+                health, maxHealth, damage, defense, name, inventory, weapon.save(), armor.save());
+        //Add inventorySave method which uses consumable save method.
+        //Flag for
+        //consumables stack using the amount field.
         //Call Hunter's toString methods for weapons and armor
 
         return null;

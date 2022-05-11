@@ -48,6 +48,9 @@ public class Consumable extends Items{
         return amount;
     }
 
+    //METHOD ADDED BY BRENDAN
+    public void setAmount(int amount) { this.amount = amount; }
+
     public int getDamage(){
         Random rand = new Random();
         return rand.nextInt(getMaxDamage()-getMinDamage()+1)+getMinDamage();
@@ -96,7 +99,7 @@ public class Consumable extends Items{
     }
 
     public String save(){
-        String value = "CONSUMABLE";
+        String value = "CONSUMABLE\n";
         //value += String.format("Name: %s\nDamage: %d-%d\nHeals: %d\nAmount: %d\nValue: %d\nDescription: %s", getName(), getMinDamage(), getMaxDamage(), getHeal(), getAmount(), getValue(), getDescription());
         value += String.format("%s\n%d\n%d\n%d\n%d\n%d\n%s", getName(), getMinDamage(), getMaxDamage(), getHeal(), getAmount(), getValue(), getDescription());
         return value;
