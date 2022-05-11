@@ -65,7 +65,7 @@ public class Consumable extends Items{
     }
 
     public void stack(Consumable consumable){
-        if(getName().equals(consumable)){
+        if(getName().equals(consumable.getName())){
             amount = amount + consumable.getAmount();
         } else {
             System.out.println("These items do not match.");
