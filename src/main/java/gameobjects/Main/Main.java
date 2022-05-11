@@ -11,10 +11,7 @@ import gameobjects.Items.Factories.WeaponFactory;
 import gameobjects.Items.Items;
 import gameobjects.Items.Weapon;
 import gameobjects.Items.Weapons.Pistol;
-import gameobjects.Tile.GameMapFactory;
-import gameobjects.Tile.MapBase;
-import gameobjects.Tile.MapFactoryBase;
-import gameobjects.Tile.TileBase;
+
 import javafx.application.Application;
 import Map.GameMapFactory;
 import Map.MapBase;

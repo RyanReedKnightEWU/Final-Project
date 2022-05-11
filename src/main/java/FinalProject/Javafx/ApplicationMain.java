@@ -2,6 +2,11 @@ package FinalProject.Javafx;
 
 import GameApplication.MainMenuScene;
 import GameApplication.MapScene;
+import Map.GameMapFactory;
+import Map.MapBase;
+import Map.MapFactoryBase;
+import gameobjects.Entity.Player;
+import gameobjects.Navigator.Navigator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -19,11 +24,16 @@ public class ApplicationMain extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
+        MapFactoryBase mapFactory = new GameMapFactory();
+        Navigator nav = Navigator.getInstance(new Player(100,100,100,"Jaque"),
+                mapFactory.createMap("first arena"),0,3);
+
         gameWindow = stage;
         stage.setTitle("Final Project Game");
         //MainMenuScene mainMenuScene = new MainMenuScene();
         MapScene mapScene = new MapScene();
-        mapScene.start();
+        mapScene.start(nav);
         stage.show();
         //mainMenuScene.start();
     }

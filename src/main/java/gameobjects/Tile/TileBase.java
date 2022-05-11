@@ -9,7 +9,6 @@ public abstract class TileBase {
 
     // Map link and map link tile, usually null
     private MapBase linkToMap;
-    private TileBase linkMapTile;
 
     // Primary occupant, must be alive.
     private Entity primaryOccupant;
@@ -47,6 +46,10 @@ public abstract class TileBase {
             this.deceasedOccupants.add(entity);
             return true;
         }
+    }
+
+    public MapBase getLinkToMap() {
+        return this.linkToMap;
     }
 
     /**

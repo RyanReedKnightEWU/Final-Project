@@ -4,36 +4,42 @@ import Map.MapBase;
 import gameobjects.Entity.Entity;
 import gameobjects.Tile.TileBase;
 
+import java.util.HashMap;
+
 public class Navigator {
 
     private static Navigator uniqueInstance;
     private MapBase currentMap;
     private TileBase currentTile;
-    private int[] position;
+    private HashMap<String,Integer> position;
+    private String rowKey, columnKey;
     private Entity player;
 
     /**
      * Defines Navigator, called in getInstance method if uniqueInstance is not null.
      * @param player - Entity to represent user.
      * @param map - the current map the player is on.
-     * @param currentTile - tile player occupies.
-     * @param xCoordinate - horizontal coordinate of tile on tile matrix
-     * @param yCoordinate - vertical coordinate of tile on tile matrix
+     * @param playerColumnPosition - horizontal coordinate of tile on tile matrix
+     * @param playerRowPosition - vertical coordinate of tile on tile matrix
      * **/
-    private Navigator(Entity player, MapBase map, TileBase currentTile, int xCoordinate, int yCoordinate) {
+    private Navigator(Entity player, MapBase map, int playerRowPosition, int playerColumnPosition) {
 
         this.player = player;
         this.currentMap = map;
-        this.currentTile = currentTile;
-        this.position = new int[]{xCoordinate, yCoordinate};
+        this.position = new HashMap<String, Integer>();
+        this.rowKey = "row";
+        this.columnKey = "column";
+        this.position.put(this.rowKey,playerRowPosition);
+        this.position.put(this.columnKey,playerColumnPosition);
+        this.currentMap.addEntity(player,playerRowPosition,playerColumnPosition);
     }
 
     // Getters and setters.
-    public static Navigator getInstance(Entity player, MapBase map, TileBase currentTile, int xCoordinate, int yCoordinate) {
+    public static Navigator getInstance(Entity player, MapBase map, int xCoordinate, int yCoordinate) {
 
         if (Navigator.uniqueInstance == null) {
 
-            Navigator.uniqueInstance = new Navigator(player, map, currentTile,xCoordinate,yCoordinate);
+            Navigator.uniqueInstance = new Navigator(player, map,xCoordinate,yCoordinate);
 
         }
 
@@ -54,7 +60,8 @@ public class Navigator {
     }
 
     public TileBase getCurrentTile() {
-        return currentTile;
+        return this.currentMap.getTile(this.position.get(this.rowKey),
+                this.position.get(this.columnKey));
     }
 
     public void setCurrentTile(TileBase currentTile) {
@@ -62,44 +69,62 @@ public class Navigator {
     }
 
 
-    public int[] getPosition() {
-        return position;
+    public void setCurrentMap(MapBase map) {
+        this.currentMap = map;
+    }
+    public MapBase getCurrentMap() {
+        return this.currentMap;
     }
 
-    public void setPosition(int xCoordinte, int yCoordinate) {
-        this.position[0] = xCoordinte;
-        this.position[1] = yCoordinate;
+    public int[] getPosition() {
+        return new int[] {this.position.get(this.rowKey),
+                this.position.get(this.columnKey)};
+    }
+    public int getCurrentRow() {
+        return this.position.get(this.rowKey);
+    }
+    public int getCurrentColumn() {
+        return this.position.get(this.columnKey);
+    }
+
+    public void setPosition(int newRow, int newColumn) {
+        this.position.put(this.rowKey, newRow);
+        this.position.put(this.columnKey, newColumn);
     }
 
     /**
      * Move to tile at new coordinates, returns string which is processed by other functions,
      * (e.g., if it returns "tile-occupied", another method will determine is that occupant is an enemy
      * and respond accordingly)
-     * @param newXCoordinate - new x coordinate, cannot be more than one tile away from current x coordinate.
-     * @param newYCoordinate - new y coordinate, cannot be more than one tile away from current y coordinate.
+     * @param row - new row position, cannot be more than one tile away from current row.
+     * @param column - new column position, cannot be more than one tile away from current column.
+     * returns MoveKey, which is handled by the scene.
      * **/
-    public String moveTile(int newXCoordinate, int newYCoordinate) {
+    public MoveKey moveTile(int row, int column) {
 
-        int distanceFromX = Math.abs(this.position[0] - newXCoordinate),
-                distanceFromY = Math.abs(this.position[1] - newYCoordinate);
+        int verticalDistance = Math.abs(this.getCurrentRow() - row),
+                horizontalDistance = Math.abs(this.getCurrentColumn() - column);
 
-        if (newYCoordinate >= this.currentMap.getRows() || newXCoordinate >= this.currentMap.getColumns()
-                || newYCoordinate < 0 || newXCoordinate < 0 || (distanceFromY + distanceFromY)!=2) {
+        if (row >= this.currentMap.getRows() || column >= this.currentMap.getColumns()
+                || column < 0 || row < 0 || horizontalDistance > 1 || verticalDistance > 1) {
             // Bad coordinates, do nothing.
-            return "bad-coordinates";
+            return MoveKey.BAD_COORDINATES;
         }
 
-        TileBase toMove = this.currentMap.getTile(newYCoordinate, newXCoordinate);
+        TileBase toMove = this.currentMap.getTile(row, column);
 
         if (toMove.getPrimaryOccupant() == null) {
-            this.currentTile = toMove;
             toMove.setPrimaryOccupant(this.player);
+            this.currentMap.getTile(this.getCurrentRow(),this.getCurrentColumn()).setPrimaryOccupant(null);
+            this.setPosition(row,column);
             // move successful, map needs to be updated.
-            return "move-successful";
+            return MoveKey.MOVE_SUCCESSFUL;
+        }
+        else if(toMove.getLinkToMap() != null) {
+            return MoveKey.LINK_TO_MAP;
         }
         else {
-
-            return "tile-occupied";
+            return MoveKey.BAD_COORDINATES;
         }
 
     }

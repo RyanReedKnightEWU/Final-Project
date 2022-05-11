@@ -1,5 +1,8 @@
 package GameApplication;
 
+import Map.MapBase;
+import Map.RectangularMap;
+import gameobjects.Navigator.Navigator;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,7 +24,8 @@ public class MainMenuScene {
 
     public static MapScene map;
 
-    public void start(){
+    public void start(MapBase map){
+
         newGame = new Button("New Game");
         newGame.setOnAction(e -> newGame());
 
@@ -103,7 +107,7 @@ public class MainMenuScene {
     private void startMap() throws Exception {
         System.out.println("Starting the arena/map.");
         map = new MapScene();
-        map.start();
+        map.start(Navigator.getInstance());
     }
 
     //allows us to skip the main menu for testing purposes

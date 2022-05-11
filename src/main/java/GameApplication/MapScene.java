@@ -3,8 +3,12 @@ package GameApplication;
 import Map.GameMapFactory;
 import Map.MapBase;
 import Map.MapFactoryBase;
+import gameobjects.Navigator.MoveKey;
+import gameobjects.Navigator.Navigator;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,32 +26,26 @@ public class MapScene {
     private HBox options = new HBox();
     private Button seeInventory, save;
 
-    public void start() {
-
-        MapFactoryBase mapFactory = new GameMapFactory();
-
-        MapBase arenaMap;
-        arenaMap = mapFactory.createMap("first arena");
 
 
-        grid.setPadding(new Insets(20,20,20,20));
+    public void start(Navigator nav) {
+
+        MapBase map = nav.getCurrentMap();
+
+
+        grid.setPadding(new Insets(20, 20, 20, 20));
         grid.setVgap(10);
         grid.setHgap(10);
 
         Label label = new Label("This is a label");
-
         GridPane.setConstraints(label,0,0);
-
-        //map.getChildren().addAll(label);
-        fillMap(grid, arenaMap);
+        fillGrid(grid,nav);
 
         Scene scene = new Scene(grid);
-
         scene.setRoot(grid);
 
         gameWindow.setScene(scene);
 
-        /*System.out.println("Starting map");
         seeInventory = new Button("Inventory");
         save = new Button("Save Game");
 
@@ -59,17 +57,17 @@ public class MapScene {
         options.getChildren().add(seeInventory);
         options.getChildren().add(save);
 
-        fillMap();
+        fillGrid(grid,nav);
 
-        layout.setCenter(map);
+        layout.setCenter(grid);
 
         layout.setBottom(options);
         scene.setRoot(layout);
 
-        gameWindow.setScene(scene);*/
+        gameWindow.setScene(scene);
     }
 
-    private void fillMap(GridPane grid, MapBase map){
+    private void fillGrid(GridPane grid, Navigator nav){
         grid.setAlignment(Pos.CENTER);
         Button b;
         Entity occupant;
@@ -78,15 +76,19 @@ public class MapScene {
         vBox.setPrefHeight(100);
         vBox.setPrefWidth(100);
 
-        for(int i = 0; i < map.getRows(); i++){
-            for (int j = 0; j < map.getColumns(); j++){
-
-                occupant = map.getTile(i,j).getPrimaryOccupant();
+        for(int i = 0; i < nav.getCurrentMap().getRows(); i++){
+            for (int j = 0; j < nav.getCurrentMap().getColumns(); j++){
+                int row = i, column = j;
+                occupant = nav.getCurrentMap().getTile(i,j).getPrimaryOccupant();
                 b = new Button(tileDisplay(occupant));
                 b.setMinHeight(vBox.getPrefHeight());
                 b.setMinWidth(vBox.getPrefWidth());
                 b.setMaxHeight(vBox.getPrefWidth());
                 b.setMaxWidth(vBox.getPrefWidth());
+                b.setOnMouseClicked(e->{
+                    String key = nav.moveTile(row, column).toString();
+                    this.start(nav);
+                });
                 grid.add(b, i, j);
             }
         }
@@ -100,42 +102,5 @@ public class MapScene {
         else {
             return "";
         }
-
-        /*
-        int length = 5, depth = 5, i, j;
-
-        StringBuilder stringBuilder = new StringBuilder();
-        if (entity == null) {
-            for (i = 0; i < depth; i++) {
-                for (j = 0; j < length; j++) {
-                    stringBuilder.append(" ");
-                }
-                stringBuilder.append('\n');
-            }
-        }
-        else {
-            for (i = 0; i < 2; i++) {
-                for (j = 0; j < length; j++) {
-                    stringBuilder.append(" ");
-                }
-                stringBuilder.append('\n');
-            }
-
-            if (entity.getName().length() > length) {
-                stringBuilder.append(entity.getName(), 0, length-1).append('\n');
-            }
-            else {
-                stringBuilder.append(entity.getName(), 0, entity.getName().length());
-                stringBuilder.append(" ".repeat(Math.max(0, length - entity.getName().length()-1))).append('\n');
-            }
-            for (i = 4; i < 5; i++) {
-                for (j = 0; j < length; j++) {
-                    stringBuilder.append(" ");
-                }
-                stringBuilder.append('\n');
-            }
-        }
-
-        return stringBuilder.toString();*/
     }
 }
