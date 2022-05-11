@@ -42,7 +42,7 @@ public class MapScene {
         GridPane.setConstraints(label,0,0);
         fillGrid(grid,nav);
 
-        scene = new Scene(grid, 500, 500);
+        scene = new Scene(grid, 700, 1000);
         scene.setRoot(grid);
 
         gameWindow.setScene(scene);
