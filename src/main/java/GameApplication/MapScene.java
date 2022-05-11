@@ -19,6 +19,7 @@ import gameobjects.Entity.*;
 import javafx.scene.layout.VBox;
 
 import static FinalProject.Javafx.ApplicationMain.gameWindow;
+import static FinalProject.Javafx.ApplicationMain.scene;
 
 public class MapScene {
     private BorderPane layout = new BorderPane();
@@ -41,7 +42,7 @@ public class MapScene {
         GridPane.setConstraints(label,0,0);
         fillGrid(grid,nav);
 
-        Scene scene = new Scene(grid);
+        scene = new Scene(grid, 500, 500);
         scene.setRoot(grid);
 
         gameWindow.setScene(scene);
@@ -87,11 +88,16 @@ public class MapScene {
                 b.setMaxWidth(vBox.getPrefWidth());
                 b.setOnMouseClicked(e->{
                     String key = nav.moveTile(row, column).toString();
-                    this.start(nav);
+                    reset(nav);
                 });
                 grid.add(b, i, j);
             }
         }
+    }
+
+    private void reset(Navigator nav){
+        MapBase map = nav.getCurrentMap();
+        fillGrid(grid,nav);
     }
 
     private String tileDisplay(Entity entity) {
