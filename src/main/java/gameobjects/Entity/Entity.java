@@ -25,6 +25,10 @@ public abstract class Entity {
         if(health <= 0 || damage < 0 || defense < 0 || name.isEmpty())
             throw new IllegalArgumentException("Bad Parameter(s) --- Entity Parent Constructor");
 
+        if (inventory == null) {
+            inventory = new ArrayList<>();
+        }
+
         this.health = health;
         this.maxHealth = health;
         this.damage = damage;
@@ -35,6 +39,10 @@ public abstract class Entity {
 
     public Entity(int health, int maxHealth, int damage, int defense, String name,
                   ArrayList<Items> inventory, Weapon weapon, Armor armor) {
+
+        if (inventory == null) {
+            inventory = new ArrayList<>();
+        }
 
         this.health = health;
         this.maxHealth = maxHealth;
@@ -50,24 +58,50 @@ public abstract class Entity {
         }
     }
 
+    public void printInventory() {
+        if (inventory.isEmpty()) { //Delete the if statement before project submission
+            System.out.println("Inventory is empty");
+        }
+        for (int i = 0; i < inventory.size(); i++) {
+            System.out.println(inventory.get(i));
+        }
+    }
+
     public void addItem(Items item) {
         inventory.add(item);
     }
-    public void removeItem(Items item) {
-        if (item.getClass() == Consumable.class || inventory.contains(item)) {
 
+    public void removeItem(Items item) { //Consider merging with removeConsumable
+        if (inventory.contains(item)) {
+            inventory.remove(item);
+        } else {
+            System.out.println("This item is not in the inventory");
+        }
+    }
+
+    public void addConsumable(Consumable consumable) {
+        if (inventory.contains(consumable)) {
+            int index = inventory.indexOf(consumable);
+            //((Consumable) inventory.get(index)).setAmount(((Consumable) inventory.get(index)).getAmount() + 1);
+            ((Consumable) inventory.get(index)).stack(consumable);
+        } else {
+            inventory.add(consumable);
         }
     }
 
     public void removeConsumable(Consumable consumable) {
-        //if (inventory.contains(item))
+        if (inventory.contains(consumable)) {
+            int index = inventory.indexOf(consumable);
 
-        for (int i = 0; i < inventory.size(); i++) {
-            if (inventory.get(i).getName() == consumable.getName()) {
-                consumable.setAmount(consumable.getAmount()-1);
+            //Removes consumable if amount is 1 or lower,or otherwise decreases amount by 1
+            if (((Consumable) inventory.get(index)).getAmount() <= 1) {
+                inventory.remove(inventory.get(index));
+            } else {
+                ((Consumable) inventory.get(index)).setAmount(((Consumable) inventory.get(index)).getAmount() - 1);
             }
+        }else {
+            System.out.println("This consumable is not in the inventory");
         }
-
     }
 
 

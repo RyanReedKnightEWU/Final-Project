@@ -5,6 +5,7 @@ import gameobjects.Entity.Goblin;
 import gameobjects.Items.Armor;
 import gameobjects.Items.Armors.LeatherArmor;
 import gameobjects.Items.Consumable;
+import gameobjects.Items.Consumables.healthPotion;
 import gameobjects.Items.Factories.EntityFactory;
 import gameobjects.Items.Factories.FantasyPAEntityFactory;
 import gameobjects.Items.Factories.WeaponFactory;
@@ -51,6 +52,16 @@ public class Main{
         System.out.println(entity3);
         entity3.basicAttack();
         entity3.takeDamage(15);
+
+        Consumable potion = new healthPotion(5);
+        Consumable potion2 = potion;
+        System.out.println();
+        entity1.printInventory();
+        entity1.addItem(weapon);
+        entity1.addItem(armor); //Issue is with inventory having both items and consumables in inv at same time
+        //entity1.addConsumable(potion);
+        //entity1.addConsumable(potion2);
+        entity1.printInventory();
 
 
         MapFactoryBase gameMapFactory = new GameMapFactory();

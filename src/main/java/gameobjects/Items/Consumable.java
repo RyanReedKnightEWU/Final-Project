@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Consumable extends Items{
     private int heal = 0;
-    private int amount = 0;
+    private int amount = 1;
 
     protected Consumable(String name, int value){
         setName(name);
@@ -18,7 +18,7 @@ public class Consumable extends Items{
         setHeal(heal);
         setValue(value);
         setDescription(description);
-        this.amount = amount;
+        setAmount(amount);
     }
 
     public void use(Entity entity){
@@ -56,12 +56,18 @@ public class Consumable extends Items{
         return rand.nextInt(getMaxDamage()-getMinDamage()+1)+getMinDamage();
     }
 
-    public Boolean equals(Consumable consumable){
-        if(consumable.getName().equals(getName())){
+    @Override
+    public boolean equals(Object consumable){
+        if(((Consumable)consumable).getName().equals(getName())){
             return true;
         }else {
             return false;
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getName().hashCode();
     }
 
     public void stack(Consumable consumable){
