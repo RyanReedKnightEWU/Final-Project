@@ -5,7 +5,7 @@ import gameobjects.Items.Consumable;
 import java.util.Random;
 
 public class AttackBottle extends Consumable {
-    AttackBottle(int luck){
+    public AttackBottle(int luck){
         super("Bottled Grenade", 250);
         setDamage(200,250);
         setDescription(String.format("Why would they put a grenade in a bottle?"));

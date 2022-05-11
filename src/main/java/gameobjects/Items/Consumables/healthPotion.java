@@ -5,7 +5,7 @@ import gameobjects.Items.Consumable;
 import java.util.Random;
 
 public class healthPotion extends Consumable {
-    healthPotion(int luck){
+    public healthPotion(int luck){
         super("Health Potion", 30);
         setHeal(100);
         setCondition(luck, "Good ", "Weak ");
