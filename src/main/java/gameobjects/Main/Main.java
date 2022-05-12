@@ -64,10 +64,16 @@ public class Main{
         Consumable potion2 = potion;
         System.out.println();
         entity1.printInventory();
+        System.out.println();
         entity1.addItem(weapon);
-        entity1.addItem(armor); //Issue is with inventory having both items and consumables in inv at same time
-        //entity1.addConsumable(potion);
-        //entity1.addConsumable(potion2);
+        entity1.addItem(armor);
+        entity1.addConsumable(potion);
+        entity1.addConsumable(potion2);
+        entity1.printInventory();
+
+        System.out.println();
+        entity1.removeConsumable(potion);
+        entity1.removeItem(armor);
         entity1.printInventory();
 
 

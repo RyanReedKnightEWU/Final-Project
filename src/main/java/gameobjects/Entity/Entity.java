@@ -59,10 +59,11 @@ public abstract class Entity {
     }
 
     public void printInventory() {
-        if (inventory.isEmpty()) { //Delete the if statement before project submission
+        if (inventory.isEmpty()) {
             System.out.println("Inventory is empty");
         }
         for (int i = 0; i < inventory.size(); i++) {
+            System.out.println("-----Inventory Index: " + i + "-----");
             System.out.println(inventory.get(i));
         }
     }
@@ -82,7 +83,6 @@ public abstract class Entity {
     public void addConsumable(Consumable consumable) {
         if (inventory.contains(consumable)) {
             int index = inventory.indexOf(consumable);
-            //((Consumable) inventory.get(index)).setAmount(((Consumable) inventory.get(index)).getAmount() + 1);
             ((Consumable) inventory.get(index)).stack(consumable);
         } else {
             inventory.add(consumable);
@@ -104,14 +104,16 @@ public abstract class Entity {
         }
     }
 
-
-
     public Weapon getWeapon() {
         return weapon;
     }
 
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
+    }
+
+    public void setWeapon(int index) {
+        this.weapon = ((Weapon)inventory.get(index));
     }
 
     public boolean isAlive() {
@@ -125,10 +127,6 @@ public abstract class Entity {
     public void setArmor(Armor armor) {
         this.armor = armor;
     }
-
-    //public Consumable getConsumable() { return consumable; }
-
-    //public void setConsumable(Consumable consumable) { this.consumable = consumable; }
 
     // ADDED BY RYAN (PLEASE DO NOT ADD SETTER.)
     public String getName() { return this.name; }
