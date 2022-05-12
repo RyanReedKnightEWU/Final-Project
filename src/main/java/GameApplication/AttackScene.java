@@ -5,6 +5,7 @@ import gameobjects.Entity.Player;
 import gameobjects.Items.Consumable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
@@ -12,6 +13,7 @@ public class AttackScene {
     private BorderPane layout = new BorderPane();
     private HBox options = new HBox();
     private Button attack, consumables, runAway;
+    private Label playerInfo, badGuyInfo;
 
     public AttackScene(){
         attack = new Button("Attack");
@@ -32,6 +34,19 @@ public class AttackScene {
 
     public static void start(Player player, Entity badGuy){
 
+
+
+    }
+
+    private void attackB(){
+
+    }
+
+    private void consumablesB(){
+
+    }
+
+    private void runAwayB(){
 
     }
 
