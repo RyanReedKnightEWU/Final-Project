@@ -13,6 +13,7 @@ import gameobjects.Items.Items;
 import gameobjects.Items.Weapon;
 import gameobjects.Items.Weapons.Pistol;
 
+import gameobjects.Navigator.MoveKey;
 import javafx.application.Application;
 import Map.GameMapFactory;
 import Map.MapBase;
@@ -24,6 +25,12 @@ import java.util.ArrayList;
 public class Main{
 
     public static void main(String[] args) {
+
+
+        MoveKey key1 = MoveKey.MOVE_SUCCESSFUL;
+        MoveKey key2 = MoveKey.FAILED_ATTACK;
+
+        System.out.println(key1 == key2);
 
         Entity entity1;
         Entity entity2;

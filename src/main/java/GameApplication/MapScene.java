@@ -3,6 +3,7 @@ package GameApplication;
 import Map.GameMapFactory;
 import Map.MapBase;
 import Map.MapFactoryBase;
+import gameobjects.Navigator.Attack;
 import gameobjects.Navigator.MoveKey;
 import gameobjects.Navigator.Navigator;
 import javafx.event.ActionEvent;
@@ -61,10 +62,15 @@ public class MapScene {
         fillGrid(grid,nav);
 
         layout.setCenter(grid);
-
+        fillGrid(grid,nav);
+        layout.setCenter(grid);
+        layout.setBottom(options);
         layout.setBottom(options);
         scene.setRoot(layout);
+        fillGrid(grid,nav);
+        layout.setCenter(grid);
 
+        layout.setBottom(options);
         gameWindow.setScene(scene);
     }
 
@@ -87,7 +93,16 @@ public class MapScene {
                 b.setMaxHeight(vBox.getPrefWidth());
                 b.setMaxWidth(vBox.getPrefWidth());
                 b.setOnMouseClicked(e->{
-                    String key = nav.moveTile(row, column).toString();
+                    MoveKey key = nav.moveTile(row, column);
+
+                    if (key == MoveKey.TILE_OCCUPIED) {
+                        Entity enemy = nav.getCurrentMap().getTile(row,column).getPrimaryOccupant();
+                        AttackScene.start((Player) nav.getPlayer(),enemy);
+                    }
+                    else if (key == MoveKey.LINK_TO_MAP) {
+
+                    }
+
                     reset(nav);
                 });
                 grid.add(b, i, j);
