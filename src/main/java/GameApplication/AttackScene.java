@@ -89,7 +89,6 @@ public class AttackScene {
     }
 
     private void showStuff(){
-
+        //Shows players consumables
     }
-
 }
