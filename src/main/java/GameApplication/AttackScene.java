@@ -3,6 +3,7 @@ package GameApplication;
 import gameobjects.Entity.Entity;
 import gameobjects.Entity.Player;
 import gameobjects.Items.Consumable;
+import gameobjects.Navigator.Navigator;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,11 +15,16 @@ import static FinalProject.Javafx.ApplicationMain.scene;
 public class AttackScene {
     private static BorderPane layout = new BorderPane();
     private HBox options = new HBox();
-    private Button attack, consumables, runAway;
+    private static Button attack;
+    private Button consumables;
+    private Button runAway;
     private static Label badGuyInfo;
     private static Label playerInfo;
+    private static boolean consume;
+    private static MapScene map;
 
-    public AttackScene(){
+    public AttackScene(MapScene map){
+        this.map = map;
         attack = new Button("Attack");
         consumables = new Button("Use Consumable");
         runAway = new Button("Run Away");
@@ -38,12 +44,48 @@ public class AttackScene {
         layout.setCenter(badGuyInfo);
         layout.setLeft(playerInfo);
 
+        runAway.setOnAction(e -> useRunAway());
+
     }
 
     public static void start(Player player, Entity badGuy){
         badGuyInfo.setText(badGuy.toString());
         playerInfo.setText(player.toString());
+
+        attack.setOnAction(e -> attackBadGuy(player, badGuy));
+
         scene.setRoot(layout);
+    }
+
+    private static void attackBadGuy(Player player, Entity badGuy){
+        badGuy.takeDamage(player.getDamage());
+        consume = true;
+        if(!badGuy.isAlive()){
+            loot();
+        }else {
+            badGuyTurn(player, badGuy);
+        }
+    }
+
+    private static void badGuyTurn(Player player, Entity badGuy){
+        player.takeDamage(badGuy.getDamage());
+    }
+
+    private void useConsumables(){
+        if(consume){
+            consume = false;
+        }
+    }
+
+    private void useRunAway(){
+        Navigator nav = Navigator.getInstance();
+        map.reset(nav);
+    }
+
+    private static void loot(){
+        //send badguy stuff to player.
+        Navigator nav = Navigator.getInstance();
+        map.reset(nav);
     }
 
     private void showStuff(){
