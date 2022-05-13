@@ -6,6 +6,8 @@ import Map.MapFactoryBase;
 import gameobjects.Navigator.Attack;
 import gameobjects.Navigator.MoveKey;
 import gameobjects.Navigator.Navigator;
+import gameobjects.Tile.LinkTile;
+import gameobjects.Tile.TileBase;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -96,10 +98,16 @@ public class MapScene {
                     MoveKey key = nav.moveTile(row, column);
 
                     if (key == MoveKey.TILE_OCCUPIED) {
-                        Entity enemy = nav.getCurrentMap().getTile(row,column).getPrimaryOccupant();
-                        AttackScene.start((Player) nav.getPlayer(),enemy);
+                        AttackScene attackScene = new AttackScene(this);
+                        attackScene.start((Player) nav.getPlayer(),nav.getCurrentMap().getTile(row, column).getPrimaryOccupant());
                     }
+
                     else if (key == MoveKey.LINK_TO_MAP) {
+                        LinkTile toMove = (LinkTile) nav.getCurrentTile();
+                        int[] newMapPLayerCoordinate = toMove.getPosition();
+                        MapBase newMap = toMove.getLinkToMap();
+                        nav.setCurrentMap(newMap);
+                        nav.getCurrentMap().addEntity(nav.getPlayer(), newMapPLayerCoordinate[0], newMapPLayerCoordinate[1]);
 
                     }
 
@@ -110,7 +118,7 @@ public class MapScene {
         }
     }
 
-    private void reset(Navigator nav){
+    public void reset(Navigator nav){
         MapBase map = nav.getCurrentMap();
         fillGrid(grid,nav);
     }

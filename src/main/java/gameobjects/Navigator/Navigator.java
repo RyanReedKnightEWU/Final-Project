@@ -2,6 +2,7 @@ package gameobjects.Navigator;
 
 import Map.MapBase;
 import gameobjects.Entity.Entity;
+import gameobjects.Tile.LinkTile;
 import gameobjects.Tile.Tile;
 import gameobjects.Tile.TileBase;
 
@@ -15,7 +16,7 @@ public class Navigator {
     private MapBase currentMap;
     private TileBase currentTile;
     private HashMap<String, Integer> position;
-    private String rowKey, columnKey;
+    private final String rowKey = "row", columnKey = "column";
     private Entity player;
 
     /**
@@ -31,8 +32,6 @@ public class Navigator {
         this.player = player;
         this.currentMap = map;
         this.position = new HashMap<String, Integer>();
-        this.rowKey = "row";
-        this.columnKey = "column";
         this.position.put(this.rowKey, playerRowPosition);
         this.position.put(this.columnKey, playerColumnPosition);
         this.currentMap.addEntity(player, playerRowPosition, playerColumnPosition);
@@ -130,15 +129,11 @@ public class Navigator {
 
            return MoveKey.TILE_OCCUPIED;
 
-        } else if (toMove.getLinkToMap() != null) {
+        } else if (toMove instanceof LinkTile) {
             return MoveKey.LINK_TO_MAP;
         } else {
             return MoveKey.BAD_COORDINATES;
         }
-
-
-
-
     }
     /**
      * Move player to new tile, does not have any checks (e.g., will move player to tile regardless

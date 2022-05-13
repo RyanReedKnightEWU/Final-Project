@@ -3,6 +3,7 @@ package FinalProject.Javafx;
 import GameApplication.MainMenuScene;
 import GameApplication.MapScene;
 import Map.GameMapFactory;
+import Map.GameMapFactoryKeys;
 import Map.MapBase;
 import Map.MapFactoryBase;
 import gameobjects.Entity.Player;
@@ -27,14 +28,14 @@ public class ApplicationMain extends Application {
 
         MapFactoryBase mapFactory = new GameMapFactory();
         Navigator nav = Navigator.getInstance(new Player(100,100,100,"Jaque"),
-                mapFactory.createMap("first arena"),0,3);
+                mapFactory.createMap(GameMapFactoryKeys.FIRST_ARENA.toString()),0,3);
 
         gameWindow = stage;
         stage.setTitle("Final Project Game");
-        //MainMenuScene mainMenuScene = new MainMenuScene();
+        MainMenuScene mainMenuScene = new MainMenuScene();
         MapScene mapScene = new MapScene();
         mapScene.start(nav);
         stage.show();
-        //mainMenuScene.start();
+        //mainMenuScene.start(nav.getCurrentMap());
     }
 }

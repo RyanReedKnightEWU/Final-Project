@@ -172,13 +172,27 @@ public abstract class Entity {
     }
 
     public String toString() {
-        String info = this.name + " has ";
-        info += this.health + " health, ";
-        info += this.damage + " damage, and ";
-        info += this.defense + " defense.\n";
-        info += this.name + " wields " + this.weapon.getName().toLowerCase() +
-                " and wears " + this.armor.getName().toLowerCase() + ".";
-        return info;
+        return this.name + " has " +
+                this.health + " health, " +
+                this.damage + " damage, and " +
+                this.defense + " defense.\n" +
+                this.name +
+                "weapon: " +this.checkIfItemNull(this.weapon) +
+                "armor: " + this.checkIfItemNull(this.armor);
+    }
+    /**
+     * Check if item is null, return item.toString() if not,
+     * otherwise return string "null". Purpose is to prevent
+     * null pointer exceptions.
+     * @param item - item being checked.
+     * **/
+    private String checkIfItemNull(Items item) {
+        if(item != null ) {
+            return this.weapon.getName().toLowerCase();
+        }
+        else {
+            return "null";
+        }
     }
 
     public String saveInventory() {

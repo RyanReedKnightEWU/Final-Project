@@ -18,10 +18,10 @@ public class AttackScene {
     private static Button attack;
     private Button consumables;
     private Button runAway;
-    private static Label badGuyInfo;
-    private static Label playerInfo;
-    private static boolean consume;
-    private static MapScene map;
+    private Label badGuyInfo = new Label();
+    private Label playerInfo = new Label();
+    private boolean consume;
+    private MapScene map;
 
     public AttackScene(MapScene map){
         this.map = map;
@@ -48,7 +48,7 @@ public class AttackScene {
 
     }
 
-    public static void start(Player player, Entity badGuy){
+    public void start(Player player, Entity badGuy){
         badGuyInfo.setText(badGuy.toString());
         playerInfo.setText(player.toString());
 
@@ -57,7 +57,7 @@ public class AttackScene {
         scene.setRoot(layout);
     }
 
-    private static void attackBadGuy(Player player, Entity badGuy){
+    private void attackBadGuy(Player player, Entity badGuy){
         badGuy.takeDamage(player.getDamage());
         consume = true;
         if(!badGuy.isAlive()){
@@ -82,7 +82,7 @@ public class AttackScene {
         map.reset(nav);
     }
 
-    private static void loot(){
+    private void loot(){
         //send badguy stuff to player.
         Navigator nav = Navigator.getInstance();
         map.reset(nav);
