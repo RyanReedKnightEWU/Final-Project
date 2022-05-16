@@ -28,8 +28,9 @@ public class InventoryScene {
         options.setSpacing(10);
         exit.setOnAction(e -> exit());
         options.getChildren().add(exit);
-        ArrayList<Items> stuff = new ArrayList<Items>();
+        ArrayList<Items> stuff = player.getInventory();
         for(Items i: stuff){
+            //System.out.println(stuff.toString());
             Button b = new Button(stuff.toString());
             items.getChildren().add(b);
         }
