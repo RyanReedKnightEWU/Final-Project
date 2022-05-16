@@ -5,10 +5,12 @@ import gameobjects.Entity.Player;
 import gameobjects.Items.Consumable;
 import gameobjects.Navigator.Navigator;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 
 import static FinalProject.Javafx.ApplicationMain.scene;
 
@@ -36,9 +38,12 @@ public class AttackScene {
 
         options.getChildren().add(attack);
         options.getChildren().add(consumables);
+        options.getChildren().add(runAway);
 
         badGuyInfo = new Label();
+        badGuyInfo.setFont(new Font("System Regular", 15));
         playerInfo = new Label();
+        playerInfo.setFont(new Font("System Regular", 15));
 
         layout.setBottom(options);
         layout.setCenter(badGuyInfo);
@@ -78,14 +83,11 @@ public class AttackScene {
     }
 
     private void useRunAway(){
-        Navigator nav = Navigator.getInstance();
-        map.reset(nav);
+        map.setScene();
     }
 
     private void loot(){
-        //send badguy stuff to player.
-        Navigator nav = Navigator.getInstance();
-        map.reset(nav);
+        map.setScene();
     }
 
     private void showStuff(){
