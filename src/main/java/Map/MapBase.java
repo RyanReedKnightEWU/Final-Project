@@ -55,9 +55,7 @@ public abstract class MapBase {
         else if (column < 0) {
             column = 0;
         }
-
         this.tileMatrix[row][column] = tile;
-
     }
 
 

@@ -11,13 +11,16 @@ public class LinkTile extends TileBase {
     // Link to new map.
     private MapBase linkToNewMap;
 
+    private MapBase linkToMap;
+
     // Position player emerges at on new map.
     private final int row, column;
 
-    public LinkTile(Entity primaryOccupant, ArrayList<Entity> deceasedOccupants, int row, int column) {
-        super(primaryOccupant, deceasedOccupants);
+    public LinkTile(MapBase map, Entity primaryOccupant, int row, int column) {
+        super(primaryOccupant, null);
         this.row = row;
         this.column = column;
+        this.linkToMap = map;
     }
 
     public int getRowOnNewMap() {
@@ -28,5 +31,19 @@ public class LinkTile extends TileBase {
     }
     public int[] getPosition() {
         return new int[] {this.row, this.column };
+    }
+
+    public MapBase getLinkToMap() {
+        return this.linkToMap;
+    }
+
+    /**
+     * Set map link
+     * @param map - MapBase
+     * **/
+    public void setLinkToMap(MapBase map) {
+
+        this.linkToMap = map;
+
     }
 }

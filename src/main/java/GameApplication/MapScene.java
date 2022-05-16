@@ -20,6 +20,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import gameobjects.Entity.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import static FinalProject.Javafx.ApplicationMain.gameWindow;
 import static FinalProject.Javafx.ApplicationMain.scene;
@@ -29,7 +30,6 @@ public class MapScene {
     private GridPane grid = new GridPane();
     private HBox options = new HBox();
     private Button seeInventory, save;
-
 
 
     public void start(Navigator nav) {
@@ -89,7 +89,18 @@ public class MapScene {
             for (int j = 0; j < nav.getCurrentMap().getColumns(); j++){
                 int row = i, column = j;
                 occupant = nav.getCurrentMap().getTile(i,j).getPrimaryOccupant();
-                b = new Button(tileDisplay(occupant));
+
+                String doorway = "Doorway";
+                boolean isLink = nav.getCurrentMap().getTile(i,j) instanceof LinkTile,
+                        hasOccupant = nav.getCurrentMap().getTile(i,j).getPrimaryOccupant() != null;
+
+                if (isLink && hasOccupant) {
+                    b = new Button(doorway + '\n' + occupant.getName());
+                } else if (isLink) {
+                    b = new Button(doorway);
+                } else {
+                    b = new Button(tileDisplay(occupant));
+                }
                 b.setMinHeight(vBox.getPrefHeight());
                 b.setMinWidth(vBox.getPrefWidth());
                 b.setMaxHeight(vBox.getPrefWidth());
@@ -99,24 +110,39 @@ public class MapScene {
 
                     if (key == MoveKey.TILE_OCCUPIED) {
                         AttackScene attackScene = new AttackScene(this);
-                        attackScene.start((Player) nav.getPlayer(),nav.getCurrentMap().getTile(row, column).getPrimaryOccupant());
+                        attackScene.start((Player) nav.getPlayer(),
+                                nav.getCurrentMap().getTile(row, column).getPrimaryOccupant());
+                        reset(nav);
                     }
-
                     else if (key == MoveKey.LINK_TO_MAP) {
-                        LinkTile toMove = (LinkTile) nav.getCurrentTile();
+                        // Get link to tile.
+                        LinkTile toMove = (LinkTile) nav.getCurrentMap().getTile(row,column);
+                        // Get coordinates of player on new map.
                         int[] newMapPLayerCoordinate = toMove.getPosition();
-                        MapBase newMap = toMove.getLinkToMap();
-                        nav.setCurrentMap(newMap);
-                        nav.getCurrentMap().addEntity(nav.getPlayer(), newMapPLayerCoordinate[0], newMapPLayerCoordinate[1]);
-
+                        // Set current map in Navigator to new map.
+                        nav.setCurrentMap(toMove.getLinkToMap());
+                        System.out.println(toMove.getLinkToMap() == null);
+                        // Add player to link's corresponding position on new map.
+                        nav.getCurrentMap().getTile(0,0);
+                        nav.getCurrentMap().addEntity(nav.getPlayer(), newMapPLayerCoordinate[0],
+                                newMapPLayerCoordinate[1]);
+                        MapScene newMapScene = new MapScene();
+                        newMapScene.start(nav);
+                    }
+                    else if (key == MoveKey.MOVE_SUCCESSFUL) {
+                        reset(nav);
                     }
 
-                    reset(nav);
                 });
                 grid.add(b, i, j);
             }
         }
     }
+
+    /*private void newMap() {
+        start(nav);
+        s
+    }*/
 
     public void reset(Navigator nav){
         MapBase map = nav.getCurrentMap();

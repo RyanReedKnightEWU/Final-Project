@@ -43,9 +43,9 @@ public class GameMapFactory extends MapFactoryBase {
                 evilWalee = new Murderbot("Evil Walee");
 
 
-        MapBase standardArena = new RectangularMap(arenaDimension), standardHall = new RectangularMap(1,4);
-        standardArena.addTile(new LinkTile(null,null,0,3),3,0);
-        standardHall.addTile(new LinkTile(null,null,3,0),0,3);
+        MapBase standardArena = new RectangularMap(arenaDimension), standardHall = new RectangularMap(4,1);
+        standardArena.addTile(new LinkTile(standardHall,null,3,0),0,3);
+        standardHall.addTile(new LinkTile(standardArena,null,0,3),3,0);
 
         if (key.equals(GameMapFactoryKeys.FIRST_ARENA.toString())) {
             map = standardArena;
@@ -69,7 +69,7 @@ public class GameMapFactory extends MapFactoryBase {
             /*String spc = ", ";
             throw new IllegalArgumentException("bad param createMap(String), select one of the follwing keys: "
                 + firstArena + spc + secondArena + spc + hall + spc + dungeons);*/
-            map = new RectangularMap(4);
+            map = standardArena;
         }
 
         return map;

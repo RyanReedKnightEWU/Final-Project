@@ -15,8 +15,7 @@ public class Navigator {
     private static Navigator uniqueInstance;
     private MapBase currentMap;
     private TileBase currentTile;
-    private HashMap<String, Integer> position;
-    private final String rowKey = "row", columnKey = "column";
+    private int row, column;
     private Entity player;
 
     /**
@@ -31,9 +30,8 @@ public class Navigator {
 
         this.player = player;
         this.currentMap = map;
-        this.position = new HashMap<String, Integer>();
-        this.position.put(this.rowKey, playerRowPosition);
-        this.position.put(this.columnKey, playerColumnPosition);
+        this.row = playerRowPosition;
+        this.column = playerColumnPosition;
         this.currentMap.addEntity(player, playerRowPosition, playerColumnPosition);
     }
 
@@ -64,8 +62,7 @@ public class Navigator {
     }
 
     public TileBase getCurrentTile() {
-        return this.currentMap.getTile(this.position.get(this.rowKey),
-                this.position.get(this.columnKey));
+        return this.currentMap.getTile(this.row, this.column);
     }
 
     public void setCurrentTile(TileBase currentTile) {
@@ -82,21 +79,21 @@ public class Navigator {
     }
 
     public int[] getPosition() {
-        return new int[]{this.position.get(this.rowKey),
-                this.position.get(this.columnKey)};
+        return new int[]{this.row,
+                this.column};
     }
 
     public int getCurrentRow() {
-        return this.position.get(this.rowKey);
+        return this.row;
     }
 
     public int getCurrentColumn() {
-        return this.position.get(this.columnKey);
+        return this.column;
     }
 
     public void setPosition(int newRow, int newColumn) {
-        this.position.put(this.rowKey, newRow);
-        this.position.put(this.columnKey, newColumn);
+        this.row = newRow;
+        this.column = newColumn;
     }
 
     /**
@@ -121,23 +118,27 @@ public class Navigator {
 
         TileBase toMove = this.currentMap.getTile(row, column);
 
-        if (toMove.getPrimaryOccupant() == null) {
-            this.forceMove(row, column);
-            // move successful, map needs to be updated.
-            return MoveKey.MOVE_SUCCESSFUL;
-        } else if (toMove.getPrimaryOccupant() != null) {
+        if (toMove.getPrimaryOccupant() == null || toMove.getPrimaryOccupant() == this.player) {
+
+            if (toMove instanceof LinkTile) {
+                // Load new map with player located at corresponding entry point.
+                return MoveKey.LINK_TO_MAP;
+            }else {
+                this.forceMove(row, column);
+                // move successful, map needs to be updated.
+                return MoveKey.MOVE_SUCCESSFUL;
+            }
+        } else if (toMove.getPrimaryOccupant() != null && toMove.getPrimaryOccupant() != this.player) {
 
            return MoveKey.TILE_OCCUPIED;
 
-        } else if (toMove instanceof LinkTile) {
-            return MoveKey.LINK_TO_MAP;
-        } else {
+        }  else {
             return MoveKey.BAD_COORDINATES;
         }
     }
     /**
      * Move player to new tile, does not have any checks (e.g., will move player to tile regardless
-     * of range of the new tile or if it has an occupant). Should be used
+     * of range of the new tile or if it has an occupant).
      * @param row - row of tile to move to.
      * @param column - column of tile to move to.
      *               !!! USE WITH CAUTION !!!
