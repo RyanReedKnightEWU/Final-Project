@@ -8,8 +8,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import static FinalProject.Javafx.ApplicationMain.scene;
@@ -17,6 +19,7 @@ import static FinalProject.Javafx.ApplicationMain.scene;
 public class AttackScene {
     private static BorderPane layout = new BorderPane();
     private HBox options = new HBox();
+    private VBox info = new VBox();
     private static Button attack;
     private Button consumables;
     private Button runAway;
@@ -41,21 +44,25 @@ public class AttackScene {
         options.getChildren().add(runAway);
 
         badGuyInfo = new Label();
-        badGuyInfo.setFont(new Font("System Regular", 15));
+        badGuyInfo.setFont(new Font("System Regular", 25));
         playerInfo = new Label();
-        playerInfo.setFont(new Font("System Regular", 15));
+        playerInfo.setFont(new Font("System Regular", 25));
 
         layout.setBottom(options);
-        layout.setCenter(badGuyInfo);
-        layout.setLeft(playerInfo);
+        info.getChildren().add(badGuyInfo);
+        info.getChildren().add(playerInfo);
+        info.setAlignment(Pos.CENTER);
+        info.setSpacing(100);
+        layout.setCenter(info);
 
         runAway.setOnAction(e -> useRunAway());
-
     }
 
     public void start(Player player, Entity badGuy){
         badGuyInfo.setText(badGuy.toString());
+        badGuyInfo.setStyle("-fx-background-color: rgb(250,200,200);");
         playerInfo.setText(player.toString());
+        playerInfo.setStyle("-fx-background-color: rgb(200,200,250);");
 
         attack.setOnAction(e -> attackBadGuy(player, badGuy));
 
