@@ -26,6 +26,7 @@ public class InventoryScene {
         options.setStyle("-fx-background-color: #336699;");
         options.setPadding(new Insets(20,20,20,20));
         options.setSpacing(10);
+        exit.setOnAction(e -> exit());
         options.getChildren().add(exit);
         ArrayList<Items> stuff = new ArrayList<Items>();
         for(Items i: stuff){
@@ -42,7 +43,7 @@ public class InventoryScene {
     }
 
     public void exit(){
-
+        map.setScene();
     }
 
 }
