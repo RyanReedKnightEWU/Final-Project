@@ -37,6 +37,7 @@ public class InventoryScene {
             items.getChildren().add(b);
         }
         items.setAlignment(Pos.CENTER);
+        items.setSpacing(10);
 
         layout.setCenter(items);
         layout.setBottom(options);

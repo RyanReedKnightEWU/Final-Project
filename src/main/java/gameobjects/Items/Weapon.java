@@ -5,10 +5,11 @@ import java.util.Random;
 public class Weapon extends Items{
 
     public Weapon(){
-
+        type = "Weapon";
     }
 
     public Weapon(String name, int minDamage, int maxDamage, int value){
+        type = "Weapon";
         setName(name);
         setDamage(minDamage, maxDamage);
         setValue(value);
@@ -19,13 +20,14 @@ public class Weapon extends Items{
         setName(name);
         setDamage(minDamage, maxDamage);
         setValue(value);
-
+        type = "Weapon";
     }
 
     public void setWeapon(Weapon weapon){
         setName(weapon.getName());
         setDamage(weapon.getMinDamage(), weapon.getMaxDamage());
         setValue(weapon.getValue());
+        type = "Weapon";
     }
 
     public void setDamage(int minDamage, int maxDamage){

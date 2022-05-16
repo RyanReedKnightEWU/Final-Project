@@ -8,6 +8,7 @@ public abstract class Items {
     private int value = 0;
     private int minDamage = 0;
     private int maxDamage = 0;
+    protected String type = "Item";
 
     protected void setValue(int value){
         this.value = value;
@@ -53,4 +54,7 @@ public abstract class Items {
         return null;
     }
 
+    public String getType(){
+        return type;
+    }
 }
