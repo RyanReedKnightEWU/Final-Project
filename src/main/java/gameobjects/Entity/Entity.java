@@ -16,6 +16,7 @@ public abstract class Entity {
     private String name;
 
     private boolean isAlive;
+
     private ArrayList<Items> inventory;
     private Weapon weapon = new BareHands();
     private Armor armor;
@@ -103,6 +104,10 @@ public abstract class Entity {
         }else {
             System.out.println("This consumable is not in the inventory");
         }
+    }
+
+    public ArrayList<Items> getInventory() {
+        return inventory;
     }
 
     public Weapon getWeapon() {
