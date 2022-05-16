@@ -69,13 +69,20 @@ public class AttackScene {
         scene.setRoot(layout);
     }
 
+    private void reset(Player player, Entity badGuy){
+        badGuyInfo.setText(badGuy.toString());
+        playerInfo.setText(player.toString());
+    }
+
     private void attackBadGuy(Player player, Entity badGuy){
         badGuy.takeDamage(player.getDamage());
+        reset(player, badGuy);
         consume = true;
         if(!badGuy.isAlive()){
             loot();
         }else {
             badGuyTurn(player, badGuy);
+            reset(player, badGuy);
         }
     }
 

@@ -4,6 +4,7 @@ import gameobjects.Items.Armor;
 import gameobjects.Items.Consumable;
 import gameobjects.Items.Items;
 import gameobjects.Items.Weapon;
+import gameobjects.Items.Weapons.BareHands;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public abstract class Entity {
 
     private boolean isAlive;
     private ArrayList<Items> inventory;
-    private Weapon weapon;
+    private Weapon weapon = new BareHands();
     private Armor armor;
     private Consumable consumable; //I probably don't need this
 
@@ -164,6 +165,9 @@ public abstract class Entity {
         if (damageTaken < 1) { damageTaken = 1; }
         setHealth(getHealth()-damageTaken);
         System.out.println(damageTaken + " damage taken and " + getHealth() + " health remaining");
+        if(health <= 0){
+            isAlive = false;
+        }
     }
 
     public int basicAttack() {
