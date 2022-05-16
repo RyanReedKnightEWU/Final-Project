@@ -55,9 +55,7 @@ public abstract class MapBase {
         else if (column < 0) {
             column = 0;
         }
-
         this.tileMatrix[row][column] = tile;
-
     }
 
 
@@ -73,6 +71,15 @@ public abstract class MapBase {
         this.checkBounds(row, colum);
 
         return this.tileMatrix[row][colum];
+    }
+
+    public TileBase getTile(int[] position) {
+        if (position.length != 2) {
+            return null;
+        }
+        else {
+            return this.getTile(position[0],position[1]);
+        }
     }
 
 

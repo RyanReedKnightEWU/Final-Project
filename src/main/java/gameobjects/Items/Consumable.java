@@ -58,6 +58,9 @@ public class Consumable extends Items{
 
     @Override
     public boolean equals(Object consumable){
+        if (!(consumable instanceof Consumable)) {
+            return false;
+        }
         if(((Consumable)consumable).getName().equals(getName())){
             return true;
         }else {

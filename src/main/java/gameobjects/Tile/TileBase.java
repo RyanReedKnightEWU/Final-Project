@@ -7,9 +7,6 @@ import java.util.ArrayList;
 
 public abstract class TileBase {
 
-    // Map link and map link tile, usually null
-    private MapBase linkToMap;
-
     // Primary occupant, must be alive.
     private Entity primaryOccupant;
     // Deceased occupants
@@ -48,17 +45,5 @@ public abstract class TileBase {
         }
     }
 
-    public MapBase getLinkToMap() {
-        return this.linkToMap;
-    }
 
-    /**
-     * Set map link
-     * @param map - MapBase
-     * **/
-    public void setLinkToMap(MapBase map) {
-
-        this.linkToMap = map;
-
-    }
 }

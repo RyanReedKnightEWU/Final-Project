@@ -4,6 +4,7 @@ import gameobjects.Items.Armor;
 import gameobjects.Items.Consumable;
 import gameobjects.Items.Items;
 import gameobjects.Items.Weapon;
+import gameobjects.Items.Weapons.BareHands;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public abstract class Entity {
 
     private boolean isAlive;
     private ArrayList<Items> inventory;
-    private Weapon weapon;
+    private Weapon weapon = new BareHands();
     private Armor armor;
     private Consumable consumable; //I probably don't need this
 
@@ -59,10 +60,11 @@ public abstract class Entity {
     }
 
     public void printInventory() {
-        if (inventory.isEmpty()) { //Delete the if statement before project submission
+        if (inventory.isEmpty()) {
             System.out.println("Inventory is empty");
         }
         for (int i = 0; i < inventory.size(); i++) {
+            System.out.println("-----Inventory Index: " + i + "-----");
             System.out.println(inventory.get(i));
         }
     }
@@ -82,7 +84,6 @@ public abstract class Entity {
     public void addConsumable(Consumable consumable) {
         if (inventory.contains(consumable)) {
             int index = inventory.indexOf(consumable);
-            //((Consumable) inventory.get(index)).setAmount(((Consumable) inventory.get(index)).getAmount() + 1);
             ((Consumable) inventory.get(index)).stack(consumable);
         } else {
             inventory.add(consumable);
@@ -104,14 +105,16 @@ public abstract class Entity {
         }
     }
 
-
-
     public Weapon getWeapon() {
         return weapon;
     }
 
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
+    }
+
+    public void setWeapon(int index) {
+        this.weapon = ((Weapon)inventory.get(index));
     }
 
     public boolean isAlive() {
@@ -125,10 +128,6 @@ public abstract class Entity {
     public void setArmor(Armor armor) {
         this.armor = armor;
     }
-
-    //public Consumable getConsumable() { return consumable; }
-
-    //public void setConsumable(Consumable consumable) { this.consumable = consumable; }
 
     // ADDED BY RYAN (PLEASE DO NOT ADD SETTER.)
     public String getName() { return this.name; }
@@ -166,6 +165,9 @@ public abstract class Entity {
         if (damageTaken < 1) { damageTaken = 1; }
         setHealth(getHealth()-damageTaken);
         System.out.println(damageTaken + " damage taken and " + getHealth() + " health remaining");
+        if(health <= 0){
+            isAlive = false;
+        }
     }
 
     public int basicAttack() {
@@ -174,13 +176,27 @@ public abstract class Entity {
     }
 
     public String toString() {
-        String info = this.name + " has ";
-        info += this.health + " health, ";
-        info += this.damage + " damage, and ";
-        info += this.defense + " defense.\n";
-        info += this.name + " wields " + this.weapon.getName().toLowerCase() +
-                " and wears " + this.armor.getName().toLowerCase() + ".";
-        return info;
+        return this.name + " has " +
+                this.health + " health, " +
+                this.damage + " damage, and " +
+                this.defense + " defense.\n" +
+                this.name +
+                "weapon: " +this.checkIfItemNull(this.weapon) +
+                "armor: " + this.checkIfItemNull(this.armor);
+    }
+    /**
+     * Check if item is null, return item.toString() if not,
+     * otherwise return string "null". Purpose is to prevent
+     * null pointer exceptions.
+     * @param item - item being checked.
+     * **/
+    private String checkIfItemNull(Items item) {
+        if(item != null ) {
+            return this.weapon.getName().toLowerCase();
+        }
+        else {
+            return "null";
+        }
     }
 
     public String saveInventory() {

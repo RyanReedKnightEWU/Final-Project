@@ -13,6 +13,7 @@ import gameobjects.Items.Items;
 import gameobjects.Items.Weapon;
 import gameobjects.Items.Weapons.Pistol;
 
+import gameobjects.Navigator.MoveKey;
 import javafx.application.Application;
 import Map.GameMapFactory;
 import Map.MapBase;
@@ -24,6 +25,12 @@ import java.util.ArrayList;
 public class Main{
 
     public static void main(String[] args) {
+
+
+        MoveKey key1 = MoveKey.MOVE_SUCCESSFUL;
+        MoveKey key2 = MoveKey.FAILED_ATTACK;
+
+        System.out.println(key1 == key2);
 
         Entity entity1;
         Entity entity2;
@@ -57,10 +64,16 @@ public class Main{
         Consumable potion2 = potion;
         System.out.println();
         entity1.printInventory();
+        System.out.println();
         entity1.addItem(weapon);
-        entity1.addItem(armor); //Issue is with inventory having both items and consumables in inv at same time
-        //entity1.addConsumable(potion);
-        //entity1.addConsumable(potion2);
+        entity1.addItem(armor);
+        entity1.addConsumable(potion);
+        entity1.addConsumable(potion2);
+        entity1.printInventory();
+
+        System.out.println();
+        entity1.removeConsumable(potion);
+        entity1.removeItem(armor);
         entity1.printInventory();
 
 
