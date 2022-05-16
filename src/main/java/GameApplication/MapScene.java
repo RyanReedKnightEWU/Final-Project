@@ -43,6 +43,7 @@ public class MapScene {
         fillGrid(grid,nav);
 
         seeInventory = new Button("Inventory");
+        seeInventory.setOnAction(e -> setSeeInventory(nav));
         save = new Button("Save Game");
 
         options = new HBox();
@@ -139,6 +140,11 @@ public class MapScene {
     public void reset(Navigator nav){
         MapBase map = nav.getCurrentMap();
         fillGrid(grid,nav);
+    }
+
+    public void setSeeInventory(Navigator nav){
+        InventoryScene in = new InventoryScene();
+        in.start(this, nav.getPlayer());
     }
 
     public void setScene(){
