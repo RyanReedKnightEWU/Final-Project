@@ -4,6 +4,7 @@ import gameobjects.Entity.Entity;
 import gameobjects.Entity.Player;
 import gameobjects.Items.Items;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -22,21 +23,25 @@ public class InventoryScene {
 
     public void start(MapScene map,Entity player){
         this.map = map;
+        exit.setOnAction(e -> exit());
+
         options = new HBox();
         options.setStyle("-fx-background-color: #336699;");
         options.setPadding(new Insets(20,20,20,20));
         options.setSpacing(10);
-        exit.setOnAction(e -> exit());
         options.getChildren().add(exit);
         ArrayList<Items> stuff = player.getInventory();
+
         for(Items i: stuff){
-            //System.out.println(stuff.toString());
-            Button b = new Button(stuff.toString());
+            Button b = new Button(i.toString());
             items.getChildren().add(b);
         }
+        items.setAlignment(Pos.CENTER);
+
         layout.setCenter(items);
         layout.setBottom(options);
         scene.setRoot(layout);
+
     }
 
     public void reset(){
