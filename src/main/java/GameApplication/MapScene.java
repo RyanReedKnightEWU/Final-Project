@@ -123,14 +123,16 @@ public class MapScene {
                         nav.setCurrentMap(toMove.getLinkToMap());
                         System.out.println(toMove.getLinkToMap() == null);
                         // Add player to link's corresponding position on new map.
-                        nav.getCurrentMap().getTile(0,0);
                         nav.getCurrentMap().addEntity(nav.getPlayer(), newMapPLayerCoordinate[0],
                                 newMapPLayerCoordinate[1]);
+                        nav.setPosition(newMapPLayerCoordinate[0],newMapPLayerCoordinate[1]);
                         MapScene newMapScene = new MapScene();
                         newMapScene.start(nav);
                     }
                     else if (key == MoveKey.MOVE_SUCCESSFUL) {
                         reset(nav);
+                    } else if (key == MoveKey.BAD_COORDINATES) {
+                        /**/
                     }
 
                 });
