@@ -31,11 +31,8 @@ public class MapScene {
     private HBox options = new HBox();
     private Button seeInventory, save;
 
-
     public void start(Navigator nav) {
-
         MapBase map = nav.getCurrentMap();
-
 
         grid.setPadding(new Insets(20, 20, 20, 20));
         grid.setVgap(10);
@@ -44,11 +41,6 @@ public class MapScene {
         Label label = new Label("This is a label");
         GridPane.setConstraints(label,0,0);
         fillGrid(grid,nav);
-
-        scene = new Scene(grid, 700, 1000);
-        scene.setRoot(grid);
-
-        gameWindow.setScene(scene);
 
         seeInventory = new Button("Inventory");
         save = new Button("Save Game");
@@ -67,12 +59,10 @@ public class MapScene {
         fillGrid(grid,nav);
         layout.setCenter(grid);
         layout.setBottom(options);
-        layout.setBottom(options);
-        scene.setRoot(layout);
         fillGrid(grid,nav);
         layout.setCenter(grid);
 
-        layout.setBottom(options);
+        scene.setRoot(layout);
         gameWindow.setScene(scene);
     }
 
@@ -147,6 +137,10 @@ public class MapScene {
     public void reset(Navigator nav){
         MapBase map = nav.getCurrentMap();
         fillGrid(grid,nav);
+    }
+
+    public void setScene(){
+        scene.setRoot(layout);
     }
 
     private String tileDisplay(Entity entity) {
