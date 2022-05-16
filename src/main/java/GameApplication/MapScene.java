@@ -3,6 +3,8 @@ package GameApplication;
 import Map.GameMapFactory;
 import Map.MapBase;
 import Map.MapFactoryBase;
+import gameobjects.Items.Consumables.AttackBottle;
+import gameobjects.Items.Weapons.Pistol;
 import gameobjects.Navigator.Attack;
 import gameobjects.Navigator.MoveKey;
 import gameobjects.Navigator.Navigator;
@@ -75,6 +77,9 @@ public class MapScene {
         VBox vBox = new VBox();
         vBox.setPrefHeight(100);
         vBox.setPrefWidth(100);
+
+        nav.getPlayer().addItem(new Pistol());
+        nav.getPlayer().addConsumable(new AttackBottle(12));
 
         for(int i = 0; i < nav.getCurrentMap().getRows(); i++){
             for (int j = 0; j < nav.getCurrentMap().getColumns(); j++){

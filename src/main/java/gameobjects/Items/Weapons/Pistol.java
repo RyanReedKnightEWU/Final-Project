@@ -14,4 +14,7 @@ public class Pistol extends Weapon{
         setWeapon(new WeaponCondition(name, damage, value, luck, set).Weapon());
         setDescription(String.format("%s is a handgun that was made before the Great War.", getName()));
     }
+
+
+
 }
