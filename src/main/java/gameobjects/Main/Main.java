@@ -73,7 +73,6 @@ public class Main{
 
         System.out.println();
         entity1.removeConsumable(potion);
-        entity1.removeItem(armor);
         entity1.printInventory();
 
         System.out.println();

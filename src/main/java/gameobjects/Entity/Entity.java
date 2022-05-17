@@ -14,13 +14,11 @@ public abstract class Entity {
     private int damage;
     private int defense;
     private String name;
-
     private boolean isAlive;
 
     private ArrayList<Items> inventory;
     private Weapon weapon = new BareHands();
     private Armor armor;
-    private Consumable consumable; //I probably don't need this
 
     public Entity(int health, int damage, int defense, String name)
     {
@@ -52,8 +50,10 @@ public abstract class Entity {
         this.defense = defense;
         this.name = name;
         this.inventory = inventory;
-        this.weapon = weapon;
-        this.armor = armor;
+        addItem(weapon);
+        setWeapon(0);
+        addItem(armor);
+        setArmor(1);
 
         if (health >= 0) {
             this.isAlive = true;
@@ -134,6 +134,10 @@ public abstract class Entity {
         this.armor = armor;
     }
 
+    public void setArmor(int index) {
+        this.armor = ((Armor)inventory.get(index));
+    }
+
     // ADDED BY RYAN (PLEASE DO NOT ADD SETTER.)
     public String getName() { return this.name; }
 
@@ -146,15 +150,11 @@ public abstract class Entity {
 
     public int getMaxHealth() { return maxHealth; }
 
-    public void setMaxHealth(int maxHealth) { this.maxHealth = maxHealth; }
-
     public int getDamage() { return (damage + getWeapon().getDamage()); }
 
     public void setDamage(int damage) { this.damage = damage; }
 
     public int getDefense() { return (defense + getArmor().getArmorValue()); }
-
-    public void setDefense(int defense) { this.defense = defense; }
 
     public void heal(int heal) {
         if ((getHealth() + heal) >= getMaxHealth()) {

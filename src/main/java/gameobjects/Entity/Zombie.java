@@ -14,15 +14,19 @@ public class Zombie extends Entity {
     public Zombie(String name) {
         super(125, 12, 0, name);
         Weapon weapon = new BareHands();
-        setWeapon(weapon);
+        addItem(weapon);
+        setWeapon(0);
         Armor armor = new Clothes(0);
-        setArmor(armor);
+        addItem(armor);
+        setArmor(1);
     }
 
     public Zombie(String name, Weapon weapon, Armor armor) {
         super(125,12,0,name);
-        setWeapon(weapon);
-        setArmor(armor);
+        addItem(weapon);
+        setWeapon(0);
+        addItem(armor);
+        setArmor(1);
     }
     public Zombie(int health, int maxHealth, int damage, int defense, String name, ArrayList inventory,
                   Weapon weapon, Armor armor) {

@@ -17,13 +17,16 @@ public class Goblin extends Entity {
         addItem(weapon);
         setWeapon(0);
         Armor armor = new Clothes(0);
-        setArmor(armor);
+        addItem(armor);
+        setArmor(1);
     }
 
     public Goblin(String name, Weapon weapon, Armor armor) {
         super(75,15,3,name);
-        setWeapon(weapon);
-        setArmor(armor);
+        addItem(weapon);
+        setWeapon(0);
+        addItem(armor);
+        setArmor(1);
     }
     public Goblin(int health, int maxHealth, int damage, int defense, String name, ArrayList inventory,
                   Weapon weapon, Armor armor) {

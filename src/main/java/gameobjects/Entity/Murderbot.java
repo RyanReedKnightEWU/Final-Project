@@ -14,15 +14,19 @@ public class Murderbot extends Entity {
     public Murderbot(String name) {
         super(150, 20, 10, name);
         Weapon weapon = new BareHands();
-        setWeapon(weapon);
+        addItem(weapon);
+        setWeapon(0);
         Armor armor = new Clothes(0);
-        setArmor(armor);
+        addItem(armor);
+        setArmor(1);
     }
 
     public Murderbot(String name, Weapon weapon, Armor armor) {
         super(150,20,10,name);
-        setWeapon(weapon);
-        setArmor(armor);
+        addItem(weapon);
+        setWeapon(0);
+        addItem(armor);
+        setArmor(1);
     }
     public Murderbot(int health, int maxHealth, int damage, int defense, String name, ArrayList inventory,
                   Weapon weapon, Armor armor) {
