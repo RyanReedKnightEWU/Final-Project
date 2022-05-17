@@ -61,7 +61,7 @@ public class Main{
         entity3.takeDamage(15);
 
         Consumable potion = new healthPotion(5);
-        Consumable potion2 = potion;
+        Consumable potion2 = new healthPotion(5);
         System.out.println();
         entity1.printInventory();
         System.out.println();
@@ -76,7 +76,11 @@ public class Main{
         entity1.removeItem(armor);
         entity1.printInventory();
 
+        System.out.println();
+        String entSave = entity1.saveString();
+        System.out.println(entSave);
 
+/*
         MapFactoryBase gameMapFactory = new GameMapFactory();
         MapBase arena, dungeons;
 
@@ -87,7 +91,7 @@ public class Main{
         catch(Exception e){
             System.out.println("EXCEPTION");
         }
-
+*/
 
     }
 

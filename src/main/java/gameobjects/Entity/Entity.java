@@ -205,20 +205,25 @@ public abstract class Entity {
     }
 
     public String saveInventory() {
-        String str = null;
-
+        String str = "INVENTORY\n";
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i) instanceof Weapon){
+                str += ((Weapon)inventory.get(i)).save();
+            }else if (inventory.get(i) instanceof Armor) {
+                str += ((Armor)inventory.get(i)).save();
+            }else {
+                str += ((Consumable)inventory.get(i)).save();
+            }
+        }
         return str;
     }
 
     public String saveString() { //Prints every field that needs to be saved
-        String str;
-        str = String.format("%d\n,%d\n,%d\n,%d\n,%s\n,%s\n,%s\n,%s\n",
-                health, maxHealth, damage, defense, name, inventory, weapon.save(), armor.save());
-        //Add inventorySave method which uses consumable save method.
-        //Flag for
-        //consumables stack using the amount field.
-        //Call Hunter's toString methods for weapons and armor
+        String str = "ENTITY\n";
+        str += String.format("%d\n%d\n%d\n%d\n%s\n%s\n%s\n%s\n%s\n",
+                health, maxHealth, damage, defense, name, saveInventory(),
+                "EQUIPPED", this.weapon.getName(), this.armor.getName());
 
-        return null;
+        return str;
     }
 }
