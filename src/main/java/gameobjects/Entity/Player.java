@@ -5,14 +5,6 @@ public class Player extends Entity{
         super(health, damage, defense, name);
     }
 
-    public void heal(int heal) {
-
-    }
-
-    public void takeDamage(int damage) {
-        
-    }
-
     public int basicAttack() {
 
         return 0;
