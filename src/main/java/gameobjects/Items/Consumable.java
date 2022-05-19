@@ -9,11 +9,13 @@ public class Consumable extends Items{
     private int amount = 1;
 
     protected Consumable(String name, int value){
+        type = "Consumable";
         setName(name);
         setValue(value);
     }
 
     public Consumable(String name, int minDamage, int maxDamage, int heal, int value, String description, int amount){
+        type = "Consumable";
         setName(name);
         setHeal(heal);
         setValue(value);

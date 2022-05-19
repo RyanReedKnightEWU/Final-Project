@@ -1,6 +1,7 @@
 package gameobjects.Entity;
 
 import gameobjects.Items.Armor;
+import gameobjects.Items.Armors.Clothes;
 import gameobjects.Items.Consumable;
 import gameobjects.Items.Items;
 import gameobjects.Items.Weapon;
@@ -18,7 +19,7 @@ public abstract class Entity {
 
     private ArrayList<Items> inventory;
     private Weapon weapon = new BareHands();
-    private Armor armor;
+    private Armor armor = new Clothes(0);
 
     public Entity(int health, int damage, int defense, String name)
     {
@@ -181,13 +182,19 @@ public abstract class Entity {
     }
 
     public String toString() {
+        String info = String.format("%s, Health: %d/%d, Defense: %d, Damage: %d+(%s)\n Weapon: %s, Armor: %s",
+                name, health, maxHealth, defense, damage, weapon.damageRange(), weapon.getName(), armor.getName());
+        return info;
+        /*
         return this.name + " has " +
-                this.health + " health, " +
-                this.damage + " damage, and " +
-                this.defense + " defense.\n" +
+                this.health + "/"+ this.maxHealth +" Health " +
+                this.damage + " Damage and " +
+                this.defense + " Defense\n" +
                 this.name +
-                "weapon: " +this.checkIfItemNull(this.weapon) +
-                "armor: " + this.checkIfItemNull(this.armor);
+                " Weapon: " +this.checkIfItemNull(this.weapon) +
+                " Armor: " + this.checkIfItemNull(this.armor);
+
+         */
     }
     /**
      * Check if item is null, return item.toString() if not,
@@ -197,7 +204,7 @@ public abstract class Entity {
      * **/
     private String checkIfItemNull(Items item) {
         if(item != null ) {
-            return this.weapon.getName().toLowerCase();
+            return item.getName().toLowerCase();
         }
         else {
             return "null";

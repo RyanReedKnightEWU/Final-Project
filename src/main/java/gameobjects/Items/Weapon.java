@@ -40,6 +40,10 @@ public class Weapon extends Items{
         return rand.nextInt(getMaxDamage()-getMinDamage()+1)+getMinDamage();
     }
 
+    public String damageRange(){
+        return String.format("%d-%d", getMinDamage(), getMaxDamage());
+    }
+
     @Override
     public String toString(){
         String value;

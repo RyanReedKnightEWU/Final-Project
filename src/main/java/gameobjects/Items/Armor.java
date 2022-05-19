@@ -7,6 +7,7 @@ public class Armor extends Items{
     int vary = 5;
 
     public Armor(String name, int armorValue, int value) {
+        type = "Armor";
         setArmorValue(armorValue);
         setValue(value);
         setName(name);
