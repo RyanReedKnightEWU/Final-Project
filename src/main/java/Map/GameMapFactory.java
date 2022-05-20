@@ -4,6 +4,7 @@ import gameobjects.Entity.Entity;
 import gameobjects.Entity.Goblin;
 import gameobjects.Entity.Murderbot;
 import gameobjects.Entity.Mutant;
+import gameobjects.Items.Armor;
 import gameobjects.Items.Consumables.AttackBottle;
 import gameobjects.Items.Weapons.Pistol;
 import gameobjects.Tile.LinkTile;
@@ -43,9 +44,6 @@ public class GameMapFactory extends MapFactoryBase {
                 jean = new Mutant("Jean-Francoise"), aleric = new Mutant("Aleric"),
                 // Murderbots
                 evilWalee = new Murderbot("Evil Walee");
-
-
-
 
         MapBase standardArena = new RectangularMap(arenaDimension), standardHall = new RectangularMap(4,1),
             recRoom = new RectangularMap(4,2);

@@ -3,6 +3,7 @@ package GameApplication;
 import Map.GameMapFactory;
 import Map.MapBase;
 import Map.MapFactoryBase;
+import gameobjects.Items.Armor;
 import gameobjects.Items.Consumables.AttackBottle;
 import gameobjects.Items.Weapons.Pistol;
 import gameobjects.Navigator.Attack;
@@ -80,6 +81,7 @@ public class MapScene {
 
         nav.getPlayer().addItem(new Pistol());
         nav.getPlayer().addConsumable(new AttackBottle(12));
+        nav.getPlayer().addItem(new Armor("Daedric Armor or something", 100,100));
 
         for(int i = 0; i < nav.getCurrentMap().getRows(); i++){
             for (int j = 0; j < nav.getCurrentMap().getColumns(); j++){
@@ -115,6 +117,9 @@ public class MapScene {
                         LinkTile toMove = (LinkTile) nav.getCurrentMap().getTile(row,column);
                         // Get coordinates of player on new map.
                         int[] newMapPLayerCoordinate = toMove.getPosition();
+
+                        nav.getCurrentMap().getTile(nav.getCurrentRow(),nav.getCurrentColumn()).setPrimaryOccupant(null);
+
                         // Set current map in Navigator to new map.
                         nav.setCurrentMap(toMove.getLinkToMap());
                         System.out.println(toMove.getLinkToMap() == null);
