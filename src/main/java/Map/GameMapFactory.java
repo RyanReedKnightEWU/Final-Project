@@ -47,9 +47,13 @@ public class GameMapFactory extends MapFactoryBase {
 
 
 
-        MapBase standardArena = new RectangularMap(arenaDimension), standardHall = new RectangularMap(4,1);
+        MapBase standardArena = new RectangularMap(arenaDimension), standardHall = new RectangularMap(4,1),
+            recRoom = new RectangularMap(4,2);
         standardArena.addTile(new LinkTile(standardHall,null,3,0),0,3);
         standardHall.addTile(new LinkTile(standardArena,null,0,3),3,0);
+        standardHall.addTile(new LinkTile(recRoom,null,0,0),0,0);
+        recRoom.addTile(new LinkTile(standardHall,null,0,0),0,0);
+        
 
         if (key.equals(GameMapFactoryKeys.FIRST_ARENA.toString())) {
             map = standardArena;
