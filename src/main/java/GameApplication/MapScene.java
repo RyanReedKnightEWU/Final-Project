@@ -4,6 +4,7 @@ import Map.GameMapFactory;
 import Map.MapBase;
 import Map.MapFactoryBase;
 import gameobjects.Items.Armor;
+import gameobjects.Items.Armors.CombatArmor;
 import gameobjects.Items.Consumables.AttackBottle;
 import gameobjects.Items.Weapons.Pistol;
 import gameobjects.Navigator.Attack;
@@ -32,7 +33,11 @@ public class MapScene {
     private BorderPane layout = new BorderPane();
     private GridPane grid = new GridPane();
     private HBox options = new HBox();
-    private Button seeInventory, save;
+    private Button seeInventory, save, load;
+
+    //To REMOVE later
+    Button shop;
+    StoreScene storeScene = new StoreScene();
 
     public void start(Navigator nav) {
         MapBase map = nav.getCurrentMap();
@@ -57,6 +62,12 @@ public class MapScene {
         options.getChildren().add(seeInventory);
         options.getChildren().add(save);
 
+        //REMOVE after shopkeeper is made
+        shop = new Button("Shop");
+        //Does nothing for now.
+        shop.setOnAction(e -> storeScene.show());
+        options.getChildren().add(shop);
+
         fillGrid(grid,nav);
 
         layout.setCenter(grid);
@@ -68,6 +79,10 @@ public class MapScene {
 
         scene.setRoot(layout);
         gameWindow.setScene(scene);
+
+        nav.getPlayer().addItem(new Pistol());
+        nav.getPlayer().addConsumable(new AttackBottle(12));
+        nav.getPlayer().addItem(new CombatArmor(1));
     }
 
     private void fillGrid(GridPane grid, Navigator nav){
@@ -78,10 +93,6 @@ public class MapScene {
         VBox vBox = new VBox();
         vBox.setPrefHeight(100);
         vBox.setPrefWidth(100);
-
-        nav.getPlayer().addItem(new Pistol());
-        nav.getPlayer().addConsumable(new AttackBottle(12));
-        nav.getPlayer().addItem(new Armor("Daedric Armor or something", 10,10));
 
         for(int i = 0; i < nav.getCurrentMap().getRows(); i++){
             for (int j = 0; j < nav.getCurrentMap().getColumns(); j++){
