@@ -81,7 +81,7 @@ public class MapScene {
 
         nav.getPlayer().addItem(new Pistol());
         nav.getPlayer().addConsumable(new AttackBottle(12));
-        nav.getPlayer().addItem(new Armor("Daedric Armor or something", 100,100));
+        nav.getPlayer().addItem(new Armor("Daedric Armor or something", 10,10));
 
         for(int i = 0; i < nav.getCurrentMap().getRows(); i++){
             for (int j = 0; j < nav.getCurrentMap().getColumns(); j++){
