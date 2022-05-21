@@ -58,8 +58,11 @@ public class AttackScene {
         playerInfo = new Label();
         playerInfo.setFont(new Font("System Regular", 25));
 
+        damageInfo.setFont(new Font("System Regular", 25));
+
         layout.setBottom(options);
         info.getChildren().add(badGuyInfo);
+        info.getChildren().add(damageInfo);
         info.getChildren().add(playerInfo);
         info.setAlignment(Pos.CENTER);
         info.setSpacing(100);
@@ -94,20 +97,27 @@ public class AttackScene {
     }
 
     private void attackBadGuy(Player player, Entity badGuy){
-        badGuy.takeDamage(player.getDamage());
+        String currentInfo = "";
+        int damage = player.getDamage();
+        badGuy.takeDamage(damage);
         reset(player, badGuy);
         consume = true;
+        currentInfo += player.getName()+" did "+damage+" damage to "+badGuy.getName();
         if(!badGuy.isAlive()){
             System.out.println("You looted the bad guy");
             loot();
         }else {
-            badGuyTurn(player, badGuy);
+            damage = badGuyTurn(player, badGuy);
             reset(player, badGuy);
+            currentInfo += "\n"+badGuy.getName()+" did "+damage+" damage to "+player.getName();
         }
+        damageInfo.setText(currentInfo);
     }
 
-    private static void badGuyTurn(Player player, Entity badGuy){
-        player.takeDamage(badGuy.getDamage());
+    private int badGuyTurn(Player player, Entity badGuy){
+        int damage = badGuy.getDamage();
+        player.takeDamage(damage);
+        return damage;
     }
 
     private void useConsumables(Player player, Entity badGuy){
