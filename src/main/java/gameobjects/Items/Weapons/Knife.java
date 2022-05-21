@@ -17,4 +17,8 @@ public class Knife extends Weapon {
         setWeapon(temp.Weapon());
         setDescription(String.format("%s is a typical kitchen knife.\n", getName()));
     }
+    // Fully defined constructor, necessary for load methods (Ryan Knight 21 May 2022)
+    public Knife (String name, int minDamage, int maxDamage, int value, String discription){
+        super(name,minDamage,maxDamage,value,discription);
+    }
 }

@@ -2,10 +2,6 @@ package gameobjects.Tile;
 
 import Map.MapBase;
 import gameobjects.Entity.Entity;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class LinkTile extends TileBase {
 
     // Link to new map.
@@ -17,9 +13,15 @@ public class LinkTile extends TileBase {
     private final int row, column;
 
     public LinkTile(MapBase map, Entity primaryOccupant, int row, int column) {
-        super(primaryOccupant, null);
+        super(primaryOccupant);
         this.row = row;
         this.column = column;
+        this.linkToMap = map;
+    }
+    public LinkTile(MapBase map, Entity primaryOccupant, int[] position) {
+        super(primaryOccupant);
+        this.row = position[0];
+        this.column = position[1];
         this.linkToMap = map;
     }
 

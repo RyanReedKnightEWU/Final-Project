@@ -15,6 +15,11 @@ public class Pistol extends Weapon{
         setDescription(String.format("%s is a handgun that was made before the Great War.\n", getName()));
     }
 
+    // Fully defined constructor, necessary for load methods (Ryan Knight 21 May 2022)
+    public Pistol (String name, int minDamage, int maxDamage, int value, String discription){
+        super(name,minDamage,maxDamage,value,discription);
+    }
+
 
 
 }

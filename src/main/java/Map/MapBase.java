@@ -6,8 +6,7 @@ import gameobjects.Tile.TileBase;
 
 public abstract class MapBase {
 
-    private TileBase[][] tileMatrix;
-    private final int rows, columns;
+    private final TileBase[][] tileMatrix;
 
     /*
     private class MapLinks {
@@ -24,9 +23,6 @@ public abstract class MapBase {
         else if(columns < 0) {
             columns = 0;
         }
-
-        this.rows = rows;
-        this.columns = columns;
         this.tileMatrix = new TileBase[rows][columns];
         this.fillMap();
 
@@ -43,14 +39,14 @@ public abstract class MapBase {
     public void addTile(TileBase tile, int row, int column) {
 
         // Check that column and row are within bounds of tileMatrix
-        if (row >= this.rows) {
-            row = this.rows - 1;
+        if (row >= this.getRows()) {
+            row = this.getRows() - 1;
         }
         else if (row < 0) {
             row = 0;
         }
-        else if (column >= this.columns) {
-            column = this.columns - 1;
+        else if (column >= this.getColumns()) {
+            column = this.getColumns() - 1;
         }
         else if (column < 0) {
             column = 0;
@@ -60,11 +56,11 @@ public abstract class MapBase {
 
 
     public int getRows() {
-        return rows;
+        return this.tileMatrix.length;
     }
 
     public int getColumns() {
-        return columns;
+        return this.tileMatrix[0].length;
     }
 
     public TileBase getTile(int row, int colum) throws IllegalArgumentException {
@@ -97,18 +93,18 @@ public abstract class MapBase {
     }
 
     private void checkBounds(int row, int column) throws IllegalArgumentException {
-        if (row < 0 || row >= this.rows || column < 0 || column >= this.columns) {
+        if (row < 0 || row >= this.getRows() || column < 0 || column >= this.getColumns()) {
             throw new IllegalArgumentException("bad param addTile, row must be no less than 0 and no greater than " +
-                    Integer.toString(this.rows - 1) + ".\ncolumn must be no less than 0 and no greater than " +
-                    Integer.toString(this.columns - 1) + ". (row is " + Integer.toString(row) + "\tcolumn is " + Integer.toString(column) + ").");
+                    Integer.toString(this.getRows() - 1) + ".\ncolumn must be no less than 0 and no greater than " +
+                    Integer.toString(this.getColumns() - 1) + ". (row is " + Integer.toString(row) + "\tcolumn is " + Integer.toString(column) + ").");
         }
     }
 
     private void fillMap() {
 
         int i,j;
-        for (i = 0; i < this.rows; i++) {
-            for (j = 0; j < this.columns; j++) {
+        for (i = 0; i < this.getRows(); i++) {
+            for (j = 0; j < this.getColumns(); j++) {
                 this.tileMatrix[i][j] = new Tile();
             }
         }

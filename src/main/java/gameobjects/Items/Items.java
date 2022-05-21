@@ -5,16 +5,16 @@ import java.util.Random;
 public abstract class Items {
     private String description = "";
     private String name = "";
-    private int value = 0;
-    private int minDamage = 0;
-    private int maxDamage = 0;
+    private Integer value = 0;
+    private Integer minDamage = 0;
+    private Integer maxDamage = 0;
     protected String type = "Item";
 
     protected void setValue(int value){
         this.value = value;
     }
 
-    public int getValue(){
+    public Integer getValue(){
         return value;
     }
 
@@ -34,7 +34,7 @@ public abstract class Items {
         return description;
     }
 
-    protected int getMaxDamage(){
+    public Integer getMaxDamage(){
         return maxDamage;
     }
 
@@ -42,7 +42,7 @@ public abstract class Items {
         this.maxDamage = maxDamage;
     }
 
-    protected int getMinDamage(){
+    public Integer getMinDamage(){
         return minDamage;
     }
 
@@ -56,5 +56,13 @@ public abstract class Items {
 
     public String getType(){
         return type;
+    }
+
+    public void setMaxDamage(Integer maxDamage) {
+        this.maxDamage = maxDamage;
+    }
+
+    public void setMinDamage(Integer minDamage) {
+        this.minDamage = minDamage;
     }
 }
