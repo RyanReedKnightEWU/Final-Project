@@ -28,7 +28,7 @@ public class ApplicationMain extends Application {
     public void start(Stage stage) throws IOException {
 
         MapFactoryBase mapFactory = new GameMapFactory();
-        Navigator nav = Navigator.getInstance(new Player(100,100,100,"Jaque"),
+        Navigator nav = Navigator.getInstance(new Player(100,0,0,"Jaque"),
                 mapFactory.createMap(GameMapFactoryKeys.FIRST_ARENA.toString()),0,3);
 
         gameWindow = stage;

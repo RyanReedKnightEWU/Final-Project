@@ -34,6 +34,7 @@ public class AttackScene {
     private Button runAway;
     private Label badGuyInfo = new Label();
     private Label playerInfo = new Label();
+    private Label damageInfo = new Label();
     private boolean consume;
     private MapScene map;
 
@@ -97,6 +98,7 @@ public class AttackScene {
         reset(player, badGuy);
         consume = true;
         if(!badGuy.isAlive()){
+            System.out.println("You looted the bad guy");
             loot();
         }else {
             badGuyTurn(player, badGuy);

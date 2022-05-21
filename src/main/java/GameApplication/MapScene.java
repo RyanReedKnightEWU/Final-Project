@@ -4,6 +4,7 @@ import Map.GameMapFactory;
 import Map.MapBase;
 import Map.MapFactoryBase;
 import gameobjects.Items.Armor;
+import gameobjects.Items.Armors.CombatArmor;
 import gameobjects.Items.Consumables.AttackBottle;
 import gameobjects.Items.Weapons.Pistol;
 import gameobjects.Navigator.Attack;
@@ -68,6 +69,10 @@ public class MapScene {
 
         scene.setRoot(layout);
         gameWindow.setScene(scene);
+
+        nav.getPlayer().addItem(new Pistol());
+        nav.getPlayer().addConsumable(new AttackBottle(12));
+        nav.getPlayer().addItem(new CombatArmor(1));
     }
 
     private void fillGrid(GridPane grid, Navigator nav){
@@ -78,10 +83,6 @@ public class MapScene {
         VBox vBox = new VBox();
         vBox.setPrefHeight(100);
         vBox.setPrefWidth(100);
-
-        nav.getPlayer().addItem(new Pistol());
-        nav.getPlayer().addConsumable(new AttackBottle(12));
-        nav.getPlayer().addItem(new Armor("Daedric Armor or something", 100,100));
 
         for(int i = 0; i < nav.getCurrentMap().getRows(); i++){
             for (int j = 0; j < nav.getCurrentMap().getColumns(); j++){

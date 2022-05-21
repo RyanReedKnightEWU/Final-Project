@@ -146,7 +146,6 @@ public abstract class Entity {
 
     public void setHealth(int health) {
         this.health = health;
-        if (this.health >= 0) { this.isAlive = false; }
     }
 
     public int getMaxHealth() { return maxHealth; }
@@ -182,8 +181,8 @@ public abstract class Entity {
     }
 
     public String toString() {
-        String info = String.format("%s, Health: %d/%d, Defense: %d, Damage: %d+(%s)\n Weapon: %s, Armor: %s",
-                name, health, maxHealth, defense, damage, weapon.damageRange(), weapon.getName(), armor.getName());
+        String info = String.format("%s, Health: %d/%d, Defense: %d+%d, Damage: %d+(%s)\n Weapon: %s, Armor: %s",
+                name, health, maxHealth, defense, getArmor().getArmorValue(), damage, weapon.damageRange(), weapon.getName(), armor.getName());
         return info;
         /*
         return this.name + " has " +
