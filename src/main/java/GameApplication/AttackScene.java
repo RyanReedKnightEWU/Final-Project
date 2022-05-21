@@ -209,6 +209,7 @@ class AttackSceneInventory{
                 Consumable con = (Consumable) i;
                 b.setOnAction(e -> {
                     con.use(target);
+                    player.removeConsumable(con);
                     playerReset();
                     makeButtons();
                     used = true;

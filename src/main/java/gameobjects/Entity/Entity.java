@@ -184,23 +184,8 @@ public abstract class Entity {
         String info = String.format("%s, Health: %d/%d, Defense: %d+%d, Damage: %d+(%s)\n Weapon: %s, Armor: %s",
                 name, health, maxHealth, defense, getArmor().getArmorValue(), damage, weapon.damageRange(), weapon.getName(), armor.getName());
         return info;
-        /*
-        return this.name + " has " +
-                this.health + "/"+ this.maxHealth +" Health " +
-                this.damage + " Damage and " +
-                this.defense + " Defense\n" +
-                this.name +
-                " Weapon: " +this.checkIfItemNull(this.weapon) +
-                " Armor: " + this.checkIfItemNull(this.armor);
-
-         */
     }
-    /**
-     * Check if item is null, return item.toString() if not,
-     * otherwise return string "null". Purpose is to prevent
-     * null pointer exceptions.
-     * @param item - item being checked.
-     * **/
+
     private String checkIfItemNull(Items item) {
         if(item != null ) {
             return item.getName().toLowerCase();
