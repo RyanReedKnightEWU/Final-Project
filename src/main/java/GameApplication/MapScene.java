@@ -33,7 +33,11 @@ public class MapScene {
     private BorderPane layout = new BorderPane();
     private GridPane grid = new GridPane();
     private HBox options = new HBox();
-    private Button seeInventory, save;
+    private Button seeInventory, save, load;
+
+    //To REMOVE later
+    Button shop;
+    StoreScene storeScene = new StoreScene();
 
     public void start(Navigator nav) {
         MapBase map = nav.getCurrentMap();
@@ -57,6 +61,12 @@ public class MapScene {
 
         options.getChildren().add(seeInventory);
         options.getChildren().add(save);
+
+        //REMOVE after shopkeeper is made
+        shop = new Button("Shop");
+        //Does nothing for now.
+        shop.setOnAction(e -> storeScene.show());
+        options.getChildren().add(shop);
 
         fillGrid(grid,nav);
 
