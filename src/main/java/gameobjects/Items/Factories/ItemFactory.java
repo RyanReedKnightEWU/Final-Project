@@ -46,24 +46,30 @@ public class ItemFactory {
         return items;
     }
 
-    public Items[] noDups(Items[] items){
-        ArrayList<Items> stuff = new ArrayList<Items>(Arrays.asList(items));
-        int count = 0;
-        do {
-            for(int i = 0; i < stuff.size(); i++){
-                if(stuff.get(count).getName().equals(stuff.get(i).getName())&& i != count){
-                    if(stuff.get(i).getType().equals("Consumable")){
-                        stuff.set(count, ((Consumable)stuff.get(i)).stack((Consumable) stuff.get(count)));
-                        stuff.remove(i);
-                        count = 0;
-                    }
-                    break;
+    public Items[] noDup(Items[] items){
+        ArrayList<Consumable> stuff = new ArrayList<Consumable>();
+        ArrayList<Items> newItems = new ArrayList<Items>();
+        for (Items i: items) {
+            if(i.getType().equals("Consumable")){
+                stuff.add((Consumable) i);
+            } else {
+                newItems.add(i);
+            }
+        }
+        while (stuff.size()!=0){
+            Consumable con = stuff.get(0);
+            int amount = 1;
+            stuff.remove(0);
+            for (int i = stuff.size()-1; i >= 0; i--){
+                if(con.equals(stuff.get(i))){
+                    //amount += stuff.get(i).getAmount();
+                    stuff.remove(i);
                 }
             }
-            count++;
-        } while (count < stuff.size());
-        Items[] back = stuff.toArray(new Items[0]);
-        System.out.println("Done stacking");
+            con.setAmount(amount);
+            newItems.add(con);
+        }
+        Items[] back = newItems.toArray(new Items[0]);
         return back;
     }
 

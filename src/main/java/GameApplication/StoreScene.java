@@ -68,12 +68,7 @@ public class StoreScene {
     public void makeShopKeeper(){
         ItemFactory itemFactory = new ItemFactory();
         shop = itemFactory.makeRandomItems(3,3,3);
-        //shop = itemFactory.noDups(shop);
-        /*
-        System.out.println("Shopkeepers Items:");
-        for (Items i: shop){
-            System.out.println(i);
-        }*/
+        shop = itemFactory.noDup(shop);
     }
 
     public void show(){
@@ -162,9 +157,9 @@ public class StoreScene {
                 b.setOnAction(e -> buy(i));
             } else {
                 b.setStyle("-fx-background-color: rgb(150,190,200)");
-                Consumable con = (Consumable) i;
-                con.setAmount(1);
-                b.setOnAction(e -> buy(con));
+                //Consumable con = (Consumable) i;
+                //con.setAmount(1);
+                b.setOnAction(e -> buy(i));
             }
 
             buttonEffects(b);
@@ -175,6 +170,8 @@ public class StoreScene {
 
     public void buy(Items i){
         if(player.getGold() - i.getValue() > 0){
+            System.out.println("You bought: \n"+i.toString());
+            System.out.println();
             player.addItem(i);
             player.setGold(player.getGold() - i.getValue());
             makeButtons();
