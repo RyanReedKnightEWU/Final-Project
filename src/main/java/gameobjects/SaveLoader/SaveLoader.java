@@ -38,10 +38,11 @@ public class SaveLoader {
         }
 
         try(FileWriter saveFile = new FileWriter(saveName)) {
-            Items[] arr = {new Pistol(),new Clothes(4), new throwingKnife()};
+            Items[] arr = {new Pistol(),new throwingKnife(),new Clothes(4),new PlateArmor(6) };
 
-            for (Items items : arr) {
-                saveItem(items, saveFile);
+            for (Items item : arr) {
+                System.out.println(item.getClass().getName());
+                saveItem(item, saveFile);
             }
         }catch (IOException e) {
             e.printStackTrace();
@@ -56,76 +57,55 @@ public class SaveLoader {
 
 
         /* Start by saving fields common to all subclasses of Items class*/
-        saveFile.write(item.getClass().getName());
-        // Save Name
-        if (item.getName() != null) {
-            saveFile.write("\n"+item.getName());
-        }else{
-            saveFile.write(ifNull);
-        }
-        // Save minDamage
-        if(item.getMinDamage() != null) {
-            saveFile.write("\n" + item.getMinDamage());
-        }else {
-            saveFile.write(ifNull);
-        }
-        // Save maxDamage
-        if(item.getMaxDamage() != null) {
-            saveFile.write("\n" + item.getMaxDamage());
-        }else {
-            saveFile.write(ifNull);
-        }
-        // Save value
-        if (item.getValue()!=null) {
-            saveFile.write("\n" + item.getValue());
-        }else {
-            saveFile.write(ifNull);
-        }
-        // Save description
-        if(item.getDescription()!=null) {
-            saveFile.write("\n"+item.getDescription());
-        }else{
-            saveFile.write(ifNull);
-        }
 
-        // Save Fields specific to Consumable if class name indicates the class is Consumable
-        if (item.getClass().getName().startsWith(Consumable.class.getName())) {
-            saveFile.write(((Consumable) item).getHeal());
-            saveFile.write(((Consumable) item).getAmount());
-        }
-        // Save Fields specific to Armor if class name indicates the class is Armor
-        else if (item.getClass().getName().startsWith(Armor.class.getName())) {
-            saveFile.write(((Armor)item).getArmorValue());
-            saveFile.write(((Armor)item).getVary());
-        }
+        // Result of getClass().getName(), will be used later to determine which fields need to be loaded.
+        String subclass = item.getClass().getName() + "\n";
+        saveFile.write(subclass);
+        saveFile.write(item.save());
     }
 
     public static Items loadItem(Scanner sc) {
 
         String ifNull = "NULL";
-
+        // Read subclass and use it to determine what needs to be implemented.
         String subclass = sc.nextLine();
-        String name = sc.nextLine();
-        int minDamage = sc.nextInt();
-        int maxDamage = sc.nextInt();
-        int value = sc.nextInt();
-        String description = sc.nextLine();
+        String name;
+        int minDamage;
+        int maxDamage;
+        int value;
+        String description;
 
 
         if (subclass.startsWith(Weapon.class.getName())) {
+
+            name = sc.nextLine();
+            minDamage = sc.nextInt();
+            maxDamage = sc.nextInt();
+            value = sc.nextInt();
+            description = sc.nextLine();
+
             return (new WeaponFactory()).createWeapon(subclass,name,minDamage,
                     maxDamage,value,description);
         }else if(subclass.startsWith(Consumable.class.getName())){
-           int heal = sc.nextInt();
-           int amount = sc.nextInt();
+
+            name = sc.nextLine();
+            minDamage = sc.nextInt();
+            maxDamage = sc.nextInt();
+            int heal = sc.nextInt();
+            int amount = sc.nextInt();
+            value = sc.nextInt();
+            description = sc.nextLine();
 
            return (new ConsumableFactory()).createConsumable(subclass,name,minDamage,
                    maxDamage,heal,value,description,amount);
         }
         else if(subclass.startsWith(Armor.class.getName())){
-            int armor = sc.nextInt();
-            int vary = sc.nextInt(); // ASK ABOUT VARY
 
+            name = sc.nextLine();
+            int armor = sc.nextInt();
+            int vary = sc.nextInt();
+            value = sc.nextInt();
+            description = sc.nextLine();
 
             return (new ArmorFactory()).createArmor(subclass,name,armor,value);
         }
