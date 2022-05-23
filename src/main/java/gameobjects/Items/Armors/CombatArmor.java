@@ -9,4 +9,7 @@ public class CombatArmor extends Armor {
         setCondition(luck, "New ", "Used ");
         setDescription(String.format("%s is a light armor set was used during the great war.", getName()));
     }
+    public CombatArmor(String name, int armorValue, int value){
+        super(name,armorValue,value);
+    }
 }

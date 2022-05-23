@@ -9,4 +9,7 @@ public class LeatherArmor extends Armor {
         setCondition(luck, "New ", "Worn out ");
         setDescription(String.format("%s is a armor set made out of animal hide.", getName()));
     }
+    public LeatherArmor(String name, int armorValue, int value) {
+        super(name, armorValue, value);
+    }
 }

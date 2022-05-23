@@ -1,7 +1,11 @@
 package gameobjects.SaveLoader;
 
-import gameobjects.Items.Items;
-import gameobjects.Items.Weapon;
+import gameobjects.Items.*;
+import gameobjects.Items.Armors.ArmorFactory;
+import gameobjects.Items.Armors.Clothes;
+import gameobjects.Items.Armors.PlateArmor;
+import gameobjects.Items.Consumables.ConsumableFactory;
+import gameobjects.Items.Consumables.throwingKnife;
 import gameobjects.Items.Weapons.Pistol;
 import gameobjects.Items.Weapons.WeaponFactory;
 import gameobjects.Items.Weapons.WeaponFactoryBase;
@@ -34,104 +38,98 @@ public class SaveLoader {
         }
 
         try(FileWriter saveFile = new FileWriter(saveName)) {
-            saveItem(new Pistol(),saveFile);
+            Items[] arr = {new Pistol(),new Clothes(4), new throwingKnife()};
+
+            for (Items items : arr) {
+                saveItem(items, saveFile);
+            }
         }catch (IOException e) {
             e.printStackTrace();
         }
+
+
 
     }
     private static void saveItem(Items item, FileWriter saveFile) throws IOException {
 
         String ifNull = "\nNULL";
 
-        if(item !=null) {
-            saveFile.write(item.getClass().getName());
-            // Save Name
-            if (item.getName() != null) {
-                saveFile.write("\n"+item.getName());
-            }else{
-                saveFile.write(ifNull);
-            }
-            // Save minDamage
-            if(item.getMinDamage() != null) {
-                saveFile.write("\n" + item.getMinDamage());
-            }else {
-                saveFile.write(ifNull);
-            }
-            // Save maxDamage
-            if(item.getMaxDamage() != null) {
-                saveFile.write("\n" + item.getMaxDamage());
-            }else {
-                saveFile.write(ifNull);
-            }
-            // Save value
-            if (item.getValue()!=null) {
-                saveFile.write("\n" + item.getValue());
-            }else {
-                saveFile.write(ifNull);
-            }
-            // Save description
-            if(item.getDescription()!=null) {
-                saveFile.write("\n"+item.getDescription());
-            }else{
-                saveFile.write(ifNull);
-            }
+
+        /* Start by saving fields common to all subclasses of Items class*/
+        saveFile.write(item.getClass().getName());
+        // Save Name
+        if (item.getName() != null) {
+            saveFile.write("\n"+item.getName());
         }else{
-            for(int i = 0; i < 6; i++) {
-                saveFile.write(ifNull);
-            }
+            saveFile.write(ifNull);
+        }
+        // Save minDamage
+        if(item.getMinDamage() != null) {
+            saveFile.write("\n" + item.getMinDamage());
+        }else {
+            saveFile.write(ifNull);
+        }
+        // Save maxDamage
+        if(item.getMaxDamage() != null) {
+            saveFile.write("\n" + item.getMaxDamage());
+        }else {
+            saveFile.write(ifNull);
+        }
+        // Save value
+        if (item.getValue()!=null) {
+            saveFile.write("\n" + item.getValue());
+        }else {
+            saveFile.write(ifNull);
+        }
+        // Save description
+        if(item.getDescription()!=null) {
+            saveFile.write("\n"+item.getDescription());
+        }else{
+            saveFile.write(ifNull);
         }
 
-
+        // Save Fields specific to Consumable if class name indicates the class is Consumable
+        if (item.getClass().getName().startsWith(Consumable.class.getName())) {
+            saveFile.write(((Consumable) item).getHeal());
+            saveFile.write(((Consumable) item).getAmount());
+        }
+        // Save Fields specific to Armor if class name indicates the class is Armor
+        else if (item.getClass().getName().startsWith(Armor.class.getName())) {
+            saveFile.write(((Armor)item).getArmorValue());
+            saveFile.write(((Armor)item).getVary());
+        }
     }
 
     public static Items loadItem(Scanner sc) {
 
         String ifNull = "NULL";
 
-        String subclass, name, description;
-        int minDamage, maxDamage, value;
+        String subclass = sc.nextLine();
+        String name = sc.nextLine();
+        int minDamage = sc.nextInt();
+        int maxDamage = sc.nextInt();
+        int value = sc.nextInt();
+        String description = sc.nextLine();
 
-        if (sc.hasNext()){
-            subclass = sc.nextLine();
-        }else{
-            subclass = ifNull;
+
+        if (subclass.startsWith(Weapon.class.getName())) {
+            return (new WeaponFactory()).createWeapon(subclass,name,minDamage,
+                    maxDamage,value,description);
+        }else if(subclass.startsWith(Consumable.class.getName())){
+           int heal = sc.nextInt();
+           int amount = sc.nextInt();
+
+           return (new ConsumableFactory()).createConsumable(subclass,name,minDamage,
+                   maxDamage,heal,value,description,amount);
         }
+        else if(subclass.startsWith(Armor.class.getName())){
+            int armor = sc.nextInt();
+            int vary = sc.nextInt(); // ASK ABOUT VARY
 
-        if (sc.hasNext()){
-            name = sc.nextLine();
-        }else{
-            name = ifNull;
+
+            return (new ArmorFactory()).createArmor(subclass,name,armor,value);
         }
-
-        if (sc.hasNext()){
-            minDamage = sc.nextInt();
-        }else{
-            minDamage = -1;
-        }
-
-        if (sc.hasNext()){
-            maxDamage = sc.nextInt();
-        }else{
-            maxDamage = -1;
-        }
-
-        if (sc.hasNext()){
-            value = sc.nextInt();
-        }else{
-            value = -1;
-        }
-
-        if (sc.hasNext()){
-            description = sc.nextLine();
-        }else{
-            description = ifNull;
-        }
-
-        if(subclass.substring(0, Weapon.class.getName().length()).equals(Weapon.class.getName())) {
-            return SaveLoader.weaponFactory.createItem(subclass,name,minDamage,maxDamage,
-                    value, description);
-        } else {
+        else {
             return null;
         }
     }
@@ -147,8 +145,10 @@ public class SaveLoader {
         }
         Scanner sc = new Scanner(fileReader);
 
+
         Weapon pistol = (Weapon)loadItem(sc);
         System.out.println(pistol);
+        sc.close();
     }
 /*public abstract class Items {
     private String description = "";
