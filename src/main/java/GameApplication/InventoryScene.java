@@ -4,6 +4,7 @@ import gameobjects.Entity.Entity;
 import gameobjects.Entity.Player;
 import gameobjects.Items.Armor;
 import gameobjects.Items.Consumable;
+import gameobjects.Items.Factories.ItemFactory;
 import gameobjects.Items.Items;
 import gameobjects.Items.Weapon;
 import javafx.event.EventHandler;
@@ -19,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static FinalProject.Javafx.ApplicationMain.scene;
 
@@ -27,6 +29,7 @@ public class InventoryScene {
     private HBox options = new HBox();
     private BorderPane layout = new BorderPane();
     private Button exit = new Button("Exit");
+    private Button stack = new Button("Stack");
     private MapScene map;
     private Entity player;
     private Label playerInfo = new Label();
@@ -35,16 +38,22 @@ public class InventoryScene {
         this.map = map;
         this.player = player;
         exit.setOnAction(e -> exit());
+        stack.setOnAction(e -> {
+            ItemFactory itemFactory = new ItemFactory();
+            Items[] playerItems = itemFactory.Stacker(player.getInventory().toArray(new Items[0]));
+            player.setInventory(playerItems);
+            makeButtons();
+        });
 
         options = new HBox();
         options.setStyle("-fx-background-color: #336699;");
         options.setPadding(new Insets(20,20,20,20));
         options.setSpacing(10);
         options.getChildren().add(exit);
+        options.getChildren().add(stack);
 
-        playerInfo.setText(player.toString());
         playerInfo.setFont(new Font("System Regular", 25));
-        playerInfo.setText(player.toString());
+        playerReset();
 
         makeButtons();
 
@@ -52,10 +61,6 @@ public class InventoryScene {
         layout.setCenter(items);
         layout.setBottom(options);
         scene.setRoot(layout);
-
-    }
-
-    public void reset(){
 
     }
 
@@ -126,7 +131,7 @@ public class InventoryScene {
     }
 
     public void playerReset(){
-        playerInfo.setText(player.toString());
+        playerInfo.setText(player.toString()+", Gold: "+player.getGold());
     }
 
     public void exit(){

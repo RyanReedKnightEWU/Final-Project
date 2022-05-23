@@ -7,14 +7,21 @@ public class Rifle extends Weapon {
         super("Rifle", 40, 50, 200);
         setDescription(String.format("%s is a rifle that was made before the Great War.\n", getName()));
     }
-    public Rifle(int luck, boolean set){
+    public Rifle(int type){
+        super("Rifle", 40, 50, 200);
         String[] name = {"New Rifle", "Rifle" , "Rusty Rifle"};
         int[] damage = {40,50};
         int value = 200;
-        WeaponCondition temp = new WeaponCondition();
-        temp.setVary(10);
-        temp.makeWeapon(name, damage, value, luck, set);
-        setWeapon(temp.Weapon());
+        int vary = 10;
+        if(type == -1){
+            setName(name[0]);
+            setValue(value - 50);
+            setDamage(damage[0] - vary, damage[1] - vary);
+        }else if(type == 1){
+            setName(name[0]);
+            setValue(value + 50);
+            setDamage(damage[0] + vary, damage[1] + vary);
+        }
         setDescription(String.format("%s is a rifle that was made before the Great War.\n", getName()));
     }
     // Fully defined constructor, necessary for load methods (Ryan Knight 21 May 2022)

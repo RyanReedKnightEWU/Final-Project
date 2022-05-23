@@ -2,29 +2,16 @@ package gameobjects.Items.Consumables;
 
 import gameobjects.Items.Consumable;
 
-import java.nio.charset.MalformedInputException;
 import java.util.Random;
 
 public class AttackBottle extends Consumable {
-    public AttackBottle(int luck){
+    public AttackBottle(int type){
         super("Bottled Grenade", 250);
         setDamage(200,250);
         setDescription(String.format("Why would they put a grenade in a bottle?"));
-        setCondition(luck);
-    }
-
-    public AttackBottle(String name,int minDamage,int maxDamage,int heal,int value,String description,int amount){
-        super(name, minDamage,maxDamage,heal,value,description,amount);
-    }
-
-    private void setCondition(int luck){
-        Random rand = new Random();
-        int good = 20+luck*5;
-        int bad = 45-luck*5;
-        int value = rand.nextInt(101);
-        if(value<bad){
+        if(type == -1){
             old();
-        } else if(value>100-good){
+        }else if(type == 1){
             clean();
         }
     }

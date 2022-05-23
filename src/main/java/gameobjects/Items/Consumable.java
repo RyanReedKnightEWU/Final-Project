@@ -15,6 +15,7 @@ public class Consumable extends Items{
     }
 
     public Consumable(String name, int minDamage, int maxDamage, int heal, int value, String description, int amount){
+        //used for loading consumables
         type = "Consumable";
         setName(name);
         setHeal(heal);
@@ -75,12 +76,13 @@ public class Consumable extends Items{
         return this.getName().hashCode();
     }
 
-    public void stack(Consumable consumable){
+    public Consumable stack(Consumable consumable){
         if(getName().equals(consumable.getName())){
             amount = amount + consumable.getAmount();
         } else {
             System.out.println("These items do not match.");
         }
+        return this;
     }
 
     public String toString(){

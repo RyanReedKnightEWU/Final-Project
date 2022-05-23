@@ -7,11 +7,21 @@ public class Pistol extends Weapon{
         super("Pistol", 20, 25, 100);
         setDescription(String.format("%s is a handgun that was made before the Great War.\n", getName()));
     }
-    public Pistol(int luck, boolean set){
+    public Pistol(int type){
+        super("Pistol", 20, 25, 100);
         String[] name = {"Old pistol","Pistol","New pistol"};
         int[] damage = {20,25};
         int value = 100;
-        setWeapon(new WeaponCondition(name, damage, value, luck, set).Weapon());
+        int vary = 5;
+        if(type == -1){
+            setName(name[0]);
+            setValue(value - 25);
+            setDamage(damage[0] - vary, damage[1] - vary);
+        }else if(type == 1){
+            setName(name[0]);
+            setValue(value + 25);
+            setDamage(damage[0] + vary, damage[1] + vary);
+        }
         setDescription(String.format("%s is a handgun that was made before the Great War.\n", getName()));
     }
 

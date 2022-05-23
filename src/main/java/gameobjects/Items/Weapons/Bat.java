@@ -7,11 +7,21 @@ public class Bat extends Weapon {
         super("Bat", 10, 15, 10);
         setDescription(String.format("%s is better than nothing.\n", getName()));
     }
-    public Bat(int luck, boolean set){
+
+    public Bat(int type){
+        super("Bat", 10, 15, 10);
         String[] name = {"Old bat","Bat","New bat"};
         int[] damage = {10,15};
         int value = 10;
-        setWeapon(new WeaponCondition(name, damage, value, luck, set).Weapon());
+        if(type == -1){
+            setName(name[0]);
+            setValue(value - 2);
+            setDamage(damage[0] - 2, damage[1] - 2);
+        }else if(type == 1){
+            setName(name[0]);
+            setValue(value + 2);
+            setDamage(damage[0] + 2, damage[1] + 2);
+        }
         setDescription(String.format("%s is better than nothing.\n", getName()));
     }
     // Fully defined constructor, necessary for load methods (Ryan Knight 21 May 2022)

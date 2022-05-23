@@ -5,21 +5,20 @@ import gameobjects.Items.Consumable;
 import java.util.Random;
 
 public class healthPotion extends Consumable {
-
-    public healthPotion(String name,int minDamage,int maxDamage,int heal,int value,String description,int amount){
-        super(name, minDamage,maxDamage,heal,value,description,amount);
-    }
-
-    public healthPotion(int luck){
+    public healthPotion(int type){
         super("Health Potion", 30);
         setHeal(100);
-        setCondition(luck, "Good ", "Weak ");
+        if(type == -1){
+            clean("Good ");
+        }else if(type == 1){
+            old("Weak ");
+        }
         setDescription(String.format("%s heals the user by %d", getName(), getHeal()));
     }
 
     private void old(String oldName){
         setHeal(getHeal()-35);
-        setValue(getValue()-getValue()/4);
+        setValue(getValue()-10);
         String temp = getName();
         temp = oldName+temp.toLowerCase();
         setName(temp);
@@ -27,21 +26,9 @@ public class healthPotion extends Consumable {
 
     private void clean(String cleanName){
         setHeal(getHeal()+35);
-        setValue(getValue()+getValue()/4);
+        setValue(getValue()+10);
         String temp = getName();
         temp = cleanName+temp.toLowerCase();
         setName(temp);
-    }
-
-    private void setCondition(int luck, String cleanName, String oldName){
-        Random rand = new Random();
-        int good = 20+luck*5;
-        int bad = 45-luck*5;
-        int value = rand.nextInt(101);
-        if(value<bad){
-            old(oldName);
-        } else if(value>100-good){
-            clean(cleanName);
-        }
     }
 }

@@ -37,10 +37,11 @@ public class MapScene {
 
     //To REMOVE later
     Button shop;
-    StoreScene storeScene = new StoreScene();
+    StoreScene storeScene;
 
     public void start(Navigator nav) {
         MapBase map = nav.getCurrentMap();
+        StoreScene storeScene = new StoreScene(this);
 
         grid.setPadding(new Insets(20, 20, 20, 20));
         grid.setVgap(10);
