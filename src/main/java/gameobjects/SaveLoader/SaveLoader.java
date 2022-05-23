@@ -41,12 +41,15 @@ public class SaveLoader {
             Items[] arr = {new Pistol(),new throwingKnife(),new Clothes(4),new PlateArmor(6) };
 
             for (Items item : arr) {
-                System.out.println(item.getClass().getName());
                 saveItem(item, saveFile);
             }
         }catch (IOException e) {
             e.printStackTrace();
         }
+
+
+
+
 
 
 
@@ -69,6 +72,7 @@ public class SaveLoader {
         String ifNull = "NULL";
         // Read subclass and use it to determine what needs to be implemented.
         String subclass = sc.nextLine();
+        String type;
         String name;
         int minDamage;
         int maxDamage;
@@ -78,6 +82,7 @@ public class SaveLoader {
 
         if (subclass.startsWith(Weapon.class.getName())) {
 
+            sc.nextLine();
             name = sc.nextLine();
             minDamage = sc.nextInt();
             maxDamage = sc.nextInt();
@@ -88,6 +93,7 @@ public class SaveLoader {
                     maxDamage,value,description);
         }else if(subclass.startsWith(Consumable.class.getName())){
 
+            sc.nextLine();
             name = sc.nextLine();
             minDamage = sc.nextInt();
             maxDamage = sc.nextInt();
@@ -101,6 +107,7 @@ public class SaveLoader {
         }
         else if(subclass.startsWith(Armor.class.getName())){
 
+            sc.nextLine();
             name = sc.nextLine();
             int armor = sc.nextInt();
             int vary = sc.nextInt();
@@ -125,9 +132,16 @@ public class SaveLoader {
         }
         Scanner sc = new Scanner(fileReader);
 
+        Items[] loadItems = new Items[4];
+        int i = 0;
 
-        Weapon pistol = (Weapon)loadItem(sc);
-        System.out.println(pistol);
+        while(sc.hasNext()){
+            loadItems[i] = loadItem(sc);
+        }
+
+        for(Items item : loadItems) {
+            System.out.println(item);
+        }
         sc.close();
     }
 /*public abstract class Items {
