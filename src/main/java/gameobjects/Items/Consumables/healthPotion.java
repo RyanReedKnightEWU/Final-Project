@@ -18,7 +18,7 @@ public class healthPotion extends Consumable {
 
     private void old(String oldName){
         setHeal(getHeal()-35);
-        setValue(getValue()-getValue()/4);
+        setValue(getValue()-10);
         String temp = getName();
         temp = oldName+temp.toLowerCase();
         setName(temp);
@@ -26,7 +26,7 @@ public class healthPotion extends Consumable {
 
     private void clean(String cleanName){
         setHeal(getHeal()+35);
-        setValue(getValue()+getValue()/4);
+        setValue(getValue()+10);
         String temp = getName();
         temp = cleanName+temp.toLowerCase();
         setName(temp);

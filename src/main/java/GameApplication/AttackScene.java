@@ -6,10 +6,12 @@ import gameobjects.Items.Armor;
 import gameobjects.Items.Consumable;
 import gameobjects.Items.Items;
 import gameobjects.Items.Weapon;
+import gameobjects.Items.Weapons.BareHands;
 import gameobjects.Navigator.Navigator;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -19,6 +21,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.Popup;
 
 import java.lang.annotation.Target;
 import java.util.ArrayList;
@@ -87,7 +90,7 @@ public class AttackScene {
         scene.setRoot(layout);
         reset(player, badGuy);
         if(!badGuy.isAlive()){
-            loot();
+            loot(player, badGuy);
         }
     }
 
@@ -105,13 +108,28 @@ public class AttackScene {
         currentInfo += player.getName()+" did "+damage+" damage to "+badGuy.getName();
         if(!badGuy.isAlive()){
             System.out.println("You looted the bad guy");
-            loot();
+            loot(player, badGuy);
         }else {
             damage = badGuyTurn(player, badGuy);
             reset(player, badGuy);
             currentInfo += "\n"+badGuy.getName()+" did "+damage+" damage to "+player.getName();
         }
         damageInfo.setText(currentInfo);
+    }
+
+    private void loot(Player player, Entity badGuy) {
+        Popup pop = new Popup();
+        player.addGold(badGuy.getGold());
+        String stuff = "You got:\nGold: "+badGuy.getGold()+"\n";
+        for (Items i: badGuy.getInventory()) {
+            if(!i.getName().equals(new BareHands().getName())){
+                stuff += i.getName()+"\n";
+                player.addItem(i);
+            }
+        }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, stuff);
+        alert.showAndWait();
+        map.setScene();
     }
 
     private int badGuyTurn(Player player, Entity badGuy){
@@ -126,10 +144,6 @@ public class AttackScene {
     }
 
     private void useRunAway(){
-        map.setScene();
-    }
-
-    private void loot(){
         map.setScene();
     }
 

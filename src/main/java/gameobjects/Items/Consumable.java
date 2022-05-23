@@ -76,12 +76,13 @@ public class Consumable extends Items{
         return this.getName().hashCode();
     }
 
-    public void stack(Consumable consumable){
+    public Consumable stack(Consumable consumable){
         if(getName().equals(consumable.getName())){
             amount = amount + consumable.getAmount();
         } else {
             System.out.println("These items do not match.");
         }
+        return this;
     }
 
     public String toString(){

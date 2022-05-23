@@ -2,12 +2,16 @@ package gameobjects.Entity;
 
 import gameobjects.Items.Armor;
 import gameobjects.Items.Armors.Clothes;
+import gameobjects.Items.Armors.PlateArmor;
 import gameobjects.Items.Consumable;
+import gameobjects.Items.Factories.ItemFactory;
 import gameobjects.Items.Items;
 import gameobjects.Items.Weapon;
 import gameobjects.Items.Weapons.BareHands;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class Entity {
     private int health;
@@ -16,6 +20,7 @@ public abstract class Entity {
     private int defense;
     private String name;
     private boolean isAlive;
+    private int gold = 25;
 
     private ArrayList<Items> inventory;
     private Weapon weapon = new BareHands();
@@ -61,6 +66,18 @@ public abstract class Entity {
         }
     }
 
+    public int getGold(){
+        return gold;
+    }
+
+    public void setGold(int gold){
+        this.gold = gold;
+    }
+
+    public void addGold(int gold){
+        this.gold += gold;
+    }
+
     public void printInventory() {
         if (inventory.isEmpty()) {
             System.out.println("Inventory is empty");
@@ -83,7 +100,7 @@ public abstract class Entity {
         }
     }
 
-    public void addConsumable(Consumable consumable) {
+    public void addConsumable(final Consumable consumable) {
         if (inventory.contains(consumable)) {
             int index = inventory.indexOf(consumable);
             ((Consumable) inventory.get(index)).stack(consumable);
@@ -105,6 +122,10 @@ public abstract class Entity {
         }else {
             System.out.println("This consumable is not in the inventory");
         }
+    }
+
+    public void setInventory(Items[] items) {
+        inventory = new ArrayList<Items>(Arrays.asList(items));
     }
 
     public ArrayList<Items> getInventory() {
