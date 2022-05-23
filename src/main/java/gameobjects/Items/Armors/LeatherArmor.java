@@ -21,4 +21,7 @@ public class LeatherArmor extends Armor {
         }
         setDescription(String.format("%s is a armor set made out of animal hide.", getName()));
     }
+    public LeatherArmor(String name, int armorValue, int value) {
+        super(name, armorValue, value);
+    }
 }

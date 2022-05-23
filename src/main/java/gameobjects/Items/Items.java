@@ -2,7 +2,7 @@ package gameobjects.Items;
 
 import java.util.Random;
 
-public abstract class Items {
+public abstract class Items implements Comparable<Items>{
     private String description = "";
     private String name = "";
     private Integer value = 0;
@@ -64,5 +64,42 @@ public abstract class Items {
 
     public void setMinDamage(Integer minDamage) {
         this.minDamage = minDamage;
+    }
+
+    @Override
+    public int compareTo(Items item) {
+        if (item == null) {
+            return -1;
+        } else if (item == this) {
+            return 0;
+        }
+
+        if(this.getClass().getName().equals(item.getClass().getName())) {
+
+            if (this.getName().equals(item.getName())) {
+
+                if (this.value.equals(item.getValue())) {
+
+                    return this.minDamage.compareTo(item.minDamage);
+
+                }else {
+                    return this.getValue().compareTo(item.getValue());
+                }
+
+            }else{
+                return this.getName().compareTo(item.getName());
+            }
+
+        }else{
+            return this.getClass().getName().compareTo(item.getClass().getName());
+        }
+
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Items)) {
+            return false;
+        }
+        return this.compareTo((Items)obj) == 0;
     }
 }

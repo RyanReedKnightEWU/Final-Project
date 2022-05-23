@@ -38,7 +38,7 @@ public class Consumable extends Items{
         this.heal = heal;
     }
 
-    protected int getHeal(){
+    public int getHeal(){
         return heal;
     }
 

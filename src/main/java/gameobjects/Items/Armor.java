@@ -4,6 +4,8 @@ import java.util.Random;
 
 public class Armor extends Items{
     int armorValue = 0;
+
+
     int vary = 5;
 
     protected Armor(String name, int armorValue, int value) {
@@ -59,6 +61,10 @@ public class Armor extends Items{
         }
     }
 
+
+    public int getVary() {
+        return vary;
+    }
     protected void setVary(int vary){
         this.vary = vary;
     }
