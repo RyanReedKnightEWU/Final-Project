@@ -17,10 +17,12 @@ public class Weapon extends Items{
     }
 
     public Weapon(String name, int minDamage, int maxDamage, int value, String discription){
+        //for loading
         setName(name);
         setDamage(minDamage, maxDamage);
         setValue(value);
         type = "Weapon";
+        setDescription(discription);
     }
 
     public void setWeapon(Weapon weapon){

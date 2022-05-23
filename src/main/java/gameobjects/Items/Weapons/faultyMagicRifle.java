@@ -3,7 +3,7 @@ package gameobjects.Items.Weapons;
 import gameobjects.Items.Weapon;
 
 public class faultyMagicRifle extends Weapon {
-    public faultyMagicRifle(int luck){
+    public faultyMagicRifle(int type){
         super("Faulty Magic Rifle", 25, 80, 175);
         setDescription(String.format("%s is a hit or miss kind of weapon, ether will do a lot of damage or not much.\n", getName()));
     }

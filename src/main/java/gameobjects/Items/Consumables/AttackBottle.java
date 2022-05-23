@@ -5,21 +5,13 @@ import gameobjects.Items.Consumable;
 import java.util.Random;
 
 public class AttackBottle extends Consumable {
-    public AttackBottle(int luck){
+    public AttackBottle(int type){
         super("Bottled Grenade", 250);
         setDamage(200,250);
         setDescription(String.format("Why would they put a grenade in a bottle?"));
-        setCondition(luck);
-    }
-
-    private void setCondition(int luck){
-        Random rand = new Random();
-        int good = 20+luck*5;
-        int bad = 45-luck*5;
-        int value = rand.nextInt(101);
-        if(value<bad){
+        if(type == -1){
             old();
-        } else if(value>100-good){
+        }else if(type == 1){
             clean();
         }
     }

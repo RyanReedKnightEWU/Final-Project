@@ -6,13 +6,21 @@ public class Armor extends Items{
     int armorValue = 0;
     int vary = 5;
 
-    public Armor(String name, int armorValue, int value) {
+    protected Armor(String name, int armorValue, int value) {
         type = "Armor";
         setArmorValue(armorValue);
         setValue(value);
         setName(name);
-        setValue(value);
         setDescription("armor");
+    }
+
+    public Armor(String name, int armorValue, int value, String description) {
+        //Used for loading armor
+        type = "Armor";
+        setArmorValue(armorValue);
+        setValue(value);
+        setName(name);
+        setDescription(description);
     }
 
     protected void setArmorValue(int armorValue){

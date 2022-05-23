@@ -5,10 +5,14 @@ import gameobjects.Items.Consumable;
 import java.util.Random;
 
 public class healthPotion extends Consumable {
-    public healthPotion(int luck){
+    public healthPotion(int type){
         super("Health Potion", 30);
         setHeal(100);
-        setCondition(luck, "Good ", "Weak ");
+        if(type == -1){
+            clean("Good ");
+        }else if(type == 1){
+            old("Weak ");
+        }
         setDescription(String.format("%s heals the user by %d", getName(), getHeal()));
     }
 
@@ -26,17 +30,5 @@ public class healthPotion extends Consumable {
         String temp = getName();
         temp = cleanName+temp.toLowerCase();
         setName(temp);
-    }
-
-    private void setCondition(int luck, String cleanName, String oldName){
-        Random rand = new Random();
-        int good = 20+luck*5;
-        int bad = 45-luck*5;
-        int value = rand.nextInt(101);
-        if(value<bad){
-            old(oldName);
-        } else if(value>100-good){
-            clean(cleanName);
-        }
     }
 }

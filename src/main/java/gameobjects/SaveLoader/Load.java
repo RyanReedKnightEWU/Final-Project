@@ -66,7 +66,7 @@ public class Load extends SaveLoader{
         int value = Integer.parseInt(temp);
         temp = scanner.nextLine();
         String description = temp;
-        Armor armor = new Armor(name, armorValue, value/*,description*/);
+        Armor armor = new Armor(name, armorValue, value,description);
         return armor;
     }
 

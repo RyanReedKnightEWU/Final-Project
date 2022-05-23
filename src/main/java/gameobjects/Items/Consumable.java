@@ -15,6 +15,7 @@ public class Consumable extends Items{
     }
 
     public Consumable(String name, int minDamage, int maxDamage, int heal, int value, String description, int amount){
+        //used for loading consumables
         type = "Consumable";
         setName(name);
         setHeal(heal);
