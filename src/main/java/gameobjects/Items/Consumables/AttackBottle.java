@@ -16,6 +16,10 @@ public class AttackBottle extends Consumable {
         }
     }
 
+    public AttackBottle(String name,int minDamage,int maxDamage,int heal,int value,String description,int amount){
+        super(name, minDamage, maxDamage,heal,value,description,amount);
+    }
+
     private void old(){
         setDamage(100,150);
         setValue(100);

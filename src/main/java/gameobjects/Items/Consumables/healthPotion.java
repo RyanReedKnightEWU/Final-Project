@@ -16,6 +16,10 @@ public class healthPotion extends Consumable {
         setDescription(String.format("%s heals the user by %d", getName(), getHeal()));
     }
 
+    public healthPotion(String name, int minDamage, int maxDamage,int heal,int value,String description,int amount) {
+        super(name,minDamage,maxDamage,heal,value,description,amount);
+    }
+
     private void old(String oldName){
         setHeal(getHeal()-35);
         setValue(getValue()-10);

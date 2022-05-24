@@ -12,9 +12,9 @@ public class ConsumableFactory extends ConsumableFactoryBase{
                                        int heal, int value, String description, int amount) {
 
         if(subclassKey.startsWith(AttackBottle.class.getName())){
-            return new Consumable(name, minDamage, maxDamage,heal,value,description,amount);
+            return new AttackBottle(name, minDamage, maxDamage,heal,value,description,amount);
         }else if(subclassKey.startsWith(healthPotion.class.getName())) {
-            return new Consumable(name, minDamage, maxDamage,heal,value,description,amount);
+            return new healthPotion(name, minDamage, maxDamage,heal,value,description,amount);
         }else if(subclassKey.startsWith(throwingKnife.class.getName())) {
             return new throwingKnife(name, minDamage, maxDamage,heal,value,description,amount);
         }else{

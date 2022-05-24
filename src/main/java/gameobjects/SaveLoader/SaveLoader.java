@@ -11,11 +11,17 @@ import gameobjects.Items.Weapons.WeaponFactory;
 import gameobjects.Items.Weapons.WeaponFactoryBase;
 import org.controlsfx.control.PropertySheet;
 
+import javax.xml.transform.sax.SAXSource;
 import java.io.*;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class SaveLoader {
 
+
+    private static class LeaveFunction extends Exception {
+
+    }
 
     private static final WeaponFactoryBase weaponFactory = new WeaponFactory();
     protected File file = new File("Save.txt");
@@ -30,30 +36,6 @@ public class SaveLoader {
         }
     }
 
-    public static void saveGame(String saveName) {
-
-        String txtSfx = ".txt";
-        if (!saveName.substring(saveName.length()-txtSfx.length()).equals(txtSfx)) {
-            saveName += txtSfx;
-        }
-
-        try(FileWriter saveFile = new FileWriter(saveName)) {
-            Items[] arr = {new Pistol(),new throwingKnife(),new Clothes(4),new PlateArmor(6) };
-
-            for (Items item : arr) {
-                saveItem(item, saveFile);
-            }
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-
-
-
-    }
     private static void saveItem(Items item, FileWriter saveFile) throws IOException {
 
         String ifNull = "\nNULL";
@@ -67,11 +49,25 @@ public class SaveLoader {
         saveFile.write(item.save());
     }
 
-    public static Items loadItem(Scanner sc) {
+    private static void saveItemArray(Items[] itemArr, FileWriter saveFile) throws IOException {
+        for(Items item:itemArr) {
+            saveItem(item,saveFile);
+        }
+        saveFile.write(SaveLoadKeys.END_ITEM_ARRAY.toString() + "\n");
+    }
+
+    public static Items loadItem(Scanner sc) throws LeaveFunction {
 
         String ifNull = "NULL";
         // Read subclass and use it to determine what needs to be implemented.
+
+
         String subclass = sc.nextLine();
+
+        if (subclass.equals(SaveLoadKeys.END_ITEM_ARRAY.toString())) {
+            throw new LeaveFunction();
+        }
+
         String type;
         String name;
         int minDamage;
@@ -84,9 +80,9 @@ public class SaveLoader {
 
             sc.nextLine();
             name = sc.nextLine();
-            minDamage = sc.nextInt();
-            maxDamage = sc.nextInt();
-            value = sc.nextInt();
+            minDamage = Integer.parseInt(sc.nextLine());;
+            maxDamage = Integer.parseInt(sc.nextLine());;
+            value = Integer.parseInt(sc.nextLine());;
             description = sc.nextLine();
 
             return (new WeaponFactory()).createWeapon(subclass,name,minDamage,
@@ -95,11 +91,11 @@ public class SaveLoader {
 
             sc.nextLine();
             name = sc.nextLine();
-            minDamage = sc.nextInt();
-            maxDamage = sc.nextInt();
-            int heal = sc.nextInt();
-            int amount = sc.nextInt();
-            value = sc.nextInt();
+            minDamage = Integer.parseInt(sc.nextLine());
+            maxDamage = Integer.parseInt(sc.nextLine());
+            int heal = Integer.parseInt(sc.nextLine());
+            int amount = Integer.parseInt(sc.nextLine());
+            value = Integer.parseInt(sc.nextLine());
             description = sc.nextLine();
 
            return (new ConsumableFactory()).createConsumable(subclass,name,minDamage,
@@ -109,19 +105,54 @@ public class SaveLoader {
 
             sc.nextLine();
             name = sc.nextLine();
-            int armor = sc.nextInt();
-            int vary = sc.nextInt();
-            value = sc.nextInt();
+            int armor = Integer.parseInt(sc.nextLine());;
+            value = Integer.parseInt(sc.nextLine());;
             description = sc.nextLine();
 
             return (new ArmorFactory()).createArmor(subclass,name,armor,value);
         }
         else {
-            return null;
+            throw new IllegalArgumentException("bad param loadItem method in SaveLoad class. " +
+                    subclass + " is not a valid subclass.");
         }
     }
 
+    public static Items[] loadItemArray(Scanner sc){
+
+        LinkedList<Items> list = new LinkedList<>();
+        boolean flag = true;
+        while(sc.hasNext()&&flag) {
+            try {
+                list.add(loadItem(sc));
+            }catch (LeaveFunction lf) {
+                flag = false;
+            }
+        }
+
+        Items[] ret = new Items[list.size()];
+
+        for(int i = 0; i < list.size(); ++i) {
+            ret[i] = list.get(i);
+        }
+        return ret;
+    }
+
+    public static void saveGame(String saveName) {
+
+        String txtSfx = ".txt";
+        if (!saveName.endsWith(txtSfx)) {
+            saveName += txtSfx;
+        }
+
+        try (FileWriter saveFile = new FileWriter(saveName)) {
+            saveItemArray(new Items[]{ new throwingKnife(), new Clothes(4), new PlateArmor(6), new Pistol()},saveFile);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static void main(String [] args) {
+
         saveGame("test");
 
         FileReader fileReader;
@@ -132,16 +163,17 @@ public class SaveLoader {
         }
         Scanner sc = new Scanner(fileReader);
 
-        Items[] loadItems = new Items[4];
+        Items[] loadItems = loadItemArray(sc);
         int i = 0;
-
-        while(sc.hasNext()){
-            loadItems[i] = loadItem(sc);
-        }
-
         for(Items item : loadItems) {
-            System.out.println(item);
+            try {
+                System.out.println(item.save());
+            }catch (NullPointerException n){
+                System.out.println("Bad: " + i);
+                ++i;
+            }
         }
+
         sc.close();
     }
 /*public abstract class Items {
