@@ -13,6 +13,7 @@ public class Consumable extends Items{
         setName(consumable.getName());
         setHeal(consumable.getHeal());
         setValue(consumable.getValue());
+        setDamage(consumable.getMinDamage(), consumable.getMaxDamage());
         setDescription(consumable.getDescription());
         setAmount(consumable.getAmount());
     }
@@ -29,6 +30,7 @@ public class Consumable extends Items{
         setName(name);
         setHeal(heal);
         setValue(value);
+        setDamage(minDamage, maxDamage);
         setDescription(description);
         setAmount(amount);
     }
