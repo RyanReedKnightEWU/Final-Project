@@ -68,7 +68,7 @@ public class StoreScene {
 
     public void makeShopKeeper(){
         ItemFactory itemFactory = new ItemFactory();
-        shop = itemFactory.makeRandomItems(3,3,3);
+        shop = itemFactory.makeRandomItems(4,4,4);
         shop = itemFactory.noDup(shop);
     }
 
