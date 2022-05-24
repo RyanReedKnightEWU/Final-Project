@@ -51,7 +51,16 @@ public class SaveLoader {
 
     private static void saveItemArray(Items[] itemArr, FileWriter saveFile) throws IOException {
         for(Items item:itemArr) {
-            saveItem(item,saveFile);
+            saveFile.write(item.getClass().getName() + "\n");
+            item.saveInstance(saveFile);
+            /*saveItem(item,saveFile);*/
+        }
+        saveFile.write(SaveLoadKeys.END_ITEM_ARRAY.toString() + "\n");
+    }
+
+    public static void saveArray(Savable[] arr,FileWriter saveFile) throws IOException {
+        for(Savable element : arr) {
+            element.saveInstance(saveFile);
         }
         saveFile.write(SaveLoadKeys.END_ITEM_ARRAY.toString() + "\n");
     }
@@ -145,7 +154,8 @@ public class SaveLoader {
         }
 
         try (FileWriter saveFile = new FileWriter(saveName)) {
-            saveItemArray(new Items[]{ new throwingKnife(), new Clothes(4), new PlateArmor(6), new Pistol()},saveFile);
+            //saveItemArray(new Items[]{ new throwingKnife(), new Clothes(4), new PlateArmor(6), new Pistol()},saveFile);
+            saveArray(new Items[]{ new throwingKnife(), new Clothes(4), new PlateArmor(6), new Pistol()},saveFile);
 
         } catch (IOException e) {
             e.printStackTrace();

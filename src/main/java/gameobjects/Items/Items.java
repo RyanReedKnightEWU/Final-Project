@@ -1,6 +1,12 @@
 package gameobjects.Items;
 
-public abstract class Items implements Comparable<Items>{
+import gameobjects.SaveLoader.Savable;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+public abstract class Items implements Comparable<Items>, Savable {
     private String description = "";
     private String name = "";
     private Integer value = 0;
@@ -62,6 +68,12 @@ public abstract class Items implements Comparable<Items>{
 
     public void setMinDamage(Integer minDamage) {
         this.minDamage = minDamage;
+    }
+
+    @Override
+    public void saveInstance(FileWriter saveFile) throws IOException {
+        saveFile.write(this.getClass().getName() + "\n");
+        saveFile.write(this.save());
     }
 
     @Override
