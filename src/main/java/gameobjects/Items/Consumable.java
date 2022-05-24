@@ -8,6 +8,15 @@ public class Consumable extends Items{
     private int heal = 0;
     private int amount = 1;
 
+    public Consumable(Consumable consumable){
+        type = "Consumable";
+        setName(consumable.getName());
+        setHeal(consumable.getHeal());
+        setValue(consumable.getValue());
+        setDescription(consumable.getDescription());
+        setAmount(consumable.getAmount());
+    }
+
     protected Consumable(String name, int value){
         type = "Consumable";
         setName(name);

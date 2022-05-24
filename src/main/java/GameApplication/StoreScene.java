@@ -37,6 +37,7 @@ public class StoreScene {
     private Entity player;
     private Label playerInfo = new Label();
     private Items[] shop;
+    ItemFactory itemFactory = new ItemFactory();
 
     public StoreScene(MapScene map){
         Navigator nav = Navigator.getInstance();
@@ -45,10 +46,10 @@ public class StoreScene {
         this.player = nav.getPlayer();
         exit.setOnAction(e -> exit());
         stack.setOnAction(e -> {
-            ItemFactory itemFactory = new ItemFactory();
             Items[] playerItems = itemFactory.Stacker(player.getInventory().toArray(new Items[0]));
             player.setInventory(playerItems);
             makeButtons();
+            makeShopButtons();
         });
 
         options = new HBox();
@@ -127,7 +128,6 @@ public class StoreScene {
                     makeButtons();
                 });
             }
-
             buttonEffects(b);
             yourItems.getChildren().add(b);
         }
@@ -157,9 +157,9 @@ public class StoreScene {
                 b.setOnAction(e -> buy(i));
             } else {
                 b.setStyle("-fx-background-color: rgb(150,190,200)");
-                //Consumable con = (Consumable) i;
-                //con.setAmount(1);
-                b.setOnAction(e -> buy(i));
+                Items thing = new Consumable((Consumable) i);
+                b.setOnAction(e -> buy(thing));
+
             }
 
             buttonEffects(b);
@@ -170,10 +170,15 @@ public class StoreScene {
 
     public void buy(Items i){
         if(player.getGold() - i.getValue() > 0){
+            //Adds to inventory
             System.out.println("You bought: \n"+i.toString());
             System.out.println();
             player.addItem(i);
             player.setGold(player.getGold() - i.getValue());
+            //stacks
+            Items[] playerItems = itemFactory.Stacker(player.getInventory().toArray(new Items[0]));
+            player.setInventory(playerItems);
+            //Reset buttons
             makeButtons();
             makeShopButtons();
             playerReset();

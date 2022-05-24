@@ -4,6 +4,7 @@ import gameobjects.Entity.Entity;
 import gameobjects.Entity.Player;
 import gameobjects.Items.Armor;
 import gameobjects.Items.Consumable;
+import gameobjects.Items.Factories.ItemFactory;
 import gameobjects.Items.Items;
 import gameobjects.Items.Weapon;
 import gameobjects.Items.Weapons.BareHands;
@@ -119,6 +120,7 @@ public class AttackScene {
 
     private void loot(Player player, Entity badGuy) {
         Popup pop = new Popup();
+        //Adds gold and items to players inventory.
         player.addGold(badGuy.getGold());
         String stuff = "You got:\nGold: "+badGuy.getGold()+"\n";
         for (Items i: badGuy.getInventory()) {
@@ -127,6 +129,11 @@ public class AttackScene {
                 player.addItem(i);
             }
         }
+        //Stacks items
+        ItemFactory itemFactory = new ItemFactory();
+        Items[] playerItems = itemFactory.Stacker(player.getInventory().toArray(new Items[0]));
+        player.setInventory(playerItems);
+        //Tells user what they got
         Alert alert = new Alert(Alert.AlertType.INFORMATION, stuff);
         alert.showAndWait();
         map.setScene();
@@ -223,6 +230,7 @@ class AttackSceneInventory{
                 Consumable con = (Consumable) i;
                 b.setOnAction(e -> {
                     con.use(target);
+                    con.setAmount(con.getAmount()+1);
                     player.removeConsumable(con);
                     playerReset();
                     makeButtons();
