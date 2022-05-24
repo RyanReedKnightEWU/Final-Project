@@ -8,6 +8,16 @@ public class Consumable extends Items{
     private int heal = 0;
     private int amount = 1;
 
+    public Consumable(Consumable consumable){
+        type = "Consumable";
+        setName(consumable.getName());
+        setHeal(consumable.getHeal());
+        setValue(consumable.getValue());
+        setDamage(consumable.getMinDamage(), consumable.getMaxDamage());
+        setDescription(consumable.getDescription());
+        setAmount(consumable.getAmount());
+    }
+
     protected Consumable(String name, int value){
         type = "Consumable";
         setName(name);
@@ -20,6 +30,7 @@ public class Consumable extends Items{
         setName(name);
         setHeal(heal);
         setValue(value);
+        setDamage(minDamage, maxDamage);
         setDescription(description);
         setAmount(amount);
     }

@@ -18,7 +18,7 @@ public class Knife extends Weapon {
             setValue(value - 25);
             setDamage(damage[0] - vary, damage[1] - vary);
         }else if(type == 1){
-            setName(name[0]);
+            setName(name[2]);
             setValue(value + 25);
             setDamage(damage[0] + vary, damage[1] + vary);
         }

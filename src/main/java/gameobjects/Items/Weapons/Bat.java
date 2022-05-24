@@ -18,7 +18,7 @@ public class Bat extends Weapon {
             setValue(value - 2);
             setDamage(damage[0] - 2, damage[1] - 2);
         }else if(type == 1){
-            setName(name[0]);
+            setName(name[2]);
             setValue(value + 2);
             setDamage(damage[0] + 2, damage[1] + 2);
         }

@@ -56,13 +56,19 @@ public class ItemFactory {
                 newItems.add(i);
             }
         }
+        for (int j = 0; j < newItems.size(); j++){
+            for (int i = newItems.size()-1; i >= 0; i--){
+                if(newItems.get(j).equals(newItems.get(i)) && j != i){
+                    newItems.remove(i);
+                }
+            }
+        }
         while (stuff.size()!=0){
             Consumable con = stuff.get(0);
             int amount = 1;
             stuff.remove(0);
             for (int i = stuff.size()-1; i >= 0; i--){
                 if(con.equals(stuff.get(i))){
-                    //amount += stuff.get(i).getAmount();
                     stuff.remove(i);
                 }
             }

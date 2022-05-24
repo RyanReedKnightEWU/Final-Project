@@ -33,13 +33,13 @@ public class InventoryScene {
     private MapScene map;
     private Entity player;
     private Label playerInfo = new Label();
+    ItemFactory itemFactory = new ItemFactory();
 
     public void start(MapScene map,Entity player){
         this.map = map;
         this.player = player;
         exit.setOnAction(e -> exit());
         stack.setOnAction(e -> {
-            ItemFactory itemFactory = new ItemFactory();
             Items[] playerItems = itemFactory.Stacker(player.getInventory().toArray(new Items[0]));
             player.setInventory(playerItems);
             makeButtons();
@@ -101,6 +101,8 @@ public class InventoryScene {
                 Consumable con = (Consumable) i;
                 b.setOnAction(e -> {
                     con.use(player);
+                    con.setAmount(con.getAmount()+1);
+                    player.removeConsumable(con);
                     playerReset();
                     makeButtons();
                 });

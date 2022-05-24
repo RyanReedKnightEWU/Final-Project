@@ -1,7 +1,5 @@
 package gameobjects.Items;
 
-import java.util.Random;
-
 public abstract class Items implements Comparable<Items>{
     private String description = "";
     private String name = "";

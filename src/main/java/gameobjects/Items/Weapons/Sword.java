@@ -15,7 +15,7 @@ public class Sword extends Weapon {
         int vary = 10;
         setDescription(String.format("%s is just a regular weapon that is unexciting.\n", getName()));
         if(type == -1){
-            setName(name[0]);
+            setName(name[2]);
             setValue(value - 50);
             setDamage(damage[0] - vary, damage[1] - vary);
             setDescription(String.format("%s is a sad sight to see, once a powerful blade but now reduce to garbage\n", getName()));

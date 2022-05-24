@@ -14,7 +14,7 @@ public class Rifle extends Weapon {
         int value = 200;
         int vary = 10;
         if(type == -1){
-            setName(name[0]);
+            setName(name[2]);
             setValue(value - 50);
             setDamage(damage[0] - vary, damage[1] - vary);
         }else if(type == 1){
