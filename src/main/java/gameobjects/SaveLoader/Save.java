@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.Writer;
 
 public class Save extends SaveLoader{
-
+/*
     Writer writer = null;
 
     public Save() {
@@ -18,5 +18,5 @@ public class Save extends SaveLoader{
 
 
 
-
+*/
 }

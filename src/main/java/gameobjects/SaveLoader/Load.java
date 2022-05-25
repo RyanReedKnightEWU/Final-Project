@@ -6,7 +6,7 @@ import gameobjects.Items.Weapon;
 
 import java.util.Scanner;
 
-public class Load extends SaveLoader{
+public class Load extends SaveLoader{}/*
 
     Scanner scanner = null;
 
@@ -34,7 +34,7 @@ public class Load extends SaveLoader{
         int value = Integer.parseInt(temp);
         temp = scanner.nextLine();
         String description = temp;
-        Weapon weapon = new Weapon(name, minDamage, maxDamage, value /* description*/);
+        Weapon weapon = new Weapon(name, minDamage, maxDamage, value /* description*//*);
         return weapon;
     }
 
@@ -70,4 +70,4 @@ public class Load extends SaveLoader{
         return armor;
     }
 
-}
+}*/

@@ -8,12 +8,15 @@ import gameobjects.Items.Factories.ItemFactory;
 import gameobjects.Items.Items;
 import gameobjects.Items.Weapon;
 import gameobjects.Items.Weapons.BareHands;
+import gameobjects.SaveLoader.Savable;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class Entity {
+public abstract class Entity implements Savable {
     private int health;
     private int maxHealth;
     private int damage;
@@ -237,5 +240,11 @@ public abstract class Entity {
                 "EQUIPPED", this.weapon.getName(), this.armor.getName());
 
         return str;
+    }
+
+    @Override
+    public void saveInstance(FileWriter saveFile) throws IOException {
+        saveFile.write(this.getClass().getName() + "\n");
+        saveFile.write(this.saveString());
     }
 }

@@ -22,6 +22,8 @@ public class SaveLoader {
     private static class LeaveFunction extends Exception {
 
     }
+    // Key to end array int saveArr method, used to indicate array has ended in load method
+    private static final String endArrKey = "END-ARR";
 
     private static final WeaponFactoryBase weaponFactory = new WeaponFactory();
     protected File file = new File("Save.txt");
@@ -37,10 +39,6 @@ public class SaveLoader {
     }
 
     private static void saveItem(Items item, FileWriter saveFile) throws IOException {
-
-        String ifNull = "\nNULL";
-
-
         /* Start by saving fields common to all subclasses of Items class*/
 
         // Result of getClass().getName(), will be used later to determine which fields need to be loaded.
@@ -55,25 +53,22 @@ public class SaveLoader {
             item.saveInstance(saveFile);
             /*saveItem(item,saveFile);*/
         }
-        saveFile.write(SaveLoadKeys.END_ITEM_ARRAY.toString() + "\n");
+        saveFile.write(SaveLoader.endArrKey);
     }
 
-    public static void saveArray(Savable[] arr,FileWriter saveFile) throws IOException {
+    public void saveArray(Savable[] arr,FileWriter saveFile) throws IOException {
         for(Savable element : arr) {
             element.saveInstance(saveFile);
         }
-        saveFile.write(SaveLoadKeys.END_ITEM_ARRAY.toString() + "\n");
+        saveFile.write(SaveLoader.endArrKey + "\n");
     }
 
     public static Items loadItem(Scanner sc) throws LeaveFunction {
 
-        String ifNull = "NULL";
         // Read subclass and use it to determine what needs to be implemented.
-
-
         String subclass = sc.nextLine();
 
-        if (subclass.equals(SaveLoadKeys.END_ITEM_ARRAY.toString())) {
+        if (subclass.equals(SaveLoader.endArrKey)) {
             throw new LeaveFunction();
         }
 
@@ -121,8 +116,8 @@ public class SaveLoader {
             return (new ArmorFactory()).createArmor(subclass,name,armor,value);
         }
         else {
-            throw new IllegalArgumentException("bad param loadItem method in SaveLoad class. " +
-                    subclass + " is not a valid subclass.");
+            throw new IllegalArgumentException("bad param loadItem method in SaveLoad class. \"" +
+                    subclass + "\" is not a valid subclass.");
         }
     }
 
@@ -154,8 +149,10 @@ public class SaveLoader {
         }
 
         try (FileWriter saveFile = new FileWriter(saveName)) {
-            //saveItemArray(new Items[]{ new throwingKnife(), new Clothes(4), new PlateArmor(6), new Pistol()},saveFile);
-            saveArray(new Items[]{ new throwingKnife(), new Clothes(4), new PlateArmor(6), new Pistol()},saveFile);
+            //saveItemArray(new Items[]{ new throwingKnife(), new Clothes(4), new PlateArmor(6),
+            // new Pistol()},saveFile);
+            (new ItemLoader()).saveArray(new Items[]{ new throwingKnife(), new Clothes(4),
+                    new PlateArmor(6), new Pistol()},saveFile);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -173,7 +170,7 @@ public class SaveLoader {
         }
         Scanner sc = new Scanner(fileReader);
 
-        Items[] loadItems = loadItemArray(sc);
+        Items[] loadItems = (new ItemLoader()).loadArray(sc);
         int i = 0;
         for(Items item : loadItems) {
             try {
