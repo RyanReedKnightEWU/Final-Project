@@ -1,12 +1,6 @@
 package gameobjects.SaveLoader;
 
-import gameobjects.Items.Armor;
-import gameobjects.Items.Consumable;
-import gameobjects.Items.Weapon;
-
-import java.util.Scanner;
-
-public class Load extends SaveLoader{}/*
+public class Load extends Main {}/*
 
     Scanner scanner = null;
 

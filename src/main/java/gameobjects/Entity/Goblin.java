@@ -32,4 +32,6 @@ public class Goblin extends Entity {
                   Weapon weapon, Armor armor) {
         super(health, maxHealth, damage, defense, name, inventory, weapon, armor);
     }
+
+
 }

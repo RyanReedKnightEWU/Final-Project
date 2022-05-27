@@ -1,9 +1,6 @@
 package gameobjects.SaveLoader;
 
-import java.io.FileWriter;
-import java.io.Writer;
-
-public class Save extends SaveLoader{
+public class Save extends Main {
 /*
     Writer writer = null;
 

@@ -83,7 +83,6 @@ public class AttackScene {
 
         attack.setOnAction(e -> attackBadGuy(player, badGuy));
         consumables.setOnAction(e -> useConsumables(player, badGuy));
-
         scene.setRoot(layout);
     }
 
@@ -107,9 +106,12 @@ public class AttackScene {
         reset(player, badGuy);
         consume = true;
         currentInfo += player.getName()+" did "+damage+" damage to "+badGuy.getName();
-        if(!badGuy.isAlive()){
+
+        if(badGuy.getHealth() <= 0){
+            badGuy.setAlive(false);
             System.out.println("You looted the bad guy");
             loot(player, badGuy);
+
         }else {
             damage = badGuyTurn(player, badGuy);
             reset(player, badGuy);

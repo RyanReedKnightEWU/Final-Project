@@ -1,14 +1,9 @@
 package gameobjects.Items;
 
-import gameobjects.Items.Armors.ArmorFactory;
-import gameobjects.Items.Consumables.ConsumableFactory;
-import gameobjects.Items.Weapons.WeaponFactory;
 import gameobjects.SaveLoader.Savable;
-import gameobjects.SaveLoader.SaveLoader;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
 
 public abstract class Items implements Comparable<Items>, Savable {
     private String description = "";

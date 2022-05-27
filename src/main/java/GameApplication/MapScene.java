@@ -122,7 +122,14 @@ public class MapScene {
                         AttackScene attackScene = new AttackScene(this);
                         attackScene.start((Player) nav.getPlayer(),
                                 nav.getCurrentMap().getTile(row, column).getPrimaryOccupant());
+
+                        if (!nav.getCurrentMap().getTile(row, column).getPrimaryOccupant().isAlive()) {
+                            System.out.println("FFFFF" + nav.getCurrentMap().getTile(row, column).getPrimaryOccupant().isAlive());
+                            nav.forceMove(row,column);
+                        }
+                        System.out.println("FFFFF" + nav.getCurrentMap().getTile(row, column).getPrimaryOccupant().isAlive());
                         reset(nav);
+
                     }
                     else if (key == MoveKey.LINK_TO_MAP) {
                         // Get link to tile.

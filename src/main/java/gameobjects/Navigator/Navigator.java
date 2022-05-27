@@ -144,9 +144,11 @@ public class Navigator {
      *               !!! USE WITH CAUTION !!!
      * **/
     public void forceMove (int row, int column) {
+        System.out.println(this.getCurrentRow() + " " + this.getCurrentColumn());
         this.currentMap.getTile(row, column).setPrimaryOccupant(this.player);
         this.currentMap.getTile(this.getCurrentRow(), this.getCurrentColumn()).setPrimaryOccupant(null);
         this.setPosition(row, column);
+        System.out.println(this.getCurrentRow() + " " + this.getCurrentColumn());
     }
 
 }

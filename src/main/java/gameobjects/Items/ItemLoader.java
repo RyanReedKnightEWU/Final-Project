@@ -3,20 +3,18 @@ package gameobjects.Items;
 import gameobjects.Items.Armors.ArmorFactory;
 import gameobjects.Items.Consumables.ConsumableFactory;
 import gameobjects.Items.Weapons.WeaponFactory;
-import gameobjects.SaveLoader.Loader;
-import gameobjects.SaveLoader.Savable;
 import gameobjects.SaveLoader.SaveLoader;
 
 import java.util.LinkedList;
 import java.util.Scanner;
 
-public class ItemLoader extends Loader<Items> {
+public class ItemLoader extends SaveLoader<Items> {
 
     public Items load(Scanner sc) throws LeaveFunction {
         // Read subclass and use it to determine what needs to be implemented.
         String subclass = sc.nextLine();
 
-        if (subclass.equals(Loader.getEndArrKey())) {
+        if (subclass.equals(SaveLoader.getEndArrKey())) {
             super.ThrowLeaveFunction();
         }
 

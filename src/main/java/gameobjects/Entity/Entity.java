@@ -2,19 +2,17 @@ package gameobjects.Entity;
 
 import gameobjects.Items.Armor;
 import gameobjects.Items.Armors.Clothes;
-import gameobjects.Items.Armors.PlateArmor;
 import gameobjects.Items.Consumable;
-import gameobjects.Items.Factories.ItemFactory;
 import gameobjects.Items.Items;
 import gameobjects.Items.Weapon;
 import gameobjects.Items.Weapons.BareHands;
 import gameobjects.SaveLoader.Savable;
+import gameobjects.SaveLoader.SaveLoader;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public abstract class Entity implements Savable {
     private int health;
@@ -235,16 +233,28 @@ public abstract class Entity implements Savable {
 
     public String saveString() { //Prints every field that needs to be saved
         String str = "ENTITY\n";
-        str += String.format("%d\n%d\n%d\n%d\n%s\n%s\n%s\n%s\n%s\n",
-                health, maxHealth, damage, defense, name, saveInventory(),
-                "EQUIPPED", this.weapon.getName(), this.armor.getName());
+        str += String.format("%d\n%d\n%d\n%d\n%s\n%s\n%s\n%s\n",
+                health, maxHealth, damage, defense, name, saveInventory(),/*
+                "EQUIPPED", */this.weapon.getName(), this.armor.getName());
 
         return str;
     }
 
     @Override
     public void saveInstance(FileWriter saveFile) throws IOException {
+
+        String str = String.format("%d\n%d\n%d\n%d\n%s\n",
+                health, maxHealth, damage, defense, name);
         saveFile.write(this.getClass().getName() + "\n");
-        saveFile.write(this.saveString());
+        saveFile.write(str);
+        Items[] arr = new Items[this.inventory.size()];
+        SaveLoader.saveArray(this.inventory.toArray(arr),saveFile);
+        this.weapon.saveInstance(saveFile);
+        this.armor.saveInstance(saveFile);
+
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
     }
 }

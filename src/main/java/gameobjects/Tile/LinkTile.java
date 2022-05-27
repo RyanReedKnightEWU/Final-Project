@@ -2,6 +2,10 @@ package gameobjects.Tile;
 
 import Map.MapBase;
 import gameobjects.Entity.Entity;
+
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class LinkTile extends TileBase {
 
     // Link to new map.
@@ -46,6 +50,11 @@ public class LinkTile extends TileBase {
     public void setLinkToMap(MapBase map) {
 
         this.linkToMap = map;
+
+    }
+    @Override
+    public void saveInstance(FileWriter saveFile) throws IOException {
+        super.saveInstance(saveFile);
 
     }
 }
