@@ -118,7 +118,9 @@ public class Navigator {
 
         TileBase toMove = this.currentMap.getTile(row, column);
 
-        if (toMove.getPrimaryOccupant() == null || toMove.getPrimaryOccupant() == this.player) {
+        if (toMove.getPrimaryOccupant() == this.player) {
+            return MoveKey.CURRENT_TILE;
+        }else if (toMove.getPrimaryOccupant() == null) {
 
             if (toMove instanceof LinkTile) {
                 // Load new map with player located at corresponding entry point.

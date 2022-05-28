@@ -115,49 +115,11 @@ public class MapScene {
                 b.setMinWidth(vBox.getPrefWidth());
                 b.setMaxHeight(vBox.getPrefWidth());
                 b.setMaxWidth(vBox.getPrefWidth());
-                b.setOnMouseClicked(e->{
-                    MoveKey key = nav.moveTile(row, column);
-
-                    if (key == MoveKey.TILE_OCCUPIED) {
-                        AttackScene attackScene = new AttackScene(this);
-                        attackScene.start((Player) nav.getPlayer(),
-                                nav.getCurrentMap().getTile(row, column).getPrimaryOccupant());
-
-                        if (!nav.getCurrentMap().getTile(row, column).getPrimaryOccupant().isAlive()) {
-                            System.out.println("FFFFF" + nav.getCurrentMap().getTile(row, column).getPrimaryOccupant().isAlive());
-                            nav.forceMove(row,column);
-                        }
-                        System.out.println("FFFFF" + nav.getCurrentMap().getTile(row, column).getPrimaryOccupant().isAlive());
-                        reset(nav);
-
-                    }
-                    else if (key == MoveKey.LINK_TO_MAP) {
-                        // Get link to tile.
-                        LinkTile toMove = (LinkTile) nav.getCurrentMap().getTile(row,column);
-                        // Get coordinates of player on new map.
-                        int[] newMapPLayerCoordinate = toMove.getPosition();
-
-                        nav.getCurrentMap().getTile(nav.getCurrentRow(),nav.getCurrentColumn()).setPrimaryOccupant(null);
-
-                        // Set current map in Navigator to new map.
-                        nav.setCurrentMap(toMove.getLinkToMap());
-                        System.out.println(toMove.getLinkToMap() == null);
-                        // Add player to link's corresponding position on new map.
-                        nav.getCurrentMap().addEntity(nav.getPlayer(), newMapPLayerCoordinate[0],
-                                newMapPLayerCoordinate[1]);
-                        nav.setPosition(newMapPLayerCoordinate[0],newMapPLayerCoordinate[1]);
-                        MapScene newMapScene = new MapScene();
-                        newMapScene.start(nav);
-                    }
-                    else if (key == MoveKey.MOVE_SUCCESSFUL) {
-                        reset(nav);
-                    } else if (key == MoveKey.BAD_COORDINATES) {
-                        /**/
-                    }
-
-                });
+                b.setOnMouseClicked(e->move(nav,row,column));
                 grid.add(b, i, j);
             }
+
+
         }
     }
 
@@ -165,6 +127,58 @@ public class MapScene {
         start(nav);
         s
     }*/
+
+    public void move(Navigator nav, int row, int column){
+
+        MoveKey key = nav.moveTile(row, column);
+
+        if (key == MoveKey.CURRENT_TILE) {
+            return;
+        }else if (key == MoveKey.TILE_OCCUPIED) {
+
+
+
+            AttackScene attackScene = new AttackScene(this, nav,row,column);
+            attackScene.start((Player) nav.getPlayer(),
+                    nav.getCurrentMap().getTile(row, column).getPrimaryOccupant());
+
+            /*TEST*/ System.out.println("DEFENDER ALIVE BEFORE BLOCK " +
+                    nav.getCurrentMap().getTile(row, column).getPrimaryOccupant().isAlive());
+
+            if (!nav.getCurrentMap().getTile(row, column).getPrimaryOccupant().isAlive()) {
+                System.out.println("DEFENDER IS NOT ALIVE " +
+                        !nav.getCurrentMap().getTile(row, column).getPrimaryOccupant().isAlive());
+                nav.forceMove(row, column);
+
+                reset(nav);
+            }
+
+        }
+        else if (key == MoveKey.LINK_TO_MAP) {
+            // Get link to tile.
+            LinkTile toMove = (LinkTile) nav.getCurrentMap().getTile(row,column);
+            // Get coordinates of player on new map.
+            int[] newMapPLayerCoordinate = toMove.getPosition();
+
+            nav.getCurrentMap().getTile(nav.getCurrentRow(),
+                    nav.getCurrentColumn()).setPrimaryOccupant(null);
+
+            // Set current map in Navigator to new map.
+            nav.setCurrentMap(toMove.getLinkToMap());
+            System.out.println(toMove.getLinkToMap() == null);
+            // Add player to link's corresponding position on new map.
+            nav.getCurrentMap().addEntity(nav.getPlayer(), newMapPLayerCoordinate[0],
+                    newMapPLayerCoordinate[1]);
+            nav.setPosition(newMapPLayerCoordinate[0],newMapPLayerCoordinate[1]);
+            MapScene newMapScene = new MapScene();
+            newMapScene.start(nav);
+        }
+        else if (key == MoveKey.MOVE_SUCCESSFUL) {
+            reset(nav);
+        } else if (key == MoveKey.BAD_COORDINATES) {
+            /**/
+        }
+    }
 
     public void reset(Navigator nav){
         MapBase map = nav.getCurrentMap();

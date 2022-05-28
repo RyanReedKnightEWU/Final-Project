@@ -13,7 +13,8 @@ package gameobjects.Navigator;
 public enum MoveKey {
 
     MOVE_SUCCESSFUL("move successful"), BAD_COORDINATES("bad coordinates"), FAILED_ATTACK("failed attack"),
-    SUCCESSFUL_ATTACK("successful attack"),TILE_OCCUPIED("tile occupied"), LINK_TO_MAP("link to map");
+    SUCCESSFUL_ATTACK("successful attack"),TILE_OCCUPIED("tile occupied"), LINK_TO_MAP("link to map"),
+    CURRENT_TILE("current tile");
     MoveKey(String s) {
     }
 }

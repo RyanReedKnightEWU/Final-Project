@@ -42,11 +42,17 @@ public class AttackScene {
     private boolean consume;
     private MapScene map;
 
-    public AttackScene(MapScene map){
+    private Navigator nav;
+    private int row, column;
+
+    public AttackScene(MapScene map, Navigator nav,int row, int column){
         this.map = map;
         attack = new Button("Attack");
         consumables = new Button("Use Consumable");
         runAway = new Button("Run Away");
+        this.nav = nav;
+        this.row = row;
+        this.column = column;
 
         options = new HBox();
         options.setStyle("-fx-background-color: #336699;");
@@ -120,6 +126,7 @@ public class AttackScene {
         damageInfo.setText(currentInfo);
     }
 
+
     private void loot(Player player, Entity badGuy) {
         Popup pop = new Popup();
         //Adds gold and items to players inventory.
@@ -138,6 +145,8 @@ public class AttackScene {
         //Tells user what they got
         Alert alert = new Alert(Alert.AlertType.INFORMATION, stuff);
         alert.showAndWait();
+        nav.forceMove(row,column);
+        map.reset(nav);
         map.setScene();
     }
 
