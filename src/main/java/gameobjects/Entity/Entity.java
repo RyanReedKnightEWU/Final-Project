@@ -257,4 +257,11 @@ public abstract class Entity implements Savable {
     public void setAlive(boolean alive) {
         isAlive = alive;
     }
+
+    @Override
+    public int hashCode(){
+        return (this.getClass().getName().length()*this.getClass().getName().length()
+                + this.defense + this.damage + this.health);
+    }
+
 }

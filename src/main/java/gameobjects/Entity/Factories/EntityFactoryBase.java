@@ -1,5 +1,6 @@
-package gameobjects.Entity;
+package gameobjects.Entity.Factories;
 
+import gameobjects.Entity.Entity;
 import gameobjects.Items.Armor;
 import gameobjects.Items.Items;
 import gameobjects.Items.Weapon;

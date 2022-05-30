@@ -1,7 +1,10 @@
 package gameobjects.SaveLoader;
 
+import gameobjects.Map.GameMapFactory;
+import gameobjects.Map.GameMapFactoryKeys;
+import gameobjects.Map.MapBase;
 import gameobjects.Entity.Entity;
-import gameobjects.Entity.EntityLoader;
+import gameobjects.Entity.SaveLoad.EntityLoader;
 import gameobjects.Entity.Goblin;
 import gameobjects.Items.*;
 import gameobjects.Items.Armors.ArmorFactory;
@@ -188,8 +191,8 @@ public class Main {
         try (FileWriter saveFile = new FileWriter(saveName)) {
             //saveItemArray(new Items[]{ new throwingKnife(), new Clothes(4), new PlateArmor(6),
             // new Pistol()},saveFile);
-            (new Goblin(goblinName)).saveInstance(saveFile);
-
+            MapBase map =(new GameMapFactory()).createMap(GameMapFactoryKeys.FIRST_ARENA.toString());
+            map.saveInstance(saveFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -216,6 +219,8 @@ public class Main {
         }
 
         sc.close();
+
+
 
     }
     public static void compare(Object a, Object b){

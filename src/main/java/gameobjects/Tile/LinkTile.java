@@ -1,6 +1,6 @@
 package gameobjects.Tile;
 
-import Map.MapBase;
+import gameobjects.Map.MapBase;
 import gameobjects.Entity.Entity;
 
 import java.io.FileWriter;
@@ -55,6 +55,8 @@ public class LinkTile extends TileBase {
     @Override
     public void saveInstance(FileWriter saveFile) throws IOException {
         super.saveInstance(saveFile);
-
+        saveFile.write("LINK\n");
+        saveFile.write(Integer.toString(linkToMap.hashCode()));
+        saveFile.write("\n");
     }
 }

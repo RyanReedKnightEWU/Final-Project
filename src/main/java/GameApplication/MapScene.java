@@ -1,22 +1,14 @@
 package GameApplication;
 
-import Map.GameMapFactory;
-import Map.MapBase;
-import Map.MapFactoryBase;
-import gameobjects.Items.Armor;
+import gameobjects.Map.MapBase;
 import gameobjects.Items.Armors.CombatArmor;
 import gameobjects.Items.Consumables.AttackBottle;
 import gameobjects.Items.Weapons.Pistol;
-import gameobjects.Navigator.Attack;
 import gameobjects.Navigator.MoveKey;
 import gameobjects.Navigator.Navigator;
 import gameobjects.Tile.LinkTile;
-import gameobjects.Tile.TileBase;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -24,7 +16,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import gameobjects.Entity.*;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+
+import java.io.FileWriter;
+import java.io.IOException;
 
 import static FinalProject.Javafx.ApplicationMain.gameWindow;
 import static FinalProject.Javafx.ApplicationMain.scene;
@@ -54,6 +48,17 @@ public class MapScene {
         seeInventory = new Button("Inventory");
         seeInventory.setOnAction(e -> setSeeInventory(nav));
         save = new Button("Save Game");
+
+        // Start testing save/load
+        save.setOnMouseClicked(e -> {
+            try {
+                setSave(nav);
+                System.out.println("HI");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        // End testing save/load
 
         options = new HBox();
         options.setStyle("-fx-background-color: #336699;");
@@ -128,11 +133,24 @@ public class MapScene {
         s
     }*/
 
+    public void setSave(Navigator nav) throws IOException {
+        String saveName = "save.txt";
+        try (FileWriter saveFile = new FileWriter(saveName)) {
+            //saveItemArray(new Items[]{ new throwingKnife(), new Clothes(4), new PlateArmor(6),
+            // new Pistol()},saveFile);
+            nav.saveInstance(saveFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void move(Navigator nav, int row, int column){
 
         MoveKey key = nav.moveTile(row, column);
 
+
         if (key == MoveKey.CURRENT_TILE) {
+            // To fix bug where player disappears from map when clicked.
             return;
         }else if (key == MoveKey.TILE_OCCUPIED) {
 
@@ -175,8 +193,6 @@ public class MapScene {
         }
         else if (key == MoveKey.MOVE_SUCCESSFUL) {
             reset(nav);
-        } else if (key == MoveKey.BAD_COORDINATES) {
-            /**/
         }
     }
 

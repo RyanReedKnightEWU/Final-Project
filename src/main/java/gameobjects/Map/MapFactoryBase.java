@@ -1,15 +1,9 @@
-package Map;
+package gameobjects.Map;
 
-
-import gameobjects.Tile.Tile;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Factory to make maps of various different dimensions
- * Abstract so Map factories which inherit it can focus more on game specific details.
+ * Abstract so gameobjects.Map factories which inherit it can focus more on game specific details.
  * **/
 public abstract class MapFactoryBase {
     /**
@@ -18,7 +12,7 @@ public abstract class MapFactoryBase {
      * @param height - border height
      * @param width - border width
      * **/
-    public abstract MapBase createMap(int height, int width);
+    public abstract MapBase createMap(int height, int width, String identifier);
     public abstract MapBase createMap(String key);
 
 
@@ -26,7 +20,7 @@ public abstract class MapFactoryBase {
     /*
     public MapBase createOctoganolMap(int sideLength) throws IllegalArgumentException {
 
-        MapBase map = new Map(sideLength*3,sideLength*3);
+        MapBase map = new gameobjects.Map(sideLength*3,sideLength*3);
 
 
 

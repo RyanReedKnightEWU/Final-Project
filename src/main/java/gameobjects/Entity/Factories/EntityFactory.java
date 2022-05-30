@@ -1,12 +1,13 @@
-package gameobjects.Entity;
+package gameobjects.Entity.Factories;
 
+import gameobjects.Entity.*;
 import gameobjects.Items.Armor;
 import gameobjects.Items.Items;
 import gameobjects.Items.Weapon;
 
 import java.util.ArrayList;
 
-public class EntityFactory extends EntityFactoryBase{
+public class EntityFactory extends EntityFactoryBase {
 
     public EntityFactory() {
         super();

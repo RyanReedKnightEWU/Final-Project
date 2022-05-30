@@ -1,12 +1,19 @@
-package Map;
+package gameobjects.Map;
 
 import gameobjects.Entity.Entity;
+import gameobjects.SaveLoader.Savable;
+import gameobjects.SaveLoader.SaveLoader;
+import gameobjects.Tile.SaveLoad.TileLoader;
 import gameobjects.Tile.Tile;
 import gameobjects.Tile.TileBase;
 
-public abstract class MapBase {
+import java.io.FileWriter;
+import java.io.IOException;
+
+public abstract class MapBase implements Savable {
 
     private final TileBase[][] tileMatrix;
+    private final String identifier;
 
     /*
     private class MapLinks {
@@ -15,7 +22,8 @@ public abstract class MapBase {
         protected int linkedMapTileCoordinate;
     }*/
 
-    protected MapBase(int rows, int columns) {
+    protected MapBase(int rows, int columns, String identifier) {
+        this.identifier = identifier;
 
         if (rows < 0) {
             rows = 0;
@@ -111,4 +119,35 @@ public abstract class MapBase {
 
     }
 
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    @Override
+    public void saveInstance(FileWriter saveFile) throws IOException {
+
+        SaveLoader<TileBase> tileLoader = new TileLoader();
+        saveFile.write("START-MAP\n");
+        saveFile.write(Integer.toString(this.hashCode())+"\n");
+
+        for (TileBase[] t : this.tileMatrix) {
+            SaveLoader.saveArray(t,saveFile);
+        }
+        saveFile.write("END-MAP\n");
+    }
+
+    @Override
+    public int hashCode() {
+        int ret = 0;
+        for(int i = 0; i < this.tileMatrix.length; i++){
+            for(int j = 0; j < this.tileMatrix[0].length; j++) {
+                if (this.tileMatrix[i][j].getPrimaryOccupant() != null) {
+                    ret += this.tileMatrix[i][j].getPrimaryOccupant().hashCode()*(j+1)/(1+i);
+                }else{
+                    ret += (j+1)/(1+i);
+                }
+            }
+        }
+        return ret%100000000;
+    }
 }

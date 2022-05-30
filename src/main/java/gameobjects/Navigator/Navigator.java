@@ -1,19 +1,20 @@
 package gameobjects.Navigator;
 
-import Map.MapBase;
+import gameobjects.Map.MapBase;
 import gameobjects.Entity.Entity;
+import gameobjects.SaveLoader.Savable;
 import gameobjects.Tile.LinkTile;
-import gameobjects.Tile.Tile;
 import gameobjects.Tile.TileBase;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 
-import static gameobjects.Navigator.Attack.attack;
-
-public class Navigator {
+public class Navigator implements Savable {
 
     private static Navigator uniqueInstance;
     private MapBase currentMap;
+    public HashMap<Integer,MapBase> mapCollection;
     private TileBase currentTile;
     private int row, column;
     private Entity player;
@@ -33,6 +34,36 @@ public class Navigator {
         this.row = playerRowPosition;
         this.column = playerColumnPosition;
         this.currentMap.addEntity(player, playerRowPosition, playerColumnPosition);
+        this.mapCollection = new HashMap<>();
+        this.putMapInHashMap(this.currentMap);
+
+
+    }
+    private void putMapInHashMap(MapBase map) {
+
+        System.out.println("RECUR");
+
+        this.mapCollection.put(map.hashCode(),map);
+        MapBase linkedMap;
+
+        for (int i = 0; i < map.getRows(); i++) {
+            for (int j = 0; j < map.getColumns(); j++) {
+
+                System.out.println(map.getTile(i,j).getClass().getName());
+
+                if (map.getTile(i,j) instanceof LinkTile /*map.getTile(i,j).getClass().getName().startsWith(LinkTile.class.getName())*/) {
+                    // Linked map
+                    linkedMap = ((LinkTile) map.getTile(i,j)).getLinkToMap();
+
+                    if (!this.mapCollection.containsValue(linkedMap)) {
+
+                        System.out.println("Made it in");
+
+                        this.putMapInHashMap(linkedMap);
+                    }
+                }
+            }
+        }
     }
 
     // Getters and setters.
@@ -118,9 +149,9 @@ public class Navigator {
 
         TileBase toMove = this.currentMap.getTile(row, column);
 
-        if (toMove.getPrimaryOccupant() == this.player) {
-            return MoveKey.CURRENT_TILE;
-        }else if (toMove.getPrimaryOccupant() == null) {
+
+
+        if (toMove.getPrimaryOccupant() == null ) {
 
             if (toMove instanceof LinkTile) {
                 // Load new map with player located at corresponding entry point.
@@ -153,4 +184,12 @@ public class Navigator {
         System.out.println(this.getCurrentRow() + " " + this.getCurrentColumn());
     }
 
+    @Override
+    public void saveInstance(FileWriter saveFile) throws IOException {
+        int i = 0;
+        for(MapBase map : this.mapCollection.values()) {
+            System.out.println("ITR " + ++i);
+            map.saveInstance(saveFile);
+        }
+    }
 }

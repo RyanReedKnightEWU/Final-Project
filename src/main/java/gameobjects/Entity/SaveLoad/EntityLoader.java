@@ -1,5 +1,7 @@
-package gameobjects.Entity;
+package gameobjects.Entity.SaveLoad;
 
+import gameobjects.Entity.Entity;
+import gameobjects.Entity.Goblin;
 import gameobjects.Items.Armor;
 import gameobjects.Items.ItemLoader;
 import gameobjects.Items.Items;
