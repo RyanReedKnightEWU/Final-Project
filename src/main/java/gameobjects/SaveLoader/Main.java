@@ -1,7 +1,7 @@
 package gameobjects.SaveLoader;
 
-import gameobjects.Map.GameMapFactory;
-import gameobjects.Map.GameMapFactoryKeys;
+import gameobjects.Map.Factories.GameMapFactory;
+import gameobjects.Map.Factories.GameMapFactoryKeys;
 import gameobjects.Map.MapBase;
 import gameobjects.Entity.Entity;
 import gameobjects.Entity.SaveLoad.EntityLoader;

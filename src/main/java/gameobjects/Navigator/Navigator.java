@@ -1,20 +1,27 @@
 package gameobjects.Navigator;
 
+import gameobjects.Map.Factories.MapLoader;
 import gameobjects.Map.MapBase;
 import gameobjects.Entity.Entity;
 import gameobjects.SaveLoader.Savable;
+import gameobjects.SaveLoader.SaveLoader;
 import gameobjects.Tile.LinkTile;
 import gameobjects.Tile.TileBase;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Scanner;
 
 public class Navigator implements Savable {
 
     private static Navigator uniqueInstance;
     private MapBase currentMap;
-    public HashMap<Integer,MapBase> mapCollection;
+    private HashMap<Integer,MapBase> mapCollection;
     private TileBase currentTile;
     private int row, column;
     private Entity player;
@@ -37,11 +44,10 @@ public class Navigator implements Savable {
         this.mapCollection = new HashMap<>();
         this.putMapInHashMap(this.currentMap);
 
-
     }
     private void putMapInHashMap(MapBase map) {
 
-        System.out.println("RECUR");
+        System.out.println(map.getIdentifier() + "\t" + map.hashCode());
 
         this.mapCollection.put(map.hashCode(),map);
         MapBase linkedMap;
@@ -51,7 +57,8 @@ public class Navigator implements Savable {
 
                 System.out.println(map.getTile(i,j).getClass().getName());
 
-                if (map.getTile(i,j) instanceof LinkTile /*map.getTile(i,j).getClass().getName().startsWith(LinkTile.class.getName())*/) {
+                if (map.getTile(i,j) instanceof LinkTile) {
+
                     // Linked map
                     linkedMap = ((LinkTile) map.getTile(i,j)).getLinkToMap();
 
@@ -149,8 +156,6 @@ public class Navigator implements Savable {
 
         TileBase toMove = this.currentMap.getTile(row, column);
 
-
-
         if (toMove.getPrimaryOccupant() == null ) {
 
             if (toMove instanceof LinkTile) {
@@ -191,5 +196,37 @@ public class Navigator implements Savable {
             System.out.println("ITR " + ++i);
             map.saveInstance(saveFile);
         }
+    }
+
+    public void loadGame(String fileName) throws SaveLoader.LeaveFunction {
+
+        Scanner sc;
+
+        try {
+            sc = new Scanner(new File(fileName));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        this.reset();
+        SaveLoader<MapBase> loader = new MapLoader();
+        MapBase map;
+
+        while(sc.hasNext()) {
+            map = loader.load(sc);
+            this.mapCollection.put(map.hashCode(),map);
+        }
+
+    }
+    private void reset() {
+        this.player = null;
+        this.currentMap = null;
+        this.row = 0;
+        this.column = 0;
+        this.mapCollection.clear();
+    }
+
+    public HashMap<Integer, MapBase> getMapCollection() {
+        return mapCollection;
     }
 }

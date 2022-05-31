@@ -1,11 +1,18 @@
-package gameobjects.Map;
+package gameobjects.Map.Factories;
 
 import gameobjects.Entity.Entity;
 import gameobjects.Entity.Goblin;
 import gameobjects.Entity.Murderbot;
 import gameobjects.Entity.Mutant;
+import gameobjects.Entity.SaveLoad.EntityLoader;
+import gameobjects.Map.MapBase;
+import gameobjects.Map.RectangularMap;
+import gameobjects.SaveLoader.SaveLoader;
 import gameobjects.Tile.LinkTile;
 import gameobjects.Tile.Tile;
+import gameobjects.Tile.TileBase;
+
+import java.util.Scanner;
 
 public class GameMapFactory extends MapFactoryBase {
 
@@ -67,8 +74,10 @@ public class GameMapFactory extends MapFactoryBase {
             LinkTile arenaToHallLink = new LinkTile(standardHall,null,arenaToHallHallPosition),
                     hallToArenaLink = new LinkTile(standardArena,null,hallToArenaArenaPosition);
 
-            standardArena.addTile(arenaToHallLink,0,3);
-            standardHall.addTile(hallToArenaLink,3,0);
+            System.out.println("HashCode:\t" + standardArena.hashCode());
+
+            standardArena.addTile(new LinkTile(standardHall,null,arenaToHallHallPosition),0,3);
+            standardHall.addTile(new LinkTile(standardArena,null,hallToArenaArenaPosition),3,0);
             standardHall.addTile(new LinkTile(recRoom,null,0,0),0,0);
             standardArena.addEntity(new Goblin("Azog"),3,0);
             standardArena.addEntity(new Goblin("Marduk"),2,2);
@@ -85,4 +94,23 @@ public class GameMapFactory extends MapFactoryBase {
         return map;
     }
 
+    @Override
+    public MapBase load(Scanner sc) throws LeaveFunction {
+        MapBase map = new RectangularMap(Integer.parseInt(sc.nextLine()),Integer.parseInt(sc.nextLine()),sc.nextLine());
+
+        for(int i = 0; i < map.getRows(); i++) {
+            Entity[] entityArr = (new EntityLoader()).loadArray(sc);
+
+            for(int j = 0; j < map.getColumns(); j++) {
+                //map.addTile();
+            }
+
+        }
+        return null;
+    }
+
+    @Override
+    public MapBase[] loadArray(Scanner sc) {
+        return new MapBase[0];
+    }
 }

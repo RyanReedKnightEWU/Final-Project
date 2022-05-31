@@ -182,9 +182,14 @@ public class MapScene {
                     nav.getCurrentColumn()).setPrimaryOccupant(null);
 
             // Set current map in Navigator to new map.
-            nav.setCurrentMap(toMove.getLinkToMap());
+            nav.setCurrentMap(nav.getMapCollection().get(toMove.getNewMapHashValue()));
             System.out.println(toMove.getLinkToMap() == null);
             // Add player to link's corresponding position on new map.
+
+            System.out.println(nav.getCurrentMap() == null);
+            System.out.println("Keys: " + nav.getMapCollection().keySet());
+            System.out.println("Values: " + nav.getMapCollection().values());
+
             nav.getCurrentMap().addEntity(nav.getPlayer(), newMapPLayerCoordinate[0],
                     newMapPLayerCoordinate[1]);
             nav.setPosition(newMapPLayerCoordinate[0],newMapPLayerCoordinate[1]);

@@ -26,6 +26,9 @@ public abstract class TileBase implements Savable {
 
     @Override
     public void saveInstance(FileWriter saveFile) throws IOException {
+
+        saveFile.write(this.getClass().getName() + "\n");
+
         if (this.primaryOccupant != null) {
             this.primaryOccupant.saveInstance(saveFile);
         }else {

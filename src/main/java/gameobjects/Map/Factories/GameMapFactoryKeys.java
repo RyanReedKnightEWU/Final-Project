@@ -1,4 +1,4 @@
-package gameobjects.Map;
+package gameobjects.Map.Factories;
 
 public enum GameMapFactoryKeys {
 

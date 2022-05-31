@@ -3,6 +3,7 @@ package gameobjects.Map;
 import gameobjects.Entity.Entity;
 import gameobjects.SaveLoader.Savable;
 import gameobjects.SaveLoader.SaveLoader;
+import gameobjects.Tile.LinkTile;
 import gameobjects.Tile.SaveLoad.TileLoader;
 import gameobjects.Tile.Tile;
 import gameobjects.Tile.TileBase;
@@ -128,6 +129,9 @@ public abstract class MapBase implements Savable {
 
         SaveLoader<TileBase> tileLoader = new TileLoader();
         saveFile.write("START-MAP\n");
+        saveFile.write(this.getRows() + "\n");
+        saveFile.write(this.getColumns() + "\n");
+        saveFile.write(this.identifier);
         saveFile.write(Integer.toString(this.hashCode())+"\n");
 
         for (TileBase[] t : this.tileMatrix) {
@@ -141,9 +145,9 @@ public abstract class MapBase implements Savable {
         int ret = 0;
         for(int i = 0; i < this.tileMatrix.length; i++){
             for(int j = 0; j < this.tileMatrix[0].length; j++) {
-                if (this.tileMatrix[i][j].getPrimaryOccupant() != null) {
-                    ret += this.tileMatrix[i][j].getPrimaryOccupant().hashCode()*(j+1)/(1+i);
-                }else{
+                /*if (this.tileMatrix[i][j] instanceof LinkTile) {
+                    ret += (j+1)/(1+i)*2;
+                }else*/{
                     ret += (j+1)/(1+i);
                 }
             }
