@@ -124,8 +124,10 @@ public class Consumable extends Items{
 
     public String save(){
         String value = "CONSUMABLE\n";
-        //value += String.format("Name: %s\nDamage: %d-%d\nHeals: %d\nAmount: %d\nValue: %d\nDescription: %s", getName(), getMinDamage(), getMaxDamage(), getHeal(), getAmount(), getValue(), getDescription());
-        value += String.format("%s\n%d\n%d\n%d\n%d\n%d\n%s\n", getName(), getMinDamage(), getMaxDamage(), getHeal(), getAmount(), getValue(), getDescription());
+        /*value += String.format("Name: %s\nDamage: %d-%d\nHeals: %d\nAmount: %d\nValue: %d\nDescription: %s",
+         getName(), getMinDamage(), getMaxDamage(), getHeal(), getAmount(), getValue(), getDescription());*/
+        value += String.format("%s\n%d\n%d\n%d\n%d\n%d\n%s\n", getName(), getMinDamage(),
+                getMaxDamage(), getHeal(), getAmount(), getValue(), getDescription());
         return value;
     }
 

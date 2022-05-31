@@ -131,7 +131,7 @@ public abstract class MapBase implements Savable {
         saveFile.write("START-MAP\n");
         saveFile.write(this.getRows() + "\n");
         saveFile.write(this.getColumns() + "\n");
-        saveFile.write(this.identifier);
+        saveFile.write(this.identifier + "\n");
         saveFile.write(Integer.toString(this.hashCode())+"\n");
 
         for (TileBase[] t : this.tileMatrix) {

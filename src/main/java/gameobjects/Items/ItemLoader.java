@@ -13,12 +13,12 @@ public class ItemLoader extends SaveLoader<Items> {
     public Items load(Scanner sc) throws LeaveFunction {
         // Read subclass and use it to determine what needs to be implemented.
         String subclass = sc.nextLine();
-
+        System.out.println("LOAD ITEM\t" + subclass);
         if (subclass.equals(SaveLoader.getEndArrKey())) {
             super.ThrowLeaveFunction();
         }
 
-        String type;
+
         String name;
         int minDamage;
         int maxDamage;
@@ -28,12 +28,12 @@ public class ItemLoader extends SaveLoader<Items> {
 
         if (subclass.startsWith(Weapon.class.getName())) {
 
-            sc.nextLine();
-            name = sc.nextLine();
-            minDamage = Integer.parseInt(sc.nextLine());;
-            maxDamage = Integer.parseInt(sc.nextLine());;
-            value = Integer.parseInt(sc.nextLine());;
-            description = sc.nextLine();
+            sc.nextLine();  // Read "WEAPON"
+            name = sc.nextLine();   // Read name
+            minDamage = Integer.parseInt(sc.nextLine());    // Read minDamage
+            maxDamage = Integer.parseInt(sc.nextLine());    // Read maxDamage
+            value = Integer.parseInt(sc.nextLine());    // Read value
+            description = sc.nextLine();    // Read description
 
             return (new WeaponFactory()).createWeapon(subclass,name,minDamage,
                     maxDamage,value,description);
@@ -69,19 +69,15 @@ public class ItemLoader extends SaveLoader<Items> {
     public Items[] loadArray(Scanner sc) {
 
         LinkedList<Items> list = new LinkedList<>();
-        boolean flag = true;
-        while(sc.hasNext()&&flag) {
-            try {
+        Items[] ret = null;
+
+        try {
+            while(sc.hasNext()) {
                 list.add(this.load(sc));
-            }catch (LeaveFunction lf) {
-                flag = false;
             }
-        }
-
-        Items[] ret = new Items[list.size()];
-
-        for(int i = 0; i < list.size(); ++i) {
-            ret[i] = list.get(i);
+        }catch (LeaveFunction lf) {
+             ret = new Items[list.size()];
+             ret = list.toArray(ret);
         }
         return ret;
     }

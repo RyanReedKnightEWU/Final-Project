@@ -37,6 +37,8 @@ public class ApplicationMain extends Application {
         nav = Navigator.getInstance(new Player(100,0,0,"Jaque"),
                 mapFactory.createMap(GameMapFactoryKeys.STANDARD_MAP.toString()),0,3/*(new MapLoader()).load(sc),0,0*/);
 
+        nav.loadGame("save.txt");
+
         System.out.println("INTEGER ---- "  + nav.getMapCollection().keySet());
         System.out.println(nav.getMapCollection().containsKey(57));
 

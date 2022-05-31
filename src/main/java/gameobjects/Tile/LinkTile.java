@@ -79,7 +79,7 @@ public class LinkTile extends TileBase {
     @Override
     public void saveInstance(FileWriter saveFile) throws IOException {
         super.saveInstance(saveFile);
-        saveFile.write(Integer.toString(linkToMap.hashCode()));
+        saveFile.write(Integer.toString(linkToMap.hashCode())+"\n");
         saveFile.write(Integer.toString(this.row) + "\n");
         saveFile.write(Integer.toString(this.column) + "\n");
     }

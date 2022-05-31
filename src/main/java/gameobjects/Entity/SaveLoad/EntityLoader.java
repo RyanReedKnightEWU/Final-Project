@@ -25,9 +25,9 @@ public class EntityLoader extends SaveLoader<Entity> {
             return null;
         }
 
-        SaveLoader<Items> itemLoader = new ItemLoader();
+        ItemLoader itemLoader = new ItemLoader();
 
-        int health = sc.nextInt();
+        int health = Integer.parseInt(sc.nextLine());
         int maxHealth = sc.nextInt();
         int damage = sc.nextInt();
         int defense = sc.nextInt();

@@ -1,5 +1,6 @@
 package gameobjects.Navigator;
 
+import gameobjects.Entity.SaveLoad.EntityLoader;
 import gameobjects.Map.Factories.MapLoader;
 import gameobjects.Map.MapBase;
 import gameobjects.Entity.Entity;
@@ -196,9 +197,13 @@ public class Navigator implements Savable {
             System.out.println("ITR " + ++i);
             map.saveInstance(saveFile);
         }
+        this.player.saveInstance(saveFile);
+        saveFile.write(getCurrentMap().hashCode());
+        saveFile.write(this.row);
+        saveFile.write(this.column);
     }
 
-    public void loadGame(String fileName) throws SaveLoader.LeaveFunction {
+    public void loadGame(String fileName) {
 
         Scanner sc;
 
@@ -209,14 +214,40 @@ public class Navigator implements Savable {
         }
 
         this.reset();
-        SaveLoader<MapBase> loader = new MapLoader();
+        MapLoader loader = new MapLoader();
         MapBase map;
-
-        while(sc.hasNext()) {
-            map = loader.load(sc);
-            this.mapCollection.put(map.hashCode(),map);
+        String mapHeader = sc.nextLine();
+        System.out.println(mapHeader);
+        try {
+            while (mapHeader.equals("START-MAP")) {
+                map = loader.load(mapHeader,sc);
+                this.mapCollection.put(map.hashCode(), map);
+                sc.nextLine(); // Catch end of map.
+                mapHeader = sc.nextLine();
+                System.out.println(map.getIdentifier() +  "\tMAP LOADED");
+                System.out.println("MAP HEADER: " + mapHeader);
+                System.out.println(this.mapCollection.keySet());
+            }
+        }catch (SaveLoader.LeaveFunction e){
         }
 
+        try {
+            System.out.println("HEADER\t" + mapHeader);
+            this.player = (new EntityLoader()).load(mapHeader,sc);
+
+        } catch (SaveLoader.LeaveFunction e) {
+            throw new RuntimeException(e);
+        }
+
+
+        String x = sc.nextLine(), y = sc.nextLine();
+       // System.out.println(sc.);
+        System.out.println(this.getMapCollection().keySet());
+        System.out.println("X\t" + x + "\tY\t" + y);
+        this.setPosition(Integer.parseInt(x),
+                Integer.parseInt(y));
+
+        sc.close();
     }
     private void reset() {
         this.player = null;

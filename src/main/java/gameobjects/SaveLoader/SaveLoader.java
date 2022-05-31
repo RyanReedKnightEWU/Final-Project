@@ -19,7 +19,7 @@ public abstract class SaveLoader<E extends Savable> {
     }
 
     public abstract E load(Scanner sc) throws LeaveFunction;
-    public abstract E[] loadArray(Scanner sc);
+    public abstract E[] loadArray(Scanner sc) throws LeaveFunction;
 
     public static void saveArray(Savable[] arr,FileWriter saveFile) throws IOException {
         for(Savable element : arr) {

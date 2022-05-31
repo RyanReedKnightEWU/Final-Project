@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public abstract class Entity implements Savable {
+public abstract class Entity implements Savable, Comparable<Entity>{
     private int health;
     private int maxHealth;
     private int damage;
@@ -60,7 +60,7 @@ public abstract class Entity implements Savable {
         addItem(weapon);
         setWeapon(0);
         addItem(armor);
-        setArmor(1);
+        setArmor(armor);
 
         if (health >= 0) {
             this.isAlive = true;
@@ -264,4 +264,45 @@ public abstract class Entity implements Savable {
                 + this.defense + this.damage + this.health);
     }
 
+    @Override
+    public int compareTo(Entity entity) {
+
+        if (name.equals(entity.name)) {
+            if (maxHealth == entity.maxHealth) {
+                if (health == entity.health) {
+                    if (damage == entity.damage) {
+                        if (defense == entity.defense) {
+                            if (isAlive == entity.isAlive) {
+                                if(gold == entity.gold) {
+                                    if(weapon.equals(entity.weapon)){
+                                        if (armor.equals(entity.armor)) {
+
+                                            if (inventory.size() == entity.inventory.size()) {
+                                                for(int i = 0; i < inventory.size(); i++) {
+                                                    if(!inventory.get(i).equals(entity.inventory.get(i))){
+                                                        return inventory.get(i).compareTo(entity.inventory.get(i));
+                                                    }
+                                                }
+                                                return 0;
+                                            }
+                                            return Integer.compare(inventory.size(),entity.inventory.size());
+                                        }
+                                        return armor.compareTo(entity.armor);
+                                    }
+                                    return weapon.compareTo(entity.weapon);
+                                }
+                                return Integer.compare(gold,entity.gold);
+                            }
+                            return Boolean.compare(isAlive,entity.isAlive);
+                        }
+                        return Integer.compare(defense,entity.defense);
+                    }
+                    return Integer.compare(damage,entity.damage);
+                }
+                return Integer.compare(health,entity.health);
+            }
+            return Integer.compare(maxHealth,entity.maxHealth);
+        }
+        return name.compareTo(entity.name);
+    }
 }
