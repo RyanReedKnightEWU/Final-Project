@@ -1,6 +1,7 @@
 package gameobjects.Entity;
 
 import gameobjects.Entity.SaveLoad.EntityLoader;
+import gameobjects.Items.Items;
 import gameobjects.SaveLoader.SaveLoader;
 
 import java.io.File;
@@ -15,6 +16,8 @@ public class TestSaveLoad {
         String name = "Azog", file = "goblin.txt";
         Entity entA = new Goblin(name);
 
+        System.out.println(entA.equals((new Goblin(name))));
+
         FileWriter fileWriter = new FileWriter(new File(file));
         entA.saveInstance(fileWriter);
         fileWriter.close();
@@ -25,6 +28,10 @@ public class TestSaveLoad {
         sc.close();
 
         System.out.println("RESULT: " + entB.equals(entA));
+
+        System.out.println("EntA\t" + entA.getInventory().size() + "\tEntb\t" + entB.getInventory().size());
+
+
 
     }
 

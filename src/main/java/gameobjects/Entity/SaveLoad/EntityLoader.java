@@ -27,7 +27,7 @@ public class EntityLoader extends SaveLoader<Entity> {
 
         ItemLoader itemLoader = new ItemLoader();
 
-        int health = Integer.parseInt(sc.nextLine());
+        int health = sc.nextInt();
         int maxHealth = sc.nextInt();
         int damage = sc.nextInt();
         int defense = sc.nextInt();
@@ -37,6 +37,12 @@ public class EntityLoader extends SaveLoader<Entity> {
         ArrayList<Items> inventory = new ArrayList<>(List.of(arr));
         Weapon weapon = (Weapon) itemLoader.load(sc);
         Armor armor = (Armor) itemLoader.load(sc);
+
+        // Remove equiped weapon and armor, these will be added in he constructor, so if they
+        // are added here there will be duplicates.
+
+        inventory.remove(weapon);
+        inventory.remove(armor);
 
         if (subclass.equals(Goblin.class.getName())) {
             return new Goblin(health, maxHealth, damage, defense, name,inventory, weapon, armor);

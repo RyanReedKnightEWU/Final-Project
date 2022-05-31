@@ -11,8 +11,10 @@ import java.util.Scanner;
 public class ItemLoader extends SaveLoader<Items> {
 
     public Items load(Scanner sc) throws LeaveFunction {
-        // Read subclass and use it to determine what needs to be implemented.
-        String subclass = sc.nextLine();
+        return load(sc,sc.nextLine());
+    }
+    public Items load(Scanner sc, String subclass) throws LeaveFunction {
+
         System.out.println("LOAD ITEM\t" + subclass);
         if (subclass.equals(SaveLoader.getEndArrKey())) {
             super.ThrowLeaveFunction();
@@ -71,13 +73,15 @@ public class ItemLoader extends SaveLoader<Items> {
         LinkedList<Items> list = new LinkedList<>();
         Items[] ret = null;
 
+
         try {
-            while(sc.hasNext()) {
+            while(true) {
                 list.add(this.load(sc));
             }
         }catch (LeaveFunction lf) {
-             ret = new Items[list.size()];
-             ret = list.toArray(ret);
+             //ret = new Items[list.size()];
+             ret = list.toArray(new Items[0]);
+             System.out.println("CATCH");
         }
         return ret;
     }

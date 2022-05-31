@@ -247,8 +247,7 @@ public abstract class Entity implements Savable, Comparable<Entity>{
                 health, maxHealth, damage, defense, name);
         saveFile.write(this.getClass().getName() + "\n");
         saveFile.write(str);
-        Items[] arr = new Items[this.inventory.size()];
-        SaveLoader.saveArray(this.inventory.toArray(arr),saveFile);
+        SaveLoader.saveArray(this.inventory.toArray(new Items[0]),saveFile);
         this.weapon.saveInstance(saveFile);
         this.armor.saveInstance(saveFile);
 
@@ -267,6 +266,12 @@ public abstract class Entity implements Savable, Comparable<Entity>{
     @Override
     public int compareTo(Entity entity) {
 
+        if (this == entity) {
+            return 0;
+        } else if (entity == null) {
+            return 1;
+        }
+
         if (name.equals(entity.name)) {
             if (maxHealth == entity.maxHealth) {
                 if (health == entity.health) {
@@ -276,11 +281,10 @@ public abstract class Entity implements Savable, Comparable<Entity>{
                                 if(gold == entity.gold) {
                                     if(weapon.equals(entity.weapon)){
                                         if (armor.equals(entity.armor)) {
-
                                             if (inventory.size() == entity.inventory.size()) {
                                                 for(int i = 0; i < inventory.size(); i++) {
-                                                    if(!inventory.get(i).equals(entity.inventory.get(i))){
-                                                        return inventory.get(i).compareTo(entity.inventory.get(i));
+                                                    if(!inventory.contains(entity.inventory.get(i))){
+                                                        return 1;
                                                     }
                                                 }
                                                 return 0;
@@ -304,5 +308,17 @@ public abstract class Entity implements Savable, Comparable<Entity>{
             return Integer.compare(maxHealth,entity.maxHealth);
         }
         return name.compareTo(entity.name);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (!(obj instanceof Entity)) {
+            return false;
+        } else if (obj == this) {
+            return true;
+        } else {
+            return compareTo((Entity) obj) == 0;
+        }
     }
 }
