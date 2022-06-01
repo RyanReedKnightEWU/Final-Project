@@ -1,10 +1,7 @@
 package gameobjects.Entity.SaveLoad;
 
 import gameobjects.Entity.*;
-import gameobjects.Items.Armor;
-import gameobjects.Items.ItemLoader;
-import gameobjects.Items.Items;
-import gameobjects.Items.Weapon;
+import gameobjects.Items.*;
 import gameobjects.Items.Weapons.WeaponFactory;
 import gameobjects.SaveLoader.SaveLoader;
 
@@ -41,8 +38,13 @@ public class EntityLoader extends SaveLoader<Entity> {
             System.out.println("From EntityLoader: " + i);
         }
 
+        ArrayList<Items> inventory = new ArrayList<Items>();
 
-        ArrayList<Items> inventory = new ArrayList<>(List.of(arr));
+        for (Items i: arr) {
+            inventory.add(i);
+        }
+
+        //ArrayList<Items> inventory = new ArrayList<Items>(List.of(arr));
         Weapon weapon = (Weapon) itemLoader.load(sc);
         Armor armor = (Armor) itemLoader.load(sc);
 
