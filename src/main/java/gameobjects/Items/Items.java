@@ -73,12 +73,7 @@ public abstract class Items implements Comparable<Items>, Savable {
     public void saveInstance(FileWriter saveFile) throws IOException {
         saveFile.write(this.getClass().getName() + "\n");
         saveFile.write(this.save());
-
-        System.out.println("SAVED: " + name);
     }
-
-
-
     @Override
     public int compareTo(Items item) {
         if (item == null) {

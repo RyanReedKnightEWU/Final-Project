@@ -183,7 +183,7 @@ public class MapScene {
 
             // Set current map in Navigator to new map.
             nav.setCurrentMap(nav.getMapCollection().get(toMove.getNewMapHashValue()));
-            System.out.println(toMove.getLinkToMap() == null);
+            System.out.println(nav.getMapCollection().get(toMove.getNewMapHashValue()) == null);
             // Add player to link's corresponding position on new map.
 
             System.out.println(nav.getCurrentMap() == null);
@@ -200,7 +200,6 @@ public class MapScene {
             reset(nav);
         }
     }
-
     public void reset(Navigator nav){
         MapBase map = nav.getCurrentMap();
         fillGrid(grid,nav);

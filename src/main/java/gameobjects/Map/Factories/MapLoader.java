@@ -18,14 +18,13 @@ public class MapLoader extends SaveLoader<MapBase> {
 
         MapBase map = new RectangularMap(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine()),
                 sc.nextLine());
+        sc.nextLine();
         TileLoader loader = new TileLoader();
         for(int i = 0; i < map.getRows(); i++) {
             loader.loadArray(sc);
         }
-
         return map;
     }
-
 
     @Override
     public MapBase[] loadArray(Scanner sc) {

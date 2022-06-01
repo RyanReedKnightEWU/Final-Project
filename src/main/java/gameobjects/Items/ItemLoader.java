@@ -4,7 +4,6 @@ import gameobjects.Items.Armors.ArmorFactory;
 import gameobjects.Items.Consumables.ConsumableFactory;
 import gameobjects.Items.Weapons.WeaponFactory;
 import gameobjects.SaveLoader.SaveLoader;
-
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -15,18 +14,15 @@ public class ItemLoader extends SaveLoader<Items> {
     }
     public Items load(Scanner sc, String subclass) throws LeaveFunction {
 
-        System.out.println("LOAD ITEM\t" + subclass);
         if (subclass.equals(SaveLoader.getEndArrKey())) {
             super.ThrowLeaveFunction();
         }
-
 
         String name;
         int minDamage;
         int maxDamage;
         int value;
         String description;
-
 
         if (subclass.startsWith(Weapon.class.getName())) {
 
@@ -73,17 +69,14 @@ public class ItemLoader extends SaveLoader<Items> {
         LinkedList<Items> list = new LinkedList<>();
         Items[] ret = null;
 
-
         try {
+            // Loop until LeaveFunction is thrown.
             while(true) {
                 list.add(this.load(sc));
             }
         }catch (LeaveFunction lf) {
-             //ret = new Items[list.size()];
              ret = list.toArray(new Items[0]);
-             System.out.println("CATCH");
         }
         return ret;
     }
-
 }

@@ -27,11 +27,7 @@ public class TestSaveLoad {
         Entity entB = (new EntityLoader()).load(sc);
         sc.close();
 
-        System.out.println("RESULT: " + entB.equals(entA));
-
-        System.out.println("EntA\t" + entA.getInventory().size() + "\tEntb\t" + entB.getInventory().size());
-
-
+        System.out.println("RESULT entA equals entB: " + entB.equals(entA));
 
     }
 

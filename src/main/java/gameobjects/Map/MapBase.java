@@ -11,7 +11,7 @@ import gameobjects.Tile.TileBase;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public abstract class MapBase implements Savable {
+public abstract class MapBase implements Savable, Comparable<MapBase> {
 
     private final TileBase[][] tileMatrix;
     private final String identifier;
@@ -132,7 +132,7 @@ public abstract class MapBase implements Savable {
         saveFile.write(this.getRows() + "\n");
         saveFile.write(this.getColumns() + "\n");
         saveFile.write(this.identifier + "\n");
-        saveFile.write(Integer.toString(this.hashCode())+"\n");
+        saveFile.write(this.hashCode() +"\n");
 
         for (TileBase[] t : this.tileMatrix) {
             SaveLoader.saveArray(t,saveFile);
@@ -153,5 +153,45 @@ public abstract class MapBase implements Savable {
             }
         }
         return ret%100000000;
+    }
+
+    @Override
+    public int compareTo(MapBase map) {
+        if (identifier.equals(map.getIdentifier())) {
+            if (getRows() == map.getRows()) {
+                if (getColumns() == map.getColumns()) {
+                    for (int i = 0; i < tileMatrix.length; i++) {
+                        for (int j = 0; j < tileMatrix[i].length; j++) {
+
+                            if (tileMatrix[i][j].getClass().getName().equals(
+                                    map.tileMatrix[i][j].getClass().getName())) {
+
+                                if (tileMatrix[i][j] instanceof Tile &&
+                                        !((Tile) tileMatrix[i][j]).equals((Tile) map.tileMatrix[i][j])) {
+                                    return ((Tile) tileMatrix[i][j]).compareTo((Tile) map.tileMatrix[i][j]);
+                                } else if (tileMatrix[i][j] instanceof LinkTile &&
+                                        !((LinkTile) tileMatrix[i][j]).equals((LinkTile) map.tileMatrix[i][j])) {
+                                    return ((LinkTile) tileMatrix[i][j]).compareTo((LinkTile) map.tileMatrix[i][j]);
+                                }
+                            }
+                        }
+                    }
+                    return 0;
+                }
+                return Integer.compare(getColumns(), map.getColumns());
+            }
+            return Integer.compare(getRows(), map.getRows());
+        }
+       return identifier.compareTo(map.identifier);
+    }
+    @Override
+    public boolean equals(Object obj){
+        if (!(obj instanceof MapBase)) {
+            return false;
+        } else if (obj == this) {
+            return true;
+        } else {
+            return compareTo((MapBase) obj) == 0;
+        }
     }
 }

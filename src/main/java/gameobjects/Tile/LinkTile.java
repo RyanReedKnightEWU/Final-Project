@@ -6,17 +6,14 @@ import gameobjects.Entity.Entity;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class LinkTile extends TileBase {
+public class LinkTile extends TileBase implements Comparable<LinkTile> {
 
     // Link to new map.
-    private MapBase linkToNewMap;
     private int newMapHashValue;
-
-    private MapBase linkToMap;
 
     // Position player emerges at on new map.
     private final int row, column;
-
+    /*
     public LinkTile(MapBase map, Entity primaryOccupant, int row, int column) {
         super(primaryOccupant);
         this.row = row;
@@ -30,14 +27,27 @@ public class LinkTile extends TileBase {
         this.column = position[1];
         this.linkToMap = map;
         this.newMapHashValue = map.hashCode();
-    }
+    }*/
 
     public LinkTile (Entity primaryOccupant, int[] position, int hashCode) {
         super(primaryOccupant);
         this.row = position[0];
         this.column = position[1];
-        this.linkToMap = null;
         this.newMapHashValue = hashCode;
+    }
+
+    public LinkTile(MapBase map, Entity occupant, int linkMapRow, int linkMapColumn) {
+        super(occupant);
+        row = linkMapRow;
+        column = linkMapColumn;
+        newMapHashValue = map.hashCode();
+    }
+
+    public LinkTile(MapBase map, Entity occupant, int[] position) {
+        super(occupant);
+        row = position[0];
+        column = position[1];
+        newMapHashValue = map.hashCode();
     }
 
     public int getRowOnNewMap() {
@@ -48,24 +58,6 @@ public class LinkTile extends TileBase {
     }
     public int[] getPosition() {
         return new int[] {this.row, this.column };
-    }
-
-    public MapBase getLinkToMap() {
-        return this.linkToMap;
-    }
-
-    /**
-     * Set map link
-     * @param map - MapBase
-     * **/
-    public void setLinkToMap(MapBase map) {
-
-        this.linkToMap = map;
-
-    }
-
-    public void setLinkToNewMap(MapBase linkToNewMap) {
-        this.linkToNewMap = linkToNewMap;
     }
 
     public int getNewMapHashValue() {
@@ -79,8 +71,41 @@ public class LinkTile extends TileBase {
     @Override
     public void saveInstance(FileWriter saveFile) throws IOException {
         super.saveInstance(saveFile);
-        saveFile.write(Integer.toString(linkToMap.hashCode())+"\n");
-        saveFile.write(Integer.toString(this.row) + "\n");
-        saveFile.write(Integer.toString(this.column) + "\n");
+        saveFile.write(newMapHashValue +"\n");
+        saveFile.write(row + "\n");
+        saveFile.write(column + "\n");
+    }
+
+    @Override
+    public int compareTo(LinkTile tile) {
+        if(tile == null) {
+            return -1;
+        } else if (tile == this) {
+            return 0;
+        }
+
+        if (getPrimaryOccupant().equals(tile.getPrimaryOccupant())){
+            if(hashCode() == tile.hashCode()) {
+                if(row == tile.row) {
+                    if(column == tile.column) {
+                        return 0;
+                    }
+                    return Integer.compare(column,tile.column);
+                }
+                return Integer.compare(row,tile.row);
+            }
+            return Integer.compare(newMapHashValue,tile.newMapHashValue);
+       }
+       return getPrimaryOccupant().compareTo(tile.getPrimaryOccupant());
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof LinkTile)) {
+            return false;
+        } else if (obj == this) {
+            return true;
+        } else {
+            return compareTo((LinkTile) obj) == 0;
+        }
     }
 }

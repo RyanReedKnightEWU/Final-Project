@@ -61,7 +61,7 @@ public class Navigator implements Savable {
                 if (map.getTile(i,j) instanceof LinkTile) {
 
                     // Linked map
-                    linkedMap = ((LinkTile) map.getTile(i,j)).getLinkToMap();
+                    linkedMap = mapCollection.get(((LinkTile) map.getTile(i,j)).getNewMapHashValue());
 
                     if (!this.mapCollection.containsValue(linkedMap)) {
 

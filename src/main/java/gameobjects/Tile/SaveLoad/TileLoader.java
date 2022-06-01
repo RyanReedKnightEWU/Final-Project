@@ -1,5 +1,6 @@
 package gameobjects.Tile.SaveLoad;
 
+import gameobjects.Entity.Entity;
 import gameobjects.Entity.Player;
 import gameobjects.Entity.SaveLoad.EntityLoader;
 import gameobjects.SaveLoader.SaveLoader;
@@ -21,17 +22,16 @@ public class TileLoader extends SaveLoader<TileBase> {
             return new Tile((new EntityLoader()).load(sc));
         } else if (header.startsWith(LinkTile.class.getName())) {
 
-            return new LinkTile((new EntityLoader()).load(sc),
-                    new int[]{Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine())},
-                    Integer.parseInt(sc.nextLine()));
+            Entity entity = (new EntityLoader()).load(sc);
+            int hash =  Integer.parseInt(sc.nextLine());
+            int[] position = new int[]{Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine())};
+            return new LinkTile(entity, position,hash);
 
         } else if (header.equals("END-ARR")){
             throw new LeaveFunction();
-        } else if (header.equals("NULL-ENTITY")){
-            System.out.println(header);
-            tile = new Tile(null);
+        }else {
+            return null;
         }
-        return null;
     }
 
     @Override

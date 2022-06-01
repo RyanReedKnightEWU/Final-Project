@@ -10,8 +10,8 @@ public abstract class TileBase implements Savable {
 
     // Primary occupant, must be alive.
     private Entity primaryOccupant;
-    // Deceased occupants
 
+    private static final String nullEntity = "NULL-ENTITY";
     public TileBase(Entity primaryOccupant) {
         this.primaryOccupant = primaryOccupant;
     }
@@ -24,6 +24,10 @@ public abstract class TileBase implements Savable {
         return this.primaryOccupant;
     }
 
+    public static String getNullEntity() {
+        return nullEntity;
+    }
+
     @Override
     public void saveInstance(FileWriter saveFile) throws IOException {
 
@@ -32,8 +36,7 @@ public abstract class TileBase implements Savable {
         if (this.primaryOccupant != null) {
             this.primaryOccupant.saveInstance(saveFile);
         }else {
-            saveFile.write("NULL-ENTITY\n");
+            saveFile.write(nullEntity + "\n");
         }
     }
-
 }

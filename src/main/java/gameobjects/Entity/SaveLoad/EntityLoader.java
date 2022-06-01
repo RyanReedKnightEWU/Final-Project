@@ -56,7 +56,7 @@ public class EntityLoader extends SaveLoader<Entity> {
             return new Zombie(health,maxHealth,damage,defense,name,inventory,weapon,armor);
         } else if (subclass.equals(Player.class.getName())) {
             return new Player(health,maxHealth,damage,defense,name,inventory,weapon,armor);
-        }else if(subclass.equals("END-ARR")) {
+        }else if(subclass.equals(SaveLoader.getEndArrKey())) {
             throw new LeaveFunction();
         } else {
             return null;
@@ -72,7 +72,6 @@ public class EntityLoader extends SaveLoader<Entity> {
             while(true) {
                 entityList.add(load(sc));
             }
-
         } catch (LeaveFunction e) {
             Entity[] arr = new Entity[entityList.size()];
             return entityList.toArray(arr);
