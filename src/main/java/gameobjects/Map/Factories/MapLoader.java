@@ -1,9 +1,13 @@
 package gameobjects.Map.Factories;
 
+import gameobjects.Entity.Entity;
+import gameobjects.Entity.SaveLoad.EntityLoader;
 import gameobjects.Map.MapBase;
 import gameobjects.Map.RectangularMap;
 import gameobjects.SaveLoader.SaveLoader;
+import gameobjects.Tile.LinkTile;
 import gameobjects.Tile.SaveLoad.TileLoader;
+import gameobjects.Tile.Tile;
 import gameobjects.Tile.TileBase;
 
 import java.util.Scanner;
@@ -19,9 +23,16 @@ public class MapLoader extends SaveLoader<MapBase> {
         MapBase map = new RectangularMap(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine()),
                 sc.nextLine());
         sc.nextLine();
-        TileLoader loader = new TileLoader();
+        //TileBase[][] tileMatrix = new TileBase[map.getRows()][map.getColumns()];
+
         for(int i = 0; i < map.getRows(); i++) {
-            loader.loadArray(sc);
+            String tileHeader = sc.nextLine(); //occupantHeader = sc.nextLine();
+            for (int j = 0; !tileHeader.equals(SaveLoader.getEndArrKey()); j++) {
+
+                map.addTile((new TileLoader()).load(tileHeader, sc),i,j);
+                tileHeader = sc.nextLine();
+                System.out.println("Header\t" + tileHeader);
+            }
         }
         return map;
     }

@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public abstract class MapBase implements Savable, Comparable<MapBase> {
 
-    private final TileBase[][] tileMatrix;
+    private TileBase[][] tileMatrix;
     private final String identifier;
 
     /*
@@ -63,7 +63,9 @@ public abstract class MapBase implements Savable, Comparable<MapBase> {
         this.tileMatrix[row][column] = tile;
     }
 
-
+    public void setMatrix(TileBase[][] matrix) {
+        tileMatrix = matrix;
+    }
     public int getRows() {
         return this.tileMatrix.length;
     }
@@ -120,10 +122,24 @@ public abstract class MapBase implements Savable, Comparable<MapBase> {
 
     }
 
+
+
     public String getIdentifier() {
         return identifier;
     }
 
+    public void setRow(TileBase[] tileArr, int row) {
+
+        if (row < 0) {
+            row = 0;
+        } else if (row >= getRows()) {
+            row = getRows() - 1;
+        }
+
+        if (getColumns() >= 0) {
+            System.arraycopy(tileArr, 0, tileMatrix[row], 0, getColumns());
+        }
+    }
     @Override
     public void saveInstance(FileWriter saveFile) throws IOException {
 
@@ -173,6 +189,9 @@ public abstract class MapBase implements Savable, Comparable<MapBase> {
                                         !((LinkTile) tileMatrix[i][j]).equals((LinkTile) map.tileMatrix[i][j])) {
                                     return ((LinkTile) tileMatrix[i][j]).compareTo((LinkTile) map.tileMatrix[i][j]);
                                 }
+                            }else {
+                                return tileMatrix[i][j].getClass().getName().compareTo(
+                                        map.tileMatrix[i][j].getClass().getName());
                             }
                         }
                     }
@@ -193,5 +212,23 @@ public abstract class MapBase implements Savable, Comparable<MapBase> {
         } else {
             return compareTo((MapBase) obj) == 0;
         }
+    }
+
+
+    @Override
+    public String toString() {
+        StringBuilder ret = new StringBuilder("{\t");
+        for(TileBase[] tileArr : tileMatrix) {
+            for (TileBase tile : tileArr) {
+                if (tile.getPrimaryOccupant() != null) {
+                    ret.append(tile.getPrimaryOccupant().getName());
+                }else {
+                    ret.append("EMPTY");
+                }
+                ret.append("\t");
+            }
+            ret.append("\n");
+        }
+        return ret + "\t}";
     }
 }

@@ -23,6 +23,8 @@ public class EntityLoader extends SaveLoader<Entity> {
 
         if (subclass.equals("NULL-ENTITY")) {
             return null;
+        } else if (subclass.equals(SaveLoader.getEndArrKey())) {
+            throw new LeaveFunction();
         }
 
         ItemLoader itemLoader = new ItemLoader();
@@ -34,6 +36,12 @@ public class EntityLoader extends SaveLoader<Entity> {
         sc.nextLine();
         String name = sc.nextLine();
         Items[] arr = itemLoader.loadArray(sc);
+
+        for (Items i : arr) {
+            System.out.println("From EntityLoader: " + i);
+        }
+
+
         ArrayList<Items> inventory = new ArrayList<>(List.of(arr));
         Weapon weapon = (Weapon) itemLoader.load(sc);
         Armor armor = (Armor) itemLoader.load(sc);
@@ -56,9 +64,7 @@ public class EntityLoader extends SaveLoader<Entity> {
             return new Zombie(health,maxHealth,damage,defense,name,inventory,weapon,armor);
         } else if (subclass.equals(Player.class.getName())) {
             return new Player(health,maxHealth,damage,defense,name,inventory,weapon,armor);
-        }else if(subclass.equals(SaveLoader.getEndArrKey())) {
-            throw new LeaveFunction();
-        } else {
+        }else {
             return null;
         }
     }

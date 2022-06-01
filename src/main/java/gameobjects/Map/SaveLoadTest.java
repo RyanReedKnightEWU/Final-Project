@@ -21,8 +21,8 @@ public class SaveLoadTest {
         File mapFile = new File("map.txt");
         FileWriter fileWriter = new FileWriter(mapFile);
 
-        MapBase map = new RectangularMap(5,"test map");
-        MapBase map2 = new RectangularMap(5,"test map");
+        MapBase map = new RectangularMap(3,5,"test map");
+        MapBase map2 = new RectangularMap(3,5,"test map");
 
         System.out.println(map.equals(map2));
 
@@ -34,8 +34,11 @@ public class SaveLoadTest {
 
         Scanner sc = new Scanner(mapFile);
         MapBase map3 = (new MapLoader()).load(sc);
+        System.out.println(map);
+        System.out.println(map3);
 
-        System.out.println(map.equals(map3));
+        System.out.println(map.equals(map2));
+        System.out.println(map.compareTo(map2));
         sc.close();
     }
 

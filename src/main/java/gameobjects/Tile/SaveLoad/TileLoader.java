@@ -13,13 +13,12 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 public class TileLoader extends SaveLoader<TileBase> {
-    @Override
-    public TileBase load(Scanner sc) throws LeaveFunction {
-        String header = sc.nextLine();
-        TileBase tile;
-        
+
+    public TileBase load(String header, Scanner sc) throws LeaveFunction {
+
         if (header.startsWith(Tile.class.getName())) {
-            return new Tile((new EntityLoader()).load(sc));
+            Entity ent = (new EntityLoader()).load(sc);
+            return new Tile(ent);
         } else if (header.startsWith(LinkTile.class.getName())) {
 
             Entity entity = (new EntityLoader()).load(sc);
@@ -35,17 +34,26 @@ public class TileLoader extends SaveLoader<TileBase> {
     }
 
     @Override
+    public TileBase load(Scanner sc) throws LeaveFunction {
+       return load(sc.nextLine(),sc);
+    }
+
+    @Override
     public TileBase[] loadArray(Scanner sc) throws LeaveFunction {
 
         LinkedList<TileBase> tileLst = new LinkedList<>();
         String header = sc.nextLine();
+        TileBase[] tileArr;
+
         try {
             while (true) {
                 tileLst.add(load(sc));
             }
         }catch (LeaveFunction e){
-            TileBase[] tileArr = new TileBase[tileLst.size()];
-            return tileLst.toArray(tileArr);
+            tileArr = new TileBase[tileLst.size()];
         }
+        return tileLst.toArray(tileArr);
     }
+
+
 }
