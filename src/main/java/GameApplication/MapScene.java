@@ -182,7 +182,12 @@ public class MapScene {
                     nav.getCurrentColumn()).setPrimaryOccupant(null);
 
             // Set current map in Navigator to new map.
+            System.out.println(nav.getMapCollection().keySet());
+            System.out.println("Hash code at 186 " + toMove.getNewMapHashValue());
+            System.out.println("187 NULL?"+nav.getMapCollection().get(toMove.getNewMapHashValue()));
             nav.setCurrentMap(nav.getMapCollection().get(toMove.getNewMapHashValue()));
+
+
             System.out.println(nav.getMapCollection().get(toMove.getNewMapHashValue()) == null);
             // Add player to link's corresponding position on new map.
 
@@ -191,7 +196,8 @@ public class MapScene {
             System.out.println("Values: " + nav.getMapCollection().values());
 
             nav.getCurrentMap().addEntity(nav.getPlayer(), newMapPLayerCoordinate[0],
-                    newMapPLayerCoordinate[1]);
+                        newMapPLayerCoordinate[1]);
+
             nav.setPosition(newMapPLayerCoordinate[0],newMapPLayerCoordinate[1]);
             MapScene newMapScene = new MapScene();
             newMapScene.start(nav);

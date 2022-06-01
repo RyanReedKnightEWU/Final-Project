@@ -150,8 +150,19 @@ public abstract class MapBase implements Savable, Comparable<MapBase> {
         saveFile.write(this.identifier + "\n");
         saveFile.write(this.hashCode() +"\n");
 
-        for (TileBase[] t : this.tileMatrix) {
-            SaveLoader.saveArray(t,saveFile);
+        for (TileBase[] tileArr : this.tileMatrix) {
+
+            for (TileBase tile : tileArr ) {
+
+                if (tile.getClass().getName().startsWith(LinkTile.class.getName())){
+                    ((LinkTile)tile).saveInstance(saveFile);
+                } else {
+                    tile.saveInstance(saveFile);
+                }
+
+            }
+            saveFile.write(SaveLoader.getEndArrKey() + "\n");
+            //SaveLoader.saveArray(t,saveFile);
         }
         saveFile.write("END-MAP\n");
     }
@@ -179,19 +190,12 @@ public abstract class MapBase implements Savable, Comparable<MapBase> {
                     for (int i = 0; i < tileMatrix.length; i++) {
                         for (int j = 0; j < tileMatrix[i].length; j++) {
 
-                            if (tileMatrix[i][j].getClass().getName().equals(
-                                    map.tileMatrix[i][j].getClass().getName())) {
-
-                                if (tileMatrix[i][j] instanceof Tile &&
-                                        !((Tile) tileMatrix[i][j]).equals((Tile) map.tileMatrix[i][j])) {
-                                    return ((Tile) tileMatrix[i][j]).compareTo((Tile) map.tileMatrix[i][j]);
-                                } else if (tileMatrix[i][j] instanceof LinkTile &&
-                                        !((LinkTile) tileMatrix[i][j]).equals((LinkTile) map.tileMatrix[i][j])) {
-                                    return ((LinkTile) tileMatrix[i][j]).compareTo((LinkTile) map.tileMatrix[i][j]);
-                                }
-                            }else {
-                                return tileMatrix[i][j].getClass().getName().compareTo(
-                                        map.tileMatrix[i][j].getClass().getName());
+                            if (tileMatrix[i][j].getPrimaryOccupant() != null
+                                    && !tileMatrix[i][j].getPrimaryOccupant().equals(map.tileMatrix[i][j].getPrimaryOccupant())) {
+                                return tileMatrix[i][j].getPrimaryOccupant().compareTo(map.tileMatrix[i][j].getPrimaryOccupant());
+                            } else if (map.tileMatrix[i][j].getPrimaryOccupant() !=
+                                    null && !map.tileMatrix[i][j].getPrimaryOccupant().equals(tileMatrix[i][j].getPrimaryOccupant())) {
+                                return -1*map.tileMatrix[i][j].getPrimaryOccupant().compareTo(tileMatrix[i][j].getPrimaryOccupant());
                             }
                         }
                     }

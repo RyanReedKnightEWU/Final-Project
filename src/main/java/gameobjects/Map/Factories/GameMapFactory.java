@@ -7,11 +7,10 @@ import gameobjects.Entity.Mutant;
 import gameobjects.Entity.SaveLoad.EntityLoader;
 import gameobjects.Map.MapBase;
 import gameobjects.Map.RectangularMap;
-import gameobjects.SaveLoader.SaveLoader;
 import gameobjects.Tile.LinkTile;
 import gameobjects.Tile.Tile;
-import gameobjects.Tile.TileBase;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GameMapFactory extends MapFactoryBase {
@@ -68,22 +67,6 @@ public class GameMapFactory extends MapFactoryBase {
         } else if (key.equals(GameMapFactoryKeys.DUNGEONS.toString())) {
             // Store keeper/match maker will be added here.
             map = new RectangularMap(4,2,"Rectangular gameobjects.Map");
-        } else if (key.equals(GameMapFactoryKeys.STANDARD_MAP.toString())){
-            int[] arenaToHallHallPosition = new int[]{3,0}, hallToArenaArenaPosition = new int[]{0,3};
-
-            LinkTile arenaToHallLink = new LinkTile(standardHall,null,arenaToHallHallPosition),
-                    hallToArenaLink = new LinkTile(standardArena,null,hallToArenaArenaPosition);
-
-            System.out.println("HashCode:\t" + standardArena.hashCode());
-
-            standardArena.addTile(new LinkTile(standardHall,null,arenaToHallHallPosition),0,3);
-            standardHall.addTile(new LinkTile(standardArena,null,hallToArenaArenaPosition),3,0);
-            standardHall.addTile(new LinkTile(recRoom,null,0,0),0,0);
-            standardArena.addEntity(new Goblin("Azog"),3,0);
-            standardArena.addEntity(new Goblin("Marduk"),2,2);
-            recRoom.addTile(new LinkTile(standardHall,null,0,0),0,0);
-
-            map = standardArena;
         }else {
             /*String spc = ", ";
             throw new IllegalArgumentException("bad param createMap(String), select one of the follwing keys: "
@@ -92,6 +75,45 @@ public class GameMapFactory extends MapFactoryBase {
         }
 
         return map;
+    }
+
+    @Override
+    public ArrayList<MapBase> createMapSet(String key) {
+        if (key.equals(GameMapFactoryKeys.STANDARD_MAP.toString())) {
+
+            Entity azog = new Goblin("Azog"), marduk = new Goblin("Marduk"), baal =  new Goblin("Baal"),
+                    // Mutants
+                    jean = new Mutant("Jean-Francoise"), aleric = new Mutant("Aleric"),
+                    // Murderbots
+                    evilWalee = new Murderbot("Evil Walee");
+
+            MapBase standardArena = new RectangularMap(7,7,"ARENA-A"),
+                    standardHall = new RectangularMap(4,1,"HALL-A"),
+                    recRoom = new RectangularMap(4,2,"RECROOM-A");
+
+            int[] arenaToHallHallPosition = new int[]{3, 0}, hallToArenaArenaPosition = new int[]{0, 3};
+
+            LinkTile arenaToHallLink = new LinkTile(standardHall, null, arenaToHallHallPosition),
+                    hallToArenaLink = new LinkTile(standardArena, null, hallToArenaArenaPosition);
+
+            standardArena.addTile(arenaToHallLink, 0, 3);
+            standardHall.addTile(hallToArenaLink, 3, 0);
+            standardHall.addTile(new LinkTile(recRoom, null, 0, 0), 0, 0);
+            standardArena.addEntity(new Goblin("Azog"), 3, 0);
+            standardArena.addEntity(new Goblin("Marduk"), 2, 2);
+            recRoom.addTile(new LinkTile(standardHall, null, 0, 0), 0, 0);
+
+            ArrayList<MapBase> retList = new ArrayList<>();
+            retList.add(standardArena);
+            retList.add(standardHall);
+            retList.add(recRoom);
+
+
+            return retList;
+
+        }else {
+            return null;
+        }
     }
 
     @Override

@@ -13,12 +13,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-public class Navigator implements Savable {
+public class Navigator implements Savable{
 
     private static Navigator uniqueInstance;
     private MapBase currentMap;
@@ -31,60 +32,46 @@ public class Navigator implements Savable {
      * Defines Navigator, called in getInstance method if uniqueInstance is not null.
      *
      * @param player               - Entity to represent user.
-     * @param map                  - the current map the player is on.
+     * //@param mapArr                  - the current map the player is on.
      * @param playerColumnPosition - horizontal coordinate of tile on tile matrix
      * @param playerRowPosition    - vertical coordinate of tile on tile matrix
      **/
-    private Navigator(Entity player, MapBase map, int playerRowPosition, int playerColumnPosition) {
+    private Navigator(Entity player, ArrayList<MapBase> mapSet,MapBase currentMap, int playerRowPosition, int playerColumnPosition) {
 
         this.player = player;
-        this.currentMap = map;
+        this.currentMap = currentMap;
+
+        mapCollection = new HashMap<>();
+        for (MapBase map : mapSet){
+            mapCollection.put(map.hashCode(),map);
+        }
+
         this.row = playerRowPosition;
         this.column = playerColumnPosition;
         this.currentMap.addEntity(player, playerRowPosition, playerColumnPosition);
-        this.mapCollection = new HashMap<>();
-        this.putMapInHashMap(this.currentMap);
 
+    }
+
+    private void putMapInHashMap(MapBase[] mapArr) {
+
+
+        for (int i = 0; i < mapArr.length; i++) {
+            mapCollection.put(mapArr[i].hashCode(), mapArr[i]);
+        }
     }
     private void putMapInHashMap(MapBase map) {
 
-        System.out.println(map.getIdentifier() + "\t" + map.hashCode());
-
-        this.mapCollection.put(map.hashCode(),map);
-        MapBase linkedMap;
-
-        for (int i = 0; i < map.getRows(); i++) {
-            for (int j = 0; j < map.getColumns(); j++) {
-
-                System.out.println(map.getTile(i,j).getClass().getName());
-
-                if (map.getTile(i,j) instanceof LinkTile) {
-
-                    // Linked map
-                    linkedMap = mapCollection.get(((LinkTile) map.getTile(i,j)).getNewMapHashValue());
-
-                    if (!this.mapCollection.containsValue(linkedMap)) {
-
-                        System.out.println("Made it in");
-
-                        this.putMapInHashMap(linkedMap);
-                    }
-                }
-            }
-        }
+        //System.out.println(map.getIdentifier() + "\t" + map.hashCode());
+        mapCollection.put(map.hashCode(),map);
     }
 
     // Getters and setters.
-    public static Navigator getInstance(Entity player, MapBase map, int xCoordinate, int yCoordinate) {
+    public static Navigator getInstance(Entity player, ArrayList<MapBase> mapSet,MapBase currentMap, int xCoordinate, int yCoordinate) {
 
         if (Navigator.uniqueInstance == null) {
-
-            Navigator.uniqueInstance = new Navigator(player, map, xCoordinate, yCoordinate);
-
+            Navigator.uniqueInstance = new Navigator(player, mapSet,currentMap, xCoordinate, yCoordinate);
         }
-
         return Navigator.uniqueInstance;
-
     }
 
     //
@@ -136,8 +123,8 @@ public class Navigator implements Savable {
     }
 
     /**
-     * Move to tile at new coordinates, returns string which is processed by other functions,
-     * (e.g., if it returns "tile-occupied", another method will determine is that occupant is an enemy
+     * Move to tile at new coordinates, returns MoveKey enum which is processed by other functions,
+     * (e.g., if it returns "tile-occupied" MoveKey, another method will determine is that occupant is an enemy
      * and respond accordingly)
      *
      * @param row    - new row position, cannot be more than one tile away from current row.
@@ -192,21 +179,20 @@ public class Navigator implements Savable {
 
     @Override
     public void saveInstance(FileWriter saveFile) throws IOException {
+
         int i = 0;
         for(MapBase map : this.mapCollection.values()) {
-            System.out.println("ITR " + ++i);
             map.saveInstance(saveFile);
         }
-        this.player.saveInstance(saveFile);
-        saveFile.write(getCurrentMap().hashCode());
-        saveFile.write(this.row);
-        saveFile.write(this.column);
+        player.saveInstance(saveFile);
+        saveFile.write(getCurrentMap().hashCode() + "\n");
+        saveFile.write(row + "\n");
+        saveFile.write(column + "\n");
+
     }
 
     public void loadGame(String fileName) {
-
         Scanner sc;
-
         try {
             sc = new Scanner(new File(fileName));
         } catch (FileNotFoundException e) {

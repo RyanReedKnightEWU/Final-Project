@@ -9,6 +9,7 @@ import gameobjects.Items.Weapons.Knife;
 import gameobjects.Items.Weapons.Pistol;
 import gameobjects.Map.Factories.MapLoader;
 import gameobjects.SaveLoader.SaveLoader;
+import gameobjects.Tile.LinkTile;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -29,6 +30,7 @@ public class SaveLoadTest {
         map.addEntity(new Goblin("Azog",new Pistol(),new PlateArmor("dd",2,3)),1,2);
         map.addEntity(new Goblin("Marduk",new Knife(),new Clothes("dd",2,3)),0,0);
         map.addEntity(new Player(45,45,45,"Joao"),1,1);
+        map.addTile(new LinkTile(null,new int[]{1,1},1),2,2);
         map.saveInstance(fileWriter);
         fileWriter.close();
 
@@ -39,6 +41,8 @@ public class SaveLoadTest {
 
         System.out.println(map.equals(map2));
         System.out.println(map.compareTo(map2));
+        System.out.println(map.hashCode());
+        System.out.println(map3.hashCode());
         sc.close();
     }
 

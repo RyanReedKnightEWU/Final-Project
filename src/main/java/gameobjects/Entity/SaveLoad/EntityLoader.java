@@ -48,7 +48,7 @@ public class EntityLoader extends SaveLoader<Entity> {
         Weapon weapon = (Weapon) itemLoader.load(sc);
         Armor armor = (Armor) itemLoader.load(sc);
 
-        // Remove equiped weapon and armor, these will be added in he constructor, so if they
+        // Remove equipped weapon and armor, these will be added in he constructor, so if they
         // are added here there will be duplicates.
 
         inventory.remove(weapon);
