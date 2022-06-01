@@ -14,6 +14,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
+/**
+ * The parent class which contains most methods and fields used by its concrete subclasses
+ */
 public abstract class Entity implements Savable, Comparable<Entity>{
     private int health;
     private int maxHealth;
@@ -27,6 +31,14 @@ public abstract class Entity implements Savable, Comparable<Entity>{
     private Weapon weapon = new BareHands();
     private Armor armor = new Clothes(0);
 
+    /**
+     * Main constructor used for entities
+     * @param health Max health
+     * @param damage Base damage
+     * @param defense Base defense
+     * @param name Name of the entity
+     * @throws IllegalArgumentException if health, damage, or defense are less than 0, or if name is empty
+     */
     public Entity(int health, int damage, int defense, String name)
     {
         if(health <= 0 || damage < 0 || defense < 0 || name.isEmpty())
@@ -44,6 +56,17 @@ public abstract class Entity implements Savable, Comparable<Entity>{
         this.isAlive = true;
     }//end Entity Constructor
 
+    /**
+     * Entity constructor used when loading an entity from a save file
+     * @param health Entity current health
+     * @param maxHealth Entity maximum health
+     * @param damage Base damage
+     * @param defense Base defense
+     * @param name Name of the entity
+     * @param inventory The array list containing all Items owned by the Entity
+     * @param weapon The weapon currently equipped by the Entity
+     * @param armor The armor currently equipped by the Entity
+     */
     public Entity(int health, int maxHealth, int damage, int defense, String name,
                   ArrayList<Items> inventory, Weapon weapon, Armor armor) {
 
@@ -79,6 +102,9 @@ public abstract class Entity implements Savable, Comparable<Entity>{
         this.gold += gold;
     }
 
+    /**
+     * Prints the contents of the Entity inventory from first to last index
+     */
     public void printInventory() {
         if (inventory.isEmpty()) {
             System.out.println("Inventory is empty");
@@ -93,7 +119,11 @@ public abstract class Entity implements Savable, Comparable<Entity>{
         inventory.add(item);
     }
 
-    public void removeItem(Items item) { //Consider merging with removeConsumable
+    /**
+     * Removes items from the inventory array list
+     * @param item Weapon or armor to be removed
+     */
+    public void removeItem(Items item) {
         if (inventory.contains(item)) {
             inventory.remove(item);
         } else {
@@ -101,6 +131,11 @@ public abstract class Entity implements Savable, Comparable<Entity>{
         }
     }
 
+    /**
+     * Adds consumable(s) to the inventory array list. Stacks the consumables if adding more of a consumable which is
+     * already stored in the inventory.
+     * @param consumable Consumable to be added
+     */
     public void addConsumable(final Consumable consumable) {
         if (inventory.contains(consumable)) {
             int index = inventory.indexOf(consumable);
@@ -110,6 +145,10 @@ public abstract class Entity implements Savable, Comparable<Entity>{
         }
     }
 
+    /**
+     * Reduces amount of consumable in inventory, or removes the consumable if amount <= 1
+     * @param consumable Consumable to be removed
+     */
     public void removeConsumable(Consumable consumable) {
         if (inventory.contains(consumable)) {
             int index = inventory.indexOf(consumable);
@@ -178,6 +217,10 @@ public abstract class Entity implements Savable, Comparable<Entity>{
 
     public int getDefense() { return (defense + getArmor().getArmorValue()); }
 
+    /**
+     * Heals the entity
+     * @param heal Amount of health to be recovered
+     */
     public void heal(int heal) {
         if ((getHealth() + heal) >= getMaxHealth()) {
             setHealth(getMaxHealth());
@@ -187,6 +230,10 @@ public abstract class Entity implements Savable, Comparable<Entity>{
         System.out.println(heal + " health restored and " + getHealth() + " health remaining");
     }
 
+    /**
+     * Entity takes damage and loses health
+     * @param damage Amount of damage to receive
+     */
     public void takeDamage(int damage) {
         int damageTaken = damage - getDefense();
         if (damageTaken < 1) { damageTaken = 1; }
@@ -197,6 +244,10 @@ public abstract class Entity implements Savable, Comparable<Entity>{
         }
     }
 
+    /**
+     * Basic attack method
+     * @return Damage to be dealt
+     */
     public int basicAttack() {
         System.out.println(getDamage() + " damage calculated");
         return getDamage();
@@ -217,6 +268,10 @@ public abstract class Entity implements Savable, Comparable<Entity>{
         }
     }
 
+    /**
+     * Saves all necessary information about the inventory and its contents for use in saving and loading
+     * @return A string containing the contents of everything within the inventory
+     */
     public String saveInventory() {
         String str = "INVENTORY\n";
         for (int i = 0; i < inventory.size(); i++) {
@@ -231,6 +286,10 @@ public abstract class Entity implements Savable, Comparable<Entity>{
         return str;
     }
 
+    /**
+     * Saves all necessary information about the Entity for use in saving and loading
+     * @return A string containing the contents of everything within Entity
+     */
     public String saveString() { //Prints every field that needs to be saved
         String str = "ENTITY\n";
         str += String.format("%d\n%d\n%d\n%d\n%s\n%s\n%s\n%s\n",
