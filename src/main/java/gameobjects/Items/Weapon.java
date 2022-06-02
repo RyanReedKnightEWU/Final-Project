@@ -61,7 +61,7 @@ public class Weapon extends Items{
     public String save(){
         String value = "WEAPON\n";
         //value += String.format("Name: %s\nDamage: %d-%d\nValue: %d\nDescription: %s", getName(), getMinDamage(), getMaxDamage(), getValue(), getDescription());
-        value += String.format("%s\n%d\n%d\n%d\n%s", getName(), getMinDamage(), getMaxDamage(), getValue(), getDescription());
+        value += String.format("%s\n%d\n%d\n%d\n%s\n", getName(), getMinDamage(), getMaxDamage(), getValue(), getDescription());
         return value;
     }
 

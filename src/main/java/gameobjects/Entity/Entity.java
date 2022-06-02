@@ -81,7 +81,7 @@ public abstract class Entity implements Savable, Comparable<Entity>{
         this.name = name;
         this.inventory = inventory;
         addItem(weapon);
-        setWeapon(0);
+        setWeapon(weapon);
         addItem(armor);
         setArmor(armor);
 

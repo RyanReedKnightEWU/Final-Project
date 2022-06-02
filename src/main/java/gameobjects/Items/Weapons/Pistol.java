@@ -5,7 +5,7 @@ import gameobjects.Items.Weapon;
 public class Pistol extends Weapon{
     public Pistol(){
         super("Pistol", 20, 25, 100);
-        setDescription(String.format("%s is a handgun that was made before the Great War.\n", getName()));
+        setDescription(String.format("%s is a handgun that was made before the Great War.", getName()));
     }
     public Pistol(int type){
         super("Pistol", 20, 25, 100);
@@ -22,7 +22,7 @@ public class Pistol extends Weapon{
             setValue(value + 25);
             setDamage(damage[0] + vary, damage[1] + vary);
         }
-        setDescription(String.format("%s is a handgun that was made before the Great War.\n", getName()));
+        setDescription(String.format("%s is a handgun that was made before the Great War.", getName()));
     }
 
     // Fully defined constructor, necessary for load methods (Ryan Knight 21 May 2022)

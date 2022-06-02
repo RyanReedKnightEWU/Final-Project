@@ -36,6 +36,8 @@ public class ApplicationMain extends Application {
         Navigator nav = Navigator.getInstance();
         nav.loadGame("save.txt");
 
+        //nav.setCurrentMap((new GameMapFactory()).createMap(Sa));
+
         gameWindow = stage;
         stage.setTitle("Final Project Game");
         MainMenuScene mainMenuScene = new MainMenuScene();
