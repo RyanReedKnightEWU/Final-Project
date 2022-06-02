@@ -70,6 +70,14 @@ public class InventoryScene {
         items.setSpacing(10);
         items.setStyle("-fx-background-color: rgb(80,40,10)");
         ArrayList<Items> stuff = player.getInventory();
+
+
+        for(Items i : stuff) {
+            System.out.println(i);
+        }
+        System.out.println("Contains NULL " + stuff.contains(null));
+
+
         boolean currentWeapon = true;
         boolean currentArmor = true;
 
