@@ -29,6 +29,8 @@ public class Navigator implements Savable{
     private int row, column;
     private Entity player;
 
+    public boolean newGame;
+
     /**
      * Defines Navigator, called in getInstance method if uniqueInstance is not null.
      *
@@ -50,6 +52,7 @@ public class Navigator implements Savable{
         this.row = playerRowPosition;
         this.column = playerColumnPosition;
         this.currentMap.addEntity(player, playerRowPosition, playerColumnPosition);
+        this.newGame = true;
 
     }
 
@@ -230,6 +233,8 @@ public class Navigator implements Savable{
 
         // Place player in their position.
         currentMap.addEntity(player,row,column);
+
+        this.newGame = false;
 
         // Close scanner
         sc.close();

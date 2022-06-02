@@ -86,9 +86,11 @@ public class MapScene {
         scene.setRoot(layout);
         gameWindow.setScene(scene);
 
-        nav.getPlayer().addItem(new Pistol());
-        nav.getPlayer().addConsumable(new AttackBottle(12));
-        nav.getPlayer().addItem(new CombatArmor(1));
+        if (nav.newGame) {
+            nav.getPlayer().addItem(new Pistol());
+            nav.getPlayer().addConsumable(new AttackBottle(12));
+            nav.getPlayer().addItem(new CombatArmor(1));
+        }
     }
 
     private void fillGrid(GridPane grid, Navigator nav){
