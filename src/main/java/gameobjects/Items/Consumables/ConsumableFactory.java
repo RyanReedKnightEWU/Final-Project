@@ -17,8 +17,11 @@ public class ConsumableFactory extends ConsumableFactoryBase{
             return new healthPotion(name, minDamage, maxDamage,heal,value,description,amount);
         }else if(subclassKey.startsWith(throwingKnife.class.getName())) {
             return new throwingKnife(name, minDamage, maxDamage,heal,value,description,amount);
-        }else{
-            return null;
+        } else if (subclassKey.startsWith(Consumable.class.getName())) {
+            return new Consumable(name, minDamage, maxDamage,heal,value,description,amount);
+        } else{
+            throw new IllegalArgumentException("Bad param fo createConsumable in ConsumableFactory.\t"
+                    + subclassKey + " is not a valid subclass.");
         }
 
     }

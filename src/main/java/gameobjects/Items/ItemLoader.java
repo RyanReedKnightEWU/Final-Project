@@ -12,11 +12,7 @@ public class ItemLoader extends SaveLoader<Items> {
     public Items load(Scanner sc) throws LeaveFunction {
         return load(sc,sc.nextLine());
     }
-    public Items load(Scanner sc, String subclass) throws LeaveFunction {
-
-        if (subclass.equals(SaveLoader.getEndArrKey())) {
-            super.ThrowLeaveFunction();
-        }
+    public Items load(Scanner sc, String subclass){
 
         String name;
         int minDamage;
@@ -69,6 +65,19 @@ public class ItemLoader extends SaveLoader<Items> {
         LinkedList<Items> list = new LinkedList<>();
         Items[] ret = null;
 
+        String header = sc.nextLine();
+
+        while(!header.equals(SaveLoader.getEndArrKey())) {
+
+            list.add(load(sc,header));
+            header = sc.nextLine();
+
+        }
+
+        return list.toArray(new Items[0]);
+
+
+        /*
         try {
             // Loop until LeaveFunction is thrown.
             while(true) {
@@ -76,7 +85,7 @@ public class ItemLoader extends SaveLoader<Items> {
             }
         }catch (LeaveFunction lf) {
              ret = list.toArray(new Items[0]);
-        }
-        return ret;
+        }*/
+        //return ret;
     }
 }
