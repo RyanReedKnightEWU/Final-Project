@@ -32,9 +32,15 @@ public class ApplicationMain extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        GameMapFactory gameMapFactory = new GameMapFactory();
+        ArrayList<MapBase> mapArr = gameMapFactory.createMapSet(GameMapFactoryKeys.STANDARD_MAP.toString());
+        Navigator nav = Navigator.setState(new Player(100,45,45,"Alex"),
+                mapArr,
+                mapArr.get(0), 0, 3);
 
-        Navigator nav = Navigator.getInstance();
-        nav.loadGame("save.txt");
+        System.out.println(nav.getPlayer()==null);
+
+        //nav.loadGame("save.txt");
 
         //nav.setCurrentMap((new GameMapFactory()).createMap(Sa));
 

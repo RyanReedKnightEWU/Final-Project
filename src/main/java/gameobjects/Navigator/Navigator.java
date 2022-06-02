@@ -69,9 +69,8 @@ public class Navigator implements Savable{
     // Getters and setters.
     public static Navigator setState(Entity player, ArrayList<MapBase> mapSet,MapBase currentMap, int xCoordinate, int yCoordinate) {
 
-        if (Navigator.uniqueInstance == null) {
-            Navigator.uniqueInstance = new Navigator(player, mapSet,currentMap, xCoordinate, yCoordinate);
-        }
+        Navigator.uniqueInstance = new Navigator(player, mapSet,currentMap, xCoordinate, yCoordinate);
+
         return Navigator.uniqueInstance;
     }
 
