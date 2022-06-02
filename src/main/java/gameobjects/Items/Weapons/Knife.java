@@ -5,7 +5,7 @@ import gameobjects.Items.Weapon;
 public class Knife extends Weapon {
     public Knife(){
         super("Knife", 20, 25, 100);
-        setDescription(String.format("%s is a typical kitchen knife.\n", getName()));
+        setDescription(String.format("%s is a typical kitchen knife.", getName()));
     }
     public Knife(int type){
         super("Knife", 20, 25, 100);

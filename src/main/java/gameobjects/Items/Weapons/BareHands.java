@@ -5,11 +5,11 @@ import gameobjects.Items.Weapon;
 public class BareHands extends Weapon {
     public BareHands(int type){ //Make sure luck is 0 when passed in
         super("Bare hands", 1, 3, 0);
-        setDescription(String.format("%s is better than nothing.\n", getName()));
+        setDescription(String.format("%s is better than nothing.", getName()));
     }
     public BareHands(){
         super("Bare hands", 1, 3, 0);
-        setDescription(String.format("%s is better than nothing.\n", getName()));
+        setDescription(String.format("%s is better than nothing.", getName()));
     }
     // Fully defined constructor, necessary for load methods (Ryan Knight 21 May 2022)
     public BareHands (String name, int minDamage, int maxDamage, int value, String discription){

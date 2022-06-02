@@ -5,7 +5,7 @@ import gameobjects.Items.Weapon;
 public class Bat extends Weapon {
     public Bat(){
         super("Bat", 10, 15, 10);
-        setDescription(String.format("%s is better than nothing.\n", getName()));
+        setDescription(String.format("%s is better than nothing.", getName()));
     }
 
     public Bat(int type){
@@ -22,7 +22,7 @@ public class Bat extends Weapon {
             setValue(value + 2);
             setDamage(damage[0] + 2, damage[1] + 2);
         }
-        setDescription(String.format("%s is better than nothing.\n", getName()));
+        setDescription(String.format("%s is better than nothing.", getName()));
     }
     // Fully defined constructor, necessary for load methods (Ryan Knight 21 May 2022)
     public Bat (String name, int minDamage, int maxDamage, int value, String discription){
