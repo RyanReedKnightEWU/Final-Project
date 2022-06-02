@@ -35,7 +35,7 @@ public class MapScene {
 
     public void start(Navigator nav) {
         MapBase map = nav.getCurrentMap();
-        StoreScene storeScene = new StoreScene(this);
+        StoreScene storeScene = new StoreScene(this,nav);
 
         grid.setPadding(new Insets(20, 20, 20, 20));
         grid.setVgap(10);

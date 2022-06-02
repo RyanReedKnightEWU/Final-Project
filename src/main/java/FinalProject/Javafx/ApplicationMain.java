@@ -33,26 +33,8 @@ public class ApplicationMain extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        File file = new File("save.txt");
-        FileWriter fileWriter = new FileWriter(file);
-
-        MapFactoryBase mapFactory = new GameMapFactory();
-        Navigator nav = null;
-
-        ArrayList<MapBase> mapSet = mapFactory.createMapSet(GameMapFactoryKeys.STANDARD_MAP.toString());
-
-        for (MapBase m : mapSet) {
-            System.out.print(m.hashCode() + "\t");
-        }
-
-        nav = Navigator.getInstance(new Player(100,0,0,"Jaque"),
-                mapSet,mapSet.get(0),0,3);
-        nav.saveInstance(fileWriter);
-        fileWriter.close();
-
-
-        System.out.println("INTEGER ---- "  + nav.getMapCollection().keySet());
-        System.out.println(nav.getMapCollection().containsKey(57));
+        Navigator nav = Navigator.getInstance();
+        nav.loadGame("save.txt");
 
         gameWindow = stage;
         stage.setTitle("Final Project Game");
@@ -61,8 +43,6 @@ public class ApplicationMain extends Application {
         mapScene.start(nav);
         stage.show();
         //mainMenuScene.start(nav.getCurrentMap());
-
-
 
     }
 }

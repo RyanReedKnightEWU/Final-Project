@@ -20,18 +20,24 @@ public class MapLoader extends SaveLoader<MapBase> {
 
     public MapBase load(String mapHeader, Scanner sc) throws LeaveFunction {
 
-        MapBase map = new RectangularMap(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine()),
-                sc.nextLine());
-        sc.nextLine();
-        //TileBase[][] tileMatrix = new TileBase[map.getRows()][map.getColumns()];
+        // Loaders
+        TileLoader tileLoader = new TileLoader();
 
-        for(int i = 0; i < map.getRows(); i++) {
-            String tileHeader = sc.nextLine(); //occupantHeader = sc.nextLine();
-            for (int j = 0; !tileHeader.equals(SaveLoader.getEndArrKey()); j++) {
+        int rows = Integer.parseInt(sc.nextLine());
+        int columns = Integer.parseInt(sc.nextLine());
+        String identifier = sc.nextLine();
+        sc.nextLine(); // Catch hashcode, which does not need to be loaded.
 
-                map.addTile((new TileLoader()).load(tileHeader, sc),i,j);
-                tileHeader = sc.nextLine();
-                System.out.println("Header\t" + tileHeader);
+        // Make map.
+        MapBase map = new RectangularMap(rows,columns,identifier);
+        TileBase tile;
+
+        for(int i = 0; i < rows; i++) {
+            String header = sc.nextLine();
+            for (int j = 0;!header.equals(SaveLoader.getEndArrKey());j++){
+                tile = tileLoader.load(header,sc);
+                map.addTile(tile,i,j);
+                header = sc.nextLine();
             }
         }
         return map;

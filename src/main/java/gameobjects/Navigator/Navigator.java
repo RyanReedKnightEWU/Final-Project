@@ -4,6 +4,7 @@ import gameobjects.Entity.SaveLoad.EntityLoader;
 import gameobjects.Map.Factories.MapLoader;
 import gameobjects.Map.MapBase;
 import gameobjects.Entity.Entity;
+import gameobjects.Map.RectangularMap;
 import gameobjects.SaveLoader.Savable;
 import gameobjects.SaveLoader.SaveLoader;
 import gameobjects.Tile.LinkTile;
@@ -66,7 +67,7 @@ public class Navigator implements Savable{
     }
 
     // Getters and setters.
-    public static Navigator getInstance(Entity player, ArrayList<MapBase> mapSet,MapBase currentMap, int xCoordinate, int yCoordinate) {
+    public static Navigator setState(Entity player, ArrayList<MapBase> mapSet,MapBase currentMap, int xCoordinate, int yCoordinate) {
 
         if (Navigator.uniqueInstance == null) {
             Navigator.uniqueInstance = new Navigator(player, mapSet,currentMap, xCoordinate, yCoordinate);
@@ -76,6 +77,9 @@ public class Navigator implements Savable{
 
     //
     public static Navigator getInstance() {
+        if(Navigator.uniqueInstance == null) {
+            reset();
+        }
         return Navigator.uniqueInstance;
     }
 
@@ -191,56 +195,49 @@ public class Navigator implements Savable{
 
     }
 
-    public void loadGame(String fileName) {
-        Scanner sc;
-        try {
-            sc = new Scanner(new File(fileName));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+    public void loadGame(String fileName) throws FileNotFoundException {
+        reset();
+        Scanner sc = new Scanner(new File(fileName));
+        MapLoader mapLoader = new MapLoader();
 
-        this.reset();
-        MapLoader loader = new MapLoader();
-        MapBase map;
-        String mapHeader = sc.nextLine();
-        System.out.println(mapHeader);
+        // Load first map into current map.
+        String header = sc.nextLine();
+        System.out.println("205 "+header);
+
         try {
-            while (mapHeader.equals("START-MAP")) {
-                map = loader.load(mapHeader,sc);
-                this.mapCollection.put(map.hashCode(), map);
-                sc.nextLine(); // Catch end of map.
-                mapHeader = sc.nextLine();
-                System.out.println(map.getIdentifier() +  "\tMAP LOADED");
-                System.out.println("MAP HEADER: " + mapHeader);
-                System.out.println(this.mapCollection.keySet());
+            while (header.equals("START-MAP")) {
+                MapBase map = mapLoader.load(header, sc);
+                mapCollection.put(map.hashCode(), map);
+                sc.nextLine(); // Catch "END-MAP"
+                header = sc.nextLine();
             }
+
+            // Load Player
+            player = (new EntityLoader()).load(header, sc);
+            System.out.println("217: " + player == null);
         }catch (SaveLoader.LeaveFunction e){
+            // Do nothing, LeaveFunction not applicable here.
         }
 
-        try {
-            System.out.println("HEADER\t" + mapHeader);
-            this.player = (new EntityLoader()).load(mapHeader,sc);
+        // Load current map
+        currentMap = mapCollection.get(Integer.parseInt(sc.nextLine()));
 
-        } catch (SaveLoader.LeaveFunction e) {
-            throw new RuntimeException(e);
-        }
+        // Load position
+        row = Integer.parseInt(sc.nextLine());
+        column = Integer.parseInt(sc.nextLine());
 
+        // Set current tile
+        currentTile = currentMap.getTile(row,column);
 
-        String x = sc.nextLine(), y = sc.nextLine();
-       // System.out.println(sc.);
-        System.out.println(this.getMapCollection().keySet());
-        System.out.println("X\t" + x + "\tY\t" + y);
-        this.setPosition(Integer.parseInt(x),
-                Integer.parseInt(y));
+        // Place player in their position.
+        currentMap.addEntity(player,row,column);
 
+        // Close scanner
         sc.close();
     }
-    private void reset() {
-        this.player = null;
-        this.currentMap = null;
-        this.row = 0;
-        this.column = 0;
-        this.mapCollection.clear();
+    private static void reset() {
+        Navigator.uniqueInstance = new Navigator(null,new ArrayList<MapBase>(),
+                new RectangularMap(1,"Dummy Map"),0,0);
     }
 
     public HashMap<Integer, MapBase> getMapCollection() {

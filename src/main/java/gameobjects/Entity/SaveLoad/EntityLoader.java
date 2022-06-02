@@ -5,10 +5,7 @@ import gameobjects.Items.*;
 import gameobjects.Items.Weapons.WeaponFactory;
 import gameobjects.SaveLoader.SaveLoader;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class EntityLoader extends SaveLoader<Entity> {
     @Override
@@ -34,15 +31,7 @@ public class EntityLoader extends SaveLoader<Entity> {
         String name = sc.nextLine();
         Items[] arr = itemLoader.loadArray(sc);
 
-        for (Items i : arr) {
-            System.out.println("From EntityLoader: " + i);
-        }
-
-        ArrayList<Items> inventory = new ArrayList<Items>();
-
-        for (Items i: arr) {
-            inventory.add(i);
-        }
+        ArrayList<Items> inventory = new ArrayList<Items>(Arrays.asList(arr));
 
         //ArrayList<Items> inventory = new ArrayList<Items>(List.of(arr));
         Weapon weapon = (Weapon) itemLoader.load(sc);

@@ -97,12 +97,8 @@ public abstract class MapBase implements Savable, Comparable<MapBase> {
         if (this.tileMatrix[row][column].getPrimaryOccupant() != null) {
             throw new Exception("cannot add Entity to occupied tile.");
         }*/
-
-
         this.tileMatrix[row][column].setPrimaryOccupant(entity);
-
     }
-
     private void checkBounds(int row, int column) throws IllegalArgumentException {
         if (row < 0 || row >= this.getRows() || column < 0 || column >= this.getColumns()) {
             throw new IllegalArgumentException("bad param addTile, row must be no less than 0 and no greater than " +

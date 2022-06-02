@@ -39,8 +39,8 @@ public class StoreScene {
     private Items[] shop;
     ItemFactory itemFactory = new ItemFactory();
 
-    public StoreScene(MapScene map){
-        Navigator nav = Navigator.getInstance();
+    public StoreScene(MapScene map, Navigator nav){
+        //Navigator nav = Navigator.getInstance();
         makeShopKeeper();
         this.map = map;
         this.player = nav.getPlayer();
