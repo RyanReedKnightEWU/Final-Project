@@ -5,6 +5,9 @@ import gameobjects.Items.Consumable;
 import java.util.Random;
 
 public class healthPotion extends Consumable {
+    /**
+     * @param type the version of the consumable.
+     */
     public healthPotion(int type){
         super("Health Potion", 30);
         setHeal(60);
@@ -20,6 +23,9 @@ public class healthPotion extends Consumable {
         super(name,minDamage,maxDamage,heal,value,description,amount);
     }
 
+    /**
+     * Makes the old version of the consumable.
+     */
     private void old(String oldName){
         setHeal(getHeal()-30);
         setValue(getValue()-10);
@@ -28,6 +34,9 @@ public class healthPotion extends Consumable {
         setName(temp);
     }
 
+    /**
+     * Makes the clean version of the consumable.
+     */
     private void clean(String cleanName){
         setHeal(getHeal()+30);
         setValue(getValue()+10);

@@ -3,11 +3,17 @@ package gameobjects.Items.Weapons;
 import gameobjects.Items.Weapon;
 
 public class Bat extends Weapon {
+    /**
+     * Makes the default version of the weapon.
+     */
     public Bat(){
         super("Bat", 10, 15, 10);
         setDescription(String.format("%s is better than nothing.", getName()));
     }
 
+    /**
+     * @param type the version of the weapon.
+     */
     public Bat(int type){
         super("Bat", 10, 15, 10);
         String[] name = {"Old bat","Bat","New bat"};
