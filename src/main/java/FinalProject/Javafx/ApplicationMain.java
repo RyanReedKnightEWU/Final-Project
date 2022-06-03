@@ -40,7 +40,7 @@ public class ApplicationMain extends Application {
 
         System.out.println(nav.getPlayer()==null);
 
-        nav.loadGame("save.txt");
+        //nav.loadGame("save.txt");
 
         //nav.setCurrentMap((new GameMapFactory()).createMap(Sa));
 

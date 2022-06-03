@@ -25,6 +25,9 @@ import java.util.Arrays;
 
 import static FinalProject.Javafx.ApplicationMain.scene;
 
+/**
+ * The store scene allows the player to buy and sell items.
+ */
 public class StoreScene {
     private VBox yourItems = new VBox();
     private VBox hisItems = new VBox();
@@ -39,6 +42,11 @@ public class StoreScene {
     private Items[] shop;
     ItemFactory itemFactory = new ItemFactory();
 
+    /**
+     * Sets up the store scene.
+     * @param map
+     * @param nav
+     */
     public StoreScene(MapScene map, Navigator nav){
         //Navigator nav = Navigator.getInstance();
         makeShopKeeper();
@@ -66,12 +74,18 @@ public class StoreScene {
         layout.setBottom(options);
     }
 
+    /**
+     * Creates a random array of items that the player can buy from.
+     */
     public void makeShopKeeper(){
         ItemFactory itemFactory = new ItemFactory();
         shop = itemFactory.makeRandomItems(4,4,4);
         shop = itemFactory.noDup(shop);
     }
 
+    /**
+     * Shows the shop scene.
+     */
     public void show(){
         playerReset();
         makeButtons();
@@ -79,6 +93,9 @@ public class StoreScene {
         scene.setRoot(layout);
     }
 
+    /**
+     * Creates the buttons that allow the player to sell items.
+     */
     public void makeButtons(){
         yourItems = new VBox();
         yourItems.setAlignment(Pos.CENTER);
@@ -134,6 +151,9 @@ public class StoreScene {
         setBoth();
     }
 
+    /**
+     * Creates the buttons that allow the player to buy items.
+     */
     public void makeShopButtons(){
         hisItems = new VBox();
         hisItems.setAlignment(Pos.CENTER);
@@ -168,6 +188,10 @@ public class StoreScene {
         setBoth();
     }
 
+    /**
+     * Checks if player can buy an item and if they can then they get the item at the cost of gold.
+     * @param i the item the player is trying to buy.
+     */
     public void buy(Items i){
         if(player.getGold() - i.getValue() > 0){
             //Adds to inventory
@@ -186,6 +210,9 @@ public class StoreScene {
 
     }
 
+    /**
+     * Sets the layout of the player buttons and shop buttons.
+     */
     public void setBoth(){
         both = new HBox();
         both.setStyle("-fx-background-color: rgb(100,100,100)");
@@ -196,6 +223,10 @@ public class StoreScene {
         layout.setCenter(both);
     }
 
+    /**
+     * Turns the buttons green if the mouse os hovering over the button.
+     * @param b the button that is getting the effect.
+     */
     public void buttonEffects(Button b){
         b.addEventHandler(MouseEvent.MOUSE_ENTERED,
                 new EventHandler<MouseEvent>() {
@@ -214,10 +245,16 @@ public class StoreScene {
                 });
     }
 
+    /**
+     * Resets the gold counter on the screen.
+     */
     public void playerReset(){
         playerInfo.setText("Your gold: "+player.getGold());
     }
 
+    /**
+     * Exits back to the map scene.
+     */
     public void exit(){
         map.setScene();
     }
