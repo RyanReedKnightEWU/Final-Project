@@ -25,8 +25,11 @@ public class WeaponFactory extends WeaponFactoryBase{
             return new BareHands(name, minDamage, maxDamage, value, discription);
         }else if(key.equals(Bat.class.getName())) {
             return new Bat(name, minDamage, maxDamage, value, discription);
-        } else {
-            return null;
+        } else if (key.startsWith(Weapon.class.getName())){
+            return new Weapon(name, minDamage, maxDamage, value, discription);
+        }else {
+            throw new IllegalArgumentException(
+                    "Bad param createWeapon in WeaponFactory, " + key + " is not a valid key");
         }
     }
 
