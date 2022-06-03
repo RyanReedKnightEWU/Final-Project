@@ -3,10 +3,16 @@ package gameobjects.Items.Weapons;
 import gameobjects.Items.Weapon;
 
 public class Sword extends Weapon {
+    /**
+     * Makes the default version of the weapon.
+     */
     public Sword(){
         super("Sword", 25, 35, 175);
         setDescription(String.format("%s is just a regular weapon that is unexciting.", getName()));
     }
+    /**
+     * @param type the version of the weapon.
+     */
     public Sword(int type){
         super("Sword", 25, 35, 175);
         String[] name = {"Magic sword", "Sword", "Broken sword"};

@@ -3,10 +3,16 @@ package gameobjects.Items.Weapons;
 import gameobjects.Items.Weapon;
 
 public class Rifle extends Weapon {
+    /**
+     * Makes the default version of the weapon.
+     */
     public Rifle(){
         super("Rifle", 40, 50, 200);
         setDescription(String.format("%s is a rifle that was made before the Great War.", getName()));
     }
+    /**
+     * @param type the version of the weapon.
+     */
     public Rifle(int type){
         super("Rifle", 40, 50, 200);
         String[] name = {"New Rifle", "Rifle" , "Rusty Rifle"};
@@ -24,8 +30,10 @@ public class Rifle extends Weapon {
         }
         setDescription(String.format("%s is a rifle that was made before the Great War.", getName()));
     }
+    /*
     // Fully defined constructor, necessary for load methods (Ryan Knight 21 May 2022)
     public Rifle (String name, int minDamage, int maxDamage, int value, String discription){
         super(name,minDamage,maxDamage,value,discription);
     }
+    */
 }
