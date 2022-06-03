@@ -5,12 +5,21 @@ import gameobjects.SaveLoader.Savable;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * Items is the parent class to items that the entities can wear and use.
+ */
 public abstract class Items implements Comparable<Items>, Savable {
     private String description = "";
     private String name = "";
+    /**
+     * The value in gold coins
+     */
     private Integer value = 0;
     private Integer minDamage = 0;
     private Integer maxDamage = 0;
+    /**
+     * Is the item armor, a weapon, or a consumable?
+     */
     protected String type = "Item";
 
     protected void setValue(int value){
@@ -69,11 +78,17 @@ public abstract class Items implements Comparable<Items>, Savable {
         this.minDamage = minDamage;
     }
 
+    /**
+     * Allows the game to get the class of the item for saving.
+     * @param saveFile
+     * @throws IOException
+     */
     @Override
     public void saveInstance(FileWriter saveFile) throws IOException {
         saveFile.write(this.getClass().getName() + "\n");
         saveFile.write(this.save());
     }
+
     @Override
     public int compareTo(Items item) {
         if (item == null) {
@@ -81,7 +96,6 @@ public abstract class Items implements Comparable<Items>, Savable {
         } else if (item == this) {
             return 0;
         }
-
         if(this.getClass().getName().equals(item.getClass().getName())) {
 
             if (this.getName().equals(item.getName())) {
