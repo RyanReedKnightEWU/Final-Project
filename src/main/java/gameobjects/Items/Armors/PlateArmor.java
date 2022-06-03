@@ -6,6 +6,9 @@ public class PlateArmor extends Armor {
     private String name = "Plate armor";
     private int armorValue = 10;
     private int value = 150;
+    /**
+     * @param type the version of the armor.
+     */
     public PlateArmor(int type){
         super("Magic plate armor", 10, 150);
         if(type == -1){

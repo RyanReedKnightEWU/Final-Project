@@ -3,6 +3,9 @@ package gameobjects.Items.Armors;
 import gameobjects.Items.Armor;
 
 public class CombatArmor extends Armor {
+    /**
+     * @param type the version of the armor.
+     */
     public CombatArmor(int type){
         super("Combat armor", 15, 150);
         if(type == -1){

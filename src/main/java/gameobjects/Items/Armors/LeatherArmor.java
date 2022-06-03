@@ -8,6 +8,9 @@ public class LeatherArmor extends Armor {
     private String name = "Leather armor";
     private int armorValue = 5;
     private int value = 75;
+    /**
+     * @param type the version of the armor.
+     */
     public LeatherArmor(int type){
         super("Leather armor", 5, 75);
         if(type == -1){
