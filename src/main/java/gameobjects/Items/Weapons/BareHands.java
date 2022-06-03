@@ -3,10 +3,16 @@ package gameobjects.Items.Weapons;
 import gameobjects.Items.Weapon;
 
 public class BareHands extends Weapon {
-    public BareHands(int type){ //Make sure luck is 0 when passed in
+    /**
+     * Makes the default version of the weapon.
+     */
+    public BareHands(int type){
         super("Bare hands", 1, 3, 0);
         setDescription(String.format("%s is better than nothing.", getName()));
     }
+    /**
+     * Makes the default version of the weapon.
+     */
     public BareHands(){
         super("Bare hands", 1, 3, 0);
         setDescription(String.format("%s is better than nothing.", getName()));

@@ -29,9 +29,8 @@ public class MapScene {
     private HBox options = new HBox();
     private Button seeInventory, save, load;
 
-    //To REMOVE later
     Button shop;
-    StoreScene storeScene;
+    //StoreScene storeScene;
 
     public void start(Navigator nav) {
         MapBase map = nav.getCurrentMap();

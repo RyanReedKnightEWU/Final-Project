@@ -24,6 +24,9 @@ import java.util.Arrays;
 
 import static FinalProject.Javafx.ApplicationMain.scene;
 
+/**
+ * Allows the player to equip items or use items.
+ */
 public class InventoryScene {
     private VBox items;
     private HBox options = new HBox();
@@ -35,6 +38,11 @@ public class InventoryScene {
     private Label playerInfo = new Label();
     ItemFactory itemFactory = new ItemFactory();
 
+    /**
+     * Sets up the player inventory scene.
+     * @param map
+     * @param player
+     */
     public void start(MapScene map,Entity player){
         this.map = map;
         this.player = player;
@@ -64,6 +72,9 @@ public class InventoryScene {
 
     }
 
+    /**
+     * Creates buttons for the player to be able to interact with their inventory.
+     */
     public void makeButtons(){
         items = new VBox();
         items.setAlignment(Pos.CENTER);
@@ -122,6 +133,10 @@ public class InventoryScene {
         layout.setCenter(items);
     }
 
+    /**
+     * Turns the buttons green if the mouse os hovering over the button.
+     * @param b the button that is getting the effect.
+     */
     public void buttonEffects(Button b){
         b.addEventHandler(MouseEvent.MOUSE_ENTERED,
                 new EventHandler<MouseEvent>() {
@@ -140,10 +155,16 @@ public class InventoryScene {
                 });
     }
 
+    /**
+     * Resets the player information at the top of the screen.
+     */
     public void playerReset(){
         playerInfo.setText(player.toString()+", Gold: "+player.getGold());
     }
 
+    /**
+     * Exits back to the map scene.
+     */
     public void exit(){
         map.setScene();
     }

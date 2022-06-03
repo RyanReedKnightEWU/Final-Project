@@ -5,6 +5,9 @@ import gameobjects.Items.Consumable;
 import java.util.Random;
 
 public class AttackBottle extends Consumable {
+    /**
+     * @param type the version of the consumable.
+     */
     public AttackBottle(int type){
         super("Bottled Grenade", 250);
         setDamage(200,250);
@@ -20,6 +23,9 @@ public class AttackBottle extends Consumable {
         super(name, minDamage, maxDamage,heal,value,description,amount);
     }
 
+    /**
+     * Makes the old version of the consumable.
+     */
     private void old(){
         setDamage(100,150);
         setValue(100);
@@ -27,6 +33,9 @@ public class AttackBottle extends Consumable {
         setDescription(String.format("A fireball preserved in a bottle"));
     }
 
+    /**
+     * Makes the clean version of the consumable.
+     */
     private void clean(){
         setDamage(350,500);
         setValue(500);

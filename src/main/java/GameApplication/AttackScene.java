@@ -29,6 +29,9 @@ import java.util.ArrayList;
 
 import static FinalProject.Javafx.ApplicationMain.scene;
 
+/**
+ * Allows the player and enemy to interact.
+ */
 public class AttackScene {
     private static BorderPane layout = new BorderPane();
     private HBox options = new HBox();
@@ -45,6 +48,13 @@ public class AttackScene {
     private Navigator nav;
     private int row, column;
 
+    /**
+     * Sets up the attack scene.
+     * @param map
+     * @param nav
+     * @param row
+     * @param column
+     */
     public AttackScene(MapScene map, Navigator nav,int row, int column){
         this.map = map;
         attack = new Button("Attack");
@@ -81,6 +91,11 @@ public class AttackScene {
         runAway.setOnAction(e -> useRunAway());
     }
 
+    /**
+     * Loads the player and enemy into the attack scene.
+     * @param player
+     * @param badGuy
+     */
     public void start(Player player, Entity badGuy){
         badGuyInfo.setText(badGuy.toString());
         badGuyInfo.setStyle("-fx-background-color: rgb(250,200,200);");
@@ -92,6 +107,11 @@ public class AttackScene {
         scene.setRoot(layout);
     }
 
+    /**
+     * Allows the attack inventory scene to switch back to the attack scene.
+     * @param player
+     * @param badGuy
+     */
     public void back(Player player, Entity badGuy){
         scene.setRoot(layout);
         reset(player, badGuy);
@@ -100,11 +120,21 @@ public class AttackScene {
         }
     }
 
+    /**
+     * Resets the player and enemy's info on the screen.
+     * @param player
+     * @param badGuy
+     */
     private void reset(Player player, Entity badGuy){
         badGuyInfo.setText(badGuy.toString());
         playerInfo.setText(player.toString());
     }
 
+    /**
+     * When the player attacks the enemy it will check if the enemy is alive, if so, they will attack back.
+     * @param player
+     * @param badGuy
+     */
     private void attackBadGuy(Player player, Entity badGuy){
         String currentInfo = "";
         int damage = player.getDamage();
@@ -126,7 +156,11 @@ public class AttackScene {
         damageInfo.setText(currentInfo);
     }
 
-
+    /**
+     * Adds the enemies inventory to the players inventory. It also tells the player what they got.
+     * @param player
+     * @param badGuy
+     */
     private void loot(Player player, Entity badGuy) {
         Popup pop = new Popup();
         //Adds gold and items to players inventory.
@@ -150,26 +184,40 @@ public class AttackScene {
         map.setScene();
     }
 
+    /**
+     * Allow the enemy to attack the player.
+     * @param player
+     * @param badGuy
+     * @return
+     */
     private int badGuyTurn(Player player, Entity badGuy){
         int damage = badGuy.getDamage();
         player.takeDamage(damage);
         return damage;
     }
 
+    /**
+     * Switches the scene to the attack scene inventory.
+     * @param player
+     * @param badGuy
+     */
     private void useConsumables(Player player, Entity badGuy){
         AttackSceneInventory attackSceneInventory = new AttackSceneInventory();
         attackSceneInventory.start(this, player, badGuy);
     }
 
+    /**
+     * Goes back to the map scene if the player runs away.
+     */
     private void useRunAway(){
         map.setScene();
     }
 
-    private void showStuff(){
-        //Shows players consumables
-    }
 }
 
+/**
+ * A modified inventory scene for the attack scene. Allows the player to pick a target and allows them to use a consumable on the target.
+ */
 class AttackSceneInventory{
     private VBox items;
     private HBox options = new HBox();
@@ -182,6 +230,12 @@ class AttackSceneInventory{
     private Button you, them;
     boolean used = false;
 
+    /**
+     * Creates the modified inventory scene.
+     * @param back
+     * @param player
+     * @param badGuy
+     */
     public void start(AttackScene back,Player player, Entity badGuy){
         this.attackScene = back;
         this.player = player;
@@ -223,6 +277,9 @@ class AttackSceneInventory{
 
     }
 
+    /**
+     * Makes the buttons of the player consumables so that they can use them for the fight.
+     */
     public void makeButtons(){
         items = new VBox();
         items.getChildren().add(you);
@@ -254,6 +311,10 @@ class AttackSceneInventory{
         layout.setCenter(items);
     }
 
+    /**
+     * Turns the buttons green if the mouse os hovering over the button.
+     * @param b the button that is getting the effect.
+     */
     public void buttonEffects(Button b){
         b.addEventHandler(MouseEvent.MOUSE_ENTERED,
                 new EventHandler<MouseEvent>() {
@@ -272,10 +333,16 @@ class AttackSceneInventory{
                 });
     }
 
+    /**
+     * Resets the player information at the top of the screen.
+     */
     public void playerReset(){
         playerInfo.setText(player.toString());
     }
 
+    /**
+     * Exits back to the attack scene.
+     */
     public void exit(){
         attackScene.back(player, badGuy);
     }

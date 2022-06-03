@@ -8,7 +8,9 @@ import java.util.Locale;
 import java.util.Random;
 
 public class WeaponFactory extends Factory{
-
+    /**
+     * @return a random weapon, with a random version of that weapon.
+     */
     public Weapon createRandomWeapon(){
         Weapon weapon;
         Random rand = new Random();
@@ -37,6 +39,9 @@ public class WeaponFactory extends Factory{
         return weapon;
     }
 
+    /**
+     * @return a random weak weapon.
+     */
     public Weapon getWeakWeapon(){
         Weapon weapon;
         Random rand = new Random();
@@ -59,6 +64,9 @@ public class WeaponFactory extends Factory{
         return weapon;
     }
 
+    /**
+     * @return a random medium weapon.
+     */
     public Weapon getRegularWeapon(){
         Weapon weapon;
         Random rand = new Random();
@@ -84,6 +92,9 @@ public class WeaponFactory extends Factory{
         return weapon;
     }
 
+    /**
+     * @return a random strong weapon.
+     */
     public Weapon getStrongWeapon(){
         Weapon weapon;
         Random rand = new Random();

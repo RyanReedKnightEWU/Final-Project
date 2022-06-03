@@ -5,9 +5,19 @@ import gameobjects.Entity.Entity;
 import java.util.Random;
 
 public class Consumable extends Items{
+    /**
+     * How much the consumable will heal the entity
+     */
     private int heal = 0;
+    /**
+     * How many uses the consumable has.
+     */
     private int amount = 1;
 
+    /**
+     * Allows for a consumable to copy the properties of another consumable.
+     * @param consumable
+     */
     public Consumable(Consumable consumable){
         type = "Consumable";
         setName(consumable.getName());
@@ -18,12 +28,27 @@ public class Consumable extends Items{
         setAmount(consumable.getAmount());
     }
 
+    /**
+     * Allows for a nearly empty consumable to be made.
+     * @param name
+     * @param value
+     */
     protected Consumable(String name, int value){
         type = "Consumable";
         setName(name);
         setValue(value);
     }
 
+    /**
+     * Allows a consumable to be fully defined. Meant for loading a consumable from a save file.
+     * @param name
+     * @param minDamage
+     * @param maxDamage
+     * @param heal
+     * @param value
+     * @param description
+     * @param amount
+     */
     public Consumable(String name, int minDamage, int maxDamage, int heal, int value, String description, int amount){
         //used for loading consumables
         type = "Consumable";
@@ -35,6 +60,11 @@ public class Consumable extends Items{
         setAmount(amount);
     }
 
+    /**
+     * Allows for an entity to use the consumable on entity.
+     * Will try to deal damage to the entity, and then it will try to heal the entity.
+     * @param entity
+     */
     public void use(Entity entity){
         if(amount > 0){
             entity.takeDamage(getDamage());
@@ -87,6 +117,11 @@ public class Consumable extends Items{
         return this.getName().hashCode();
     }
 
+    /**
+     * Allows for to items to add their uses together if they are the same consumable.
+     * @param consumable
+     * @return
+     */
     public Consumable stack(Consumable consumable){
         if(getName().equals(consumable.getName())){
             amount = amount + consumable.getAmount();
@@ -96,6 +131,10 @@ public class Consumable extends Items{
         return this;
     }
 
+    /**
+     * Makes a string based off of the effects of the consumable.
+     * @return
+     */
     public String toString(){
         String value = "";
         if(getMaxDamage() != 0 && getHeal() == 0){
@@ -122,6 +161,10 @@ public class Consumable extends Items{
         return value;
     }
 
+    /**
+     * Creates a save string for saving.
+     * @return
+     */
     public String save(){
         String value = "CONSUMABLE\n";
         /*value += String.format("Name: %s\nDamage: %d-%d\nHeals: %d\nAmount: %d\nValue: %d\nDescription: %s",

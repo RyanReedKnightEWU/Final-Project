@@ -12,6 +12,13 @@ public class ItemFactory {
     ConsumableFactory consumableFactory = new ConsumableFactory();
     ArmorFactory armorFactory = new ArmorFactory();
 
+    /**
+     * Creates a random items with random versions of those items.
+     * @param Weapons the amount of weapons you want.
+     * @param Armors the amount of armors you want.
+     * @param Consumables the amount of consumables you want
+     * @return an array of the items.
+     */
     public Items[] makeRandomItems(int Weapons, int Armors, int Consumables){
         ArrayList<Items> stuff = new ArrayList<Items>();
         for(int i = 0; i < Weapons; i++){
@@ -27,7 +34,10 @@ public class ItemFactory {
         return items;
     }
 
-    public Items createRandomWeapon(){
+    /**
+     * @return a random item such as an armor set, a weapon, or a consumable.
+     */
+    public Items createRandomItem(){
         Items items;
         Random rand = new Random();
         int type = rand.nextInt(6);
@@ -46,6 +56,11 @@ public class ItemFactory {
         return items;
     }
 
+    /**
+     * Removes duplicates from the passed in item array.
+     * @param items the array of items you want to remove duplicates from.
+     * @return the new array of no duplicated items.
+     */
     public Items[] noDup(Items[] items){
         ArrayList<Consumable> stuff = new ArrayList<Consumable>();
         ArrayList<Items> newItems = new ArrayList<Items>();
@@ -79,6 +94,11 @@ public class ItemFactory {
         return back;
     }
 
+    /**
+     * Stacks all the consumables in the array that are the same.
+     * @param items
+     * @return the new version of the array.
+     */
     public Items[] Stacker(Items[] items){
         ArrayList<Consumable> stuff = new ArrayList<Consumable>();
         ArrayList<Items> newItems = new ArrayList<Items>();

@@ -76,7 +76,6 @@ public class ItemLoader extends SaveLoader<Items> {
 
         return list.toArray(new Items[0]);
 
-
         /*
         try {
             // Loop until LeaveFunction is thrown.

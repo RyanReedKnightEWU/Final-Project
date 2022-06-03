@@ -8,7 +8,9 @@ import gameobjects.Items.Armors.PlateArmor;
 import java.util.Random;
 
 public class ArmorFactory {
-
+    /**
+     * @return a random armor set with a random version of the armor set.
+     */
     public Armor createRandomArmor(){
         Armor armor;
         Random rand = new Random();
@@ -27,6 +29,5 @@ public class ArmorFactory {
         }
         return armor;
     }
-
 
 }

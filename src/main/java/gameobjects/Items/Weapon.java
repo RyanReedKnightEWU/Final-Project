@@ -4,10 +4,20 @@ import java.util.Random;
 
 public class Weapon extends Items{
 
+    /**
+     * Allows for an empty weapon to be made.
+     */
     public Weapon(){
         type = "Weapon";
     }
 
+    /**
+     * Allows for a basic weapon to be made.
+     * @param name
+     * @param minDamage
+     * @param maxDamage
+     * @param value
+     */
     public Weapon(String name, int minDamage, int maxDamage, int value){
         type = "Weapon";
         setName(name);
@@ -16,8 +26,15 @@ public class Weapon extends Items{
         setDescription("Weapon");
     }
 
+    /**
+     * Allows one to fully define a weapon. Meant for loading weapons from a save file.
+     * @param name
+     * @param minDamage
+     * @param maxDamage
+     * @param value
+     * @param discription
+     */
     public Weapon(String name, int minDamage, int maxDamage, int value, String discription){
-        //for loading
         setName(name);
         setDamage(minDamage, maxDamage);
         setValue(value);
@@ -25,10 +42,15 @@ public class Weapon extends Items{
         setDescription(discription);
     }
 
+    /**
+     * Allows for weapon duplication.
+     * @param weapon
+     */
     public void setWeapon(Weapon weapon){
         setName(weapon.getName());
         setDamage(weapon.getMinDamage(), weapon.getMaxDamage());
         setValue(weapon.getValue());
+        setDescription(weapon.getDescription());
         type = "Weapon";
     }
 
@@ -37,11 +59,18 @@ public class Weapon extends Items{
         setMaxDamage(maxDamage);
     }
 
+    /**
+     * Gets a random value between the weapons maximum damage and minim damage.
+     * @return
+     */
     public int getDamage(){
         Random rand = new Random();
         return rand.nextInt(getMaxDamage()-getMinDamage()+1)+getMinDamage();
     }
 
+    /**
+     * @return the damage range as a string.
+     */
     public String damageRange(){
         return String.format("%d-%d", getMinDamage(), getMaxDamage());
     }
@@ -58,6 +87,10 @@ public class Weapon extends Items{
         }
     }
 
+    /**
+     * Makes a string for saving purposes.
+     * @return the weapons properties with no flavor text.
+     */
     public String save(){
         String value = "WEAPON\n";
         //value += String.format("Name: %s\nDamage: %d-%d\nValue: %d\nDescription: %s", getName(), getMinDamage(), getMaxDamage(), getValue(), getDescription());

@@ -3,10 +3,16 @@ package gameobjects.Items.Weapons;
 import gameobjects.Items.Weapon;
 
 public class Pistol extends Weapon{
+    /**
+     * Makes the default version of the weapon.
+     */
     public Pistol(){
         super("Pistol", 20, 25, 100);
         setDescription(String.format("%s is a handgun that was made before the Great War.", getName()));
     }
+    /**
+     * @param type the version of the weapon.
+     */
     public Pistol(int type){
         super("Pistol", 20, 25, 100);
         String[] name = {"Old pistol","Pistol","New pistol"};
@@ -29,7 +35,4 @@ public class Pistol extends Weapon{
     public Pistol (String name, int minDamage, int maxDamage, int value, String discription){
         super(name,minDamage,maxDamage,value,discription);
     }
-
-
-
 }
