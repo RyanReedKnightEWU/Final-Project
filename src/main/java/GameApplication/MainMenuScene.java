@@ -74,7 +74,7 @@ public class MainMenuScene {
         //Gets the location of the java directory
         String file = new File("").getAbsolutePath();
 
-        names = new File(file+"\\Saves").list();
+        names = new File(file+"").list();
         layout = new HBox();
         layout.setAlignment(Pos.CENTER);
 
@@ -85,7 +85,7 @@ public class MainMenuScene {
                 Button button = new Button(name.substring(0,name.indexOf(".")));
                 button.setOnAction(e -> {
                     try {
-                        nav.loadGame(file+"\\Saves\\"+name);
+                        nav.loadGame(file+"\\"+name);
                         MapScene mapScene = new MapScene();
                         mapScene.start(nav);
                     } catch (FileNotFoundException ex) {
