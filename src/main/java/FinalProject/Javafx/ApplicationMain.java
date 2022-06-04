@@ -32,6 +32,13 @@ public class ApplicationMain extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        gameWindow = stage;
+        stage.setTitle("Final Project Game");
+        MainMenuScene mainMenuScene = new MainMenuScene();
+        mainMenuScene.start();
+        //stage.show();
+
+        /*
         GameMapFactory gameMapFactory = new GameMapFactory();
         ArrayList<MapBase> mapArr = gameMapFactory.createMapSet(GameMapFactoryKeys.STANDARD_MAP.toString());
         Navigator nav = Navigator.setState(new Player(100,45,45,"Alex"),
@@ -44,13 +51,10 @@ public class ApplicationMain extends Application {
 
         //nav.setCurrentMap((new GameMapFactory()).createMap(Sa));
 
-        gameWindow = stage;
-        stage.setTitle("Final Project Game");
         MainMenuScene mainMenuScene = new MainMenuScene();
         MapScene mapScene = new MapScene();
-        mapScene.start(nav);
-        stage.show();
+        //mapScene.start(nav);
         //mainMenuScene.start(nav.getCurrentMap());
-
+         */
     }
 }

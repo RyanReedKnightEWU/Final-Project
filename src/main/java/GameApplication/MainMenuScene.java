@@ -1,5 +1,8 @@
 package GameApplication;
 
+import gameobjects.Entity.Player;
+import gameobjects.Map.Factories.GameMapFactory;
+import gameobjects.Map.Factories.GameMapFactoryKeys;
 import gameobjects.Map.MapBase;
 import gameobjects.Navigator.Navigator;
 import javafx.geometry.Pos;
@@ -11,6 +14,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import static FinalProject.Javafx.ApplicationMain.gameWindow;
 import static FinalProject.Javafx.ApplicationMain.scene;
@@ -21,13 +26,12 @@ public class MainMenuScene {
 
     public static MapScene map;
 
-    public void start(MapBase map){
-
+    public void start(){
         newGame = new Button("New Game");
-        newGame.setOnAction(e -> newGame());
+        newGame.setOnAction(e -> basicStartNewGame());
 
         loadGame = new Button("Load Game");
-        loadGame.setOnAction(e -> loadGame());
+        loadGame.setOnAction(e -> basicLoadGame());
 
         //FOR TESTING
         Button skip = new Button("Skip");
@@ -38,7 +42,7 @@ public class MainMenuScene {
                 throw new RuntimeException(ex);
             }
         });
-        layout.getChildren().add(skip);
+        //layout.getChildren().add(skip);
 
         layout.getChildren().add(newGame);
         layout.getChildren().add(loadGame);
@@ -72,6 +76,33 @@ public class MainMenuScene {
 
     private void newSave(String name){
         System.out.println("Player entered: "+name);
+    }
+
+    private void basicStartNewGame(){
+        GameMapFactory gameMapFactory = new GameMapFactory();
+        ArrayList<MapBase> mapArr = gameMapFactory.createMapSet(GameMapFactoryKeys.STANDARD_MAP.toString());
+        Navigator nav = Navigator.setState(new Player(100,45,45,"Alex"),
+                mapArr,
+                mapArr.get(0), 0, 3);
+
+        System.out.println(nav.getPlayer()==null);
+
+        MainMenuScene mainMenuScene = new MainMenuScene();
+        MapScene mapScene = new MapScene();
+        mapScene.start(nav);
+    }
+
+    private void basicLoadGame() {
+        Navigator nav = Navigator.getInstance();
+        try {
+            nav.loadGame("save.txt");
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
+        MainMenuScene mainMenuScene = new MainMenuScene();
+        MapScene mapScene = new MapScene();
+        mapScene.start(nav);
     }
 
     private void loadGame(){
