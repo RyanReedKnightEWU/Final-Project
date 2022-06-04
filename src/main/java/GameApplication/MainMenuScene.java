@@ -87,7 +87,6 @@ public class MainMenuScene {
 
         System.out.println(nav.getPlayer()==null);
 
-        MainMenuScene mainMenuScene = new MainMenuScene();
         MapScene mapScene = new MapScene();
         mapScene.start(nav);
     }
@@ -100,7 +99,6 @@ public class MainMenuScene {
             System.out.println(e);
         }
 
-        MainMenuScene mainMenuScene = new MainMenuScene();
         MapScene mapScene = new MapScene();
         mapScene.start(nav);
     }
