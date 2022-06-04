@@ -24,25 +24,12 @@ public class MainMenuScene {
     private HBox layout = new HBox();
     private Button newGame, loadGame;
 
-    public static MapScene map;
-
     public void start(){
         newGame = new Button("New Game");
         newGame.setOnAction(e -> basicStartNewGame());
 
         loadGame = new Button("Load Game");
         loadGame.setOnAction(e -> basicLoadGame());
-
-        //FOR TESTING
-        Button skip = new Button("Skip");
-        skip.setOnAction(e -> {
-            try {
-                Skip();
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-        //layout.getChildren().add(skip);
 
         layout.getChildren().add(newGame);
         layout.getChildren().add(loadGame);
@@ -103,17 +90,6 @@ public class MainMenuScene {
 
     private void readGameFile(String name){
 
-    }
-
-    private void startMap() throws Exception {
-        System.out.println("Starting the arena/map.");
-        map = new MapScene();
-        map.start(Navigator.getInstance());
-    }
-
-    //allows us to skip the main menu for testing purposes
-    private void Skip() throws Exception {
-        startMap();
     }
 
     private void basicStartNewGame(){
