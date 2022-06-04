@@ -5,6 +5,8 @@ import gameobjects.Entity.Goblin;
 import gameobjects.Entity.Murderbot;
 import gameobjects.Entity.Mutant;
 import gameobjects.Entity.SaveLoad.EntityLoader;
+import gameobjects.Items.Armors.Clothes;
+import gameobjects.Items.Weapons.Pistol;
 import gameobjects.Map.MapBase;
 import gameobjects.Map.RectangularMap;
 import gameobjects.Tile.LinkTile;
@@ -96,6 +98,7 @@ public class GameMapFactory extends MapFactoryBase {
             LinkTile arenaToHallLink = new LinkTile(standardHall, null, arenaToHallHallPosition),
                     hallToArenaLink = new LinkTile(standardArena, null, hallToArenaArenaPosition);
 
+            standardArena.addEntity(new Murderbot("Lary",new Pistol(),new Clothes(5)),1,1);
             standardArena.addTile(arenaToHallLink, 0, 3);
             standardHall.addTile(hallToArenaLink, 3, 0);
             standardHall.addTile(new LinkTile(recRoom, null, 0, 0), 0, 0);

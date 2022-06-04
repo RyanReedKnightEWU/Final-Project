@@ -331,42 +331,42 @@ public abstract class Entity implements Savable, Comparable<Entity>{
             return 1;
         }
 
-        if (name.equals(entity.name)) {
-            if (maxHealth == entity.maxHealth) {
-                if (health == entity.health) {
-                    if (damage == entity.damage) {
-                        if (defense == entity.defense) {
-                            if (isAlive == entity.isAlive) {
-                                if(gold == entity.gold) {
-                                    if(weapon.equals(entity.weapon)){
-                                        if (armor.equals(entity.armor)) {
-                                            if (inventory.size() == entity.inventory.size()) {
-                                                for(int i = 0; i < inventory.size(); i++) {
-                                                    if(!inventory.contains(entity.inventory.get(i))){
-                                                        return 1;
-                                                    }
-                                                }
-                                                return 0;
-                                            }
-                                            return Integer.compare(inventory.size(),entity.inventory.size());
-                                        }
-                                        return armor.compareTo(entity.armor);
-                                    }
-                                    return weapon.compareTo(entity.weapon);
-                                }
-                                return Integer.compare(gold,entity.gold);
-                            }
-                            return Boolean.compare(isAlive,entity.isAlive);
-                        }
-                        return Integer.compare(defense,entity.defense);
-                    }
-                    return Integer.compare(damage,entity.damage);
-                }
-                return Integer.compare(health,entity.health);
-            }
+        if (!name.equals(entity.name)) {
+            return name.compareTo(entity.name);
+        }
+        if (maxHealth != entity.maxHealth) {
             return Integer.compare(maxHealth,entity.maxHealth);
         }
-        return name.compareTo(entity.name);
+        if(health != entity.health) {
+            return Integer.compare(health,entity.health);
+        }
+        if(damage != entity.damage) {
+            return Integer.compare(damage,entity.damage);
+        }
+        if (defense != entity.defense){
+            return Integer.compare(defense,entity.defense);
+        }
+        if(isAlive!=entity.isAlive) {
+            return Boolean.compare(isAlive,entity.isAlive);
+        }
+        if (gold != entity.gold) {
+            return Integer.compare(gold,entity.gold);
+        }
+        if (!weapon.equals(entity.weapon)){
+            return weapon.compareTo(entity.weapon);
+        }
+        if(!armor.equals(entity.armor)){
+            return armor.compareTo(entity.armor);
+        }
+        if (inventory.size()!=entity.inventory.size()){
+            return Integer.compare(inventory.size(),entity.inventory.size());
+        }
+        for(int i = 0; i < inventory.size(); i++) {
+            if(!inventory.contains(entity.inventory.get(i))){
+                return 1;
+            }
+        }
+        return 0;
     }
 
     @Override

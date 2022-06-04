@@ -197,6 +197,27 @@ public class Navigator implements Savable{
 
     }
 
+    public void saveInstance(String saveFileName) throws IOException {
+
+        // If file name does not have text file suffix, append it.
+        String sfx = ".txt";
+        if (!saveFileName.endsWith(sfx)) {
+            saveFileName += sfx;
+        }
+
+        FileWriter saveFile = new FileWriter(saveFileName);
+
+        for(MapBase map : this.mapCollection.values()) {
+            map.saveInstance(saveFile);
+        }
+        player.saveInstance(saveFile);
+        saveFile.write(getCurrentMap().hashCode() + "\n");
+        saveFile.write(row + "\n");
+        saveFile.write(column + "\n");
+
+        saveFile.close();
+    }
+
     public void loadGame(String fileName) throws FileNotFoundException {
         reset();
         Scanner sc = new Scanner(new File(fileName));

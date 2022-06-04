@@ -3,13 +3,15 @@ package gameobjects.Items.Weapons;
 import gameobjects.Items.Items;
 import gameobjects.Items.Weapon;
 
+/**
+ * Mainly used in save and load mechanisms,
+ * */
 public class WeaponFactory extends WeaponFactoryBase{
 
     /**
      * Create Weapon - given key, which contains the class name, returns instance of class.
-     *
      * @param key         - string which contains the items' subclass,
-     *                    this string must be built by object.getClass().getName().
+     *                          this string must be built by object.getClass().getName().
      * @param name        - name field in Weapon instance.
      * @param minDamage   - minDamage field in Weapon instance.
      * @param maxDamage   - maxDamage field in Weapon instance.

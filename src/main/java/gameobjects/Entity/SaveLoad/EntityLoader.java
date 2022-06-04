@@ -6,19 +6,21 @@ import gameobjects.Items.Weapons.WeaponFactory;
 import gameobjects.SaveLoader.SaveLoader;
 
 import java.util.*;
-
+/**
+ * Used to load
+ * **/
 public class EntityLoader extends SaveLoader<Entity> {
     @Override
-    public Entity load(Scanner sc) throws LeaveFunction {
+    public Entity load(Scanner sc) {
         return load(sc.nextLine(),sc);
     }
 
-    public Entity load(String subclass, Scanner sc) throws LeaveFunction {
+    public Entity load(String subclass, Scanner sc) {
 
         if (subclass.equals("NULL-ENTITY")) {
             return null;
         } else if (subclass.equals(SaveLoader.getEndArrKey())) {
-            throw new LeaveFunction();
+            //throw new LeaveFunction();
         }
 
         ItemLoader itemLoader = new ItemLoader();
@@ -34,8 +36,15 @@ public class EntityLoader extends SaveLoader<Entity> {
         ArrayList<Items> inventory = new ArrayList<Items>(Arrays.asList(arr));
 
         //ArrayList<Items> inventory = new ArrayList<Items>(List.of(arr));
-        Weapon weapon = (Weapon) itemLoader.load(sc);
-        Armor armor = (Armor) itemLoader.load(sc);
+        Weapon weapon;
+        Armor armor;
+        try {
+            weapon = (Weapon) itemLoader.load(sc);
+            armor = (Armor) itemLoader.load(sc);
+        } catch (LeaveFunction e) {
+            throw new RuntimeException(e);
+        }
+
 
         // Remove equipped weapon and armor, these will be added in he constructor, so if they
         // are added here there will be duplicates.
@@ -63,7 +72,14 @@ public class EntityLoader extends SaveLoader<Entity> {
     @Override
     public Entity[] loadArray(Scanner sc) {
         LinkedList<Entity> entityList = new LinkedList<>();
-        try {
+        String header = sc.nextLine();
+        while(!header.equals(SaveLoader.getEndArrKey())) {
+            entityList.add(load(header, sc));
+            header = sc.nextLine();
+        }
+        Entity[] arr = new Entity[entityList.size()];
+        return entityList.toArray(arr);
+        /*try {
             entityList.add(load(sc));
             while(true) {
                 entityList.add(load(sc));
@@ -71,6 +87,6 @@ public class EntityLoader extends SaveLoader<Entity> {
         } catch (LeaveFunction e) {
             Entity[] arr = new Entity[entityList.size()];
             return entityList.toArray(arr);
-        }
+        }*/
     }
 }
