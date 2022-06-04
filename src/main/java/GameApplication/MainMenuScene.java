@@ -29,7 +29,7 @@ public class MainMenuScene {
         newGame.setOnAction(e -> basicStartNewGame());
 
         loadGame = new Button("Load Game");
-        loadGame.setOnAction(e -> basicLoadGame());
+        loadGame.setOnAction(e -> loadGame());
 
         layout.getChildren().add(newGame);
         layout.getChildren().add(loadGame);
@@ -81,17 +81,19 @@ public class MainMenuScene {
         //List all the names of saves.
         for (String name: names) {
             System.out.println(name);
-            Button button = new Button(name.substring(0,name.indexOf(".")));
-            button.setOnAction(e -> {
-                try {
-                    nav.loadGame(file+"\\Saves\\"+name);
-                    MapScene mapScene = new MapScene();
-                    mapScene.start(nav);
-                } catch (FileNotFoundException ex) {
-                    ex.printStackTrace();
-                }
-            });
-            layout.getChildren().add(button);
+            if(name.endsWith(".txt")){
+                Button button = new Button(name.substring(0,name.indexOf(".")));
+                button.setOnAction(e -> {
+                    try {
+                        nav.loadGame(file+"\\Saves\\"+name);
+                        MapScene mapScene = new MapScene();
+                        mapScene.start(nav);
+                    } catch (FileNotFoundException ex) {
+                        ex.printStackTrace();
+                    }
+                });
+                layout.getChildren().add(button);
+            }
         }
 
         layout.setAlignment(Pos.CENTER);
