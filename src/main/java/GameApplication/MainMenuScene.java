@@ -78,31 +78,6 @@ public class MainMenuScene {
         System.out.println("Player entered: "+name);
     }
 
-    private void basicStartNewGame(){
-        GameMapFactory gameMapFactory = new GameMapFactory();
-        ArrayList<MapBase> mapArr = gameMapFactory.createMapSet(GameMapFactoryKeys.STANDARD_MAP.toString());
-        Navigator nav = Navigator.setState(new Player(100,45,45,"Alex"),
-                mapArr,
-                mapArr.get(0), 0, 3);
-
-        System.out.println(nav.getPlayer()==null);
-
-        MapScene mapScene = new MapScene();
-        mapScene.start(nav);
-    }
-
-    private void basicLoadGame() {
-        Navigator nav = Navigator.getInstance();
-        try {
-            nav.loadGame("save.txt");
-        } catch (Exception e){
-            System.out.println(e);
-        }
-
-        MapScene mapScene = new MapScene();
-        mapScene.start(nav);
-    }
-
     private void loadGame(){
         String names [];
         //Gets the location of the java directory
@@ -139,5 +114,30 @@ public class MainMenuScene {
     //allows us to skip the main menu for testing purposes
     private void Skip() throws Exception {
         startMap();
+    }
+
+    private void basicStartNewGame(){
+        GameMapFactory gameMapFactory = new GameMapFactory();
+        ArrayList<MapBase> mapArr = gameMapFactory.createMapSet(GameMapFactoryKeys.STANDARD_MAP.toString());
+        Navigator nav = Navigator.setState(new Player(100,45,45,"Alex"),
+                mapArr,
+                mapArr.get(0), 0, 3);
+
+        System.out.println(nav.getPlayer()==null);
+
+        MapScene mapScene = new MapScene();
+        mapScene.start(nav);
+    }
+
+    private void basicLoadGame() {
+        Navigator nav = Navigator.getInstance();
+        try {
+            nav.loadGame("save.txt");
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
+        MapScene mapScene = new MapScene();
+        mapScene.start(nav);
     }
 }
