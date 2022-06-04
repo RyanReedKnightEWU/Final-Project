@@ -65,11 +65,14 @@ public class MainMenuScene {
         System.out.println("Player entered: "+name);
     }
 
+    /**
+     * Shows a list of buttons, that represent save locations. When pressed that save will load.
+     */
     private void loadGame(){
+        Navigator nav = Navigator.getInstance();
         String names [];
         //Gets the location of the java directory
         String file = new File("").getAbsolutePath();
-        //System.out.println(file);
 
         names = new File(file+"\\Saves").list();
         layout = new HBox();
@@ -77,8 +80,17 @@ public class MainMenuScene {
 
         //List all the names of saves.
         for (String name: names) {
+            System.out.println(name);
             Button button = new Button(name.substring(0,name.indexOf(".")));
-            button.setOnAction(e -> readGameFile(name));
+            button.setOnAction(e -> {
+                try {
+                    nav.loadGame(file+"\\Saves\\"+name);
+                    MapScene mapScene = new MapScene();
+                    mapScene.start(nav);
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+            });
             layout.getChildren().add(button);
         }
 
