@@ -52,7 +52,6 @@ public class MapScene {
         save.setOnMouseClicked(e -> {
             try {
                 setSave(nav);
-                System.out.println("HI");
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -136,13 +135,14 @@ public class MapScene {
 
     public void setSave(Navigator nav) throws IOException {
         String saveName = "save.txt";
-        try (FileWriter saveFile = new FileWriter(saveName)) {
+        nav.saveInstance(saveName);
+        /*try (FileWriter saveFile = new FileWriter(saveName)) {
             //saveItemArray(new Items[]{ new throwingKnife(), new Clothes(4), new PlateArmor(6),
             // new Pistol()},saveFile);
             nav.saveInstance(saveFile);
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public void move(Navigator nav, int row, int column){

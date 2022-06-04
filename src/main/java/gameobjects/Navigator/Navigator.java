@@ -10,21 +10,23 @@ import gameobjects.SaveLoader.SaveLoader;
 import gameobjects.Tile.LinkTile;
 import gameobjects.Tile.TileBase;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
-
+/**
+ * Keeps track of the current player, their location on the current map,
+ * and which map (out of a group of maps) they are one.
+ * Saves and loads games.
+ * */
 public class Navigator implements Savable{
 
     private static Navigator uniqueInstance;
     private MapBase currentMap;
-    private HashMap<Integer,MapBase> mapCollection;
+    private final HashMap<Integer,MapBase> mapCollection;
     private TileBase currentTile;
     private int row, column;
     private Entity player;
@@ -118,11 +120,18 @@ public class Navigator implements Savable{
     public int getCurrentRow() {
         return this.row;
     }
-
+    /**
+     * Get the column (index 0) of the player on the current map.
+     * @return this.column
+     * */
     public int getCurrentColumn() {
         return this.column;
     }
-
+    /**
+     * @param newRow - row of the position player is moving to.
+     * @param newColumn - column of the new position player is moving to.
+     * Column and row are index 0. Places player in the new position on the map.
+     * */
     public void setPosition(int newRow, int newColumn) {
         this.row = newRow;
         this.column = newColumn;
@@ -183,10 +192,12 @@ public class Navigator implements Savable{
         System.out.println(this.getCurrentRow() + " " + this.getCurrentColumn());
     }
 
+    /**
+     * Save
+     * */
     @Override
     public void saveInstance(FileWriter saveFile) throws IOException {
 
-        int i = 0;
         for(MapBase map : this.mapCollection.values()) {
             map.saveInstance(saveFile);
         }
@@ -206,6 +217,7 @@ public class Navigator implements Savable{
         }
 
         FileWriter saveFile = new FileWriter(saveFileName);
+
 
         for(MapBase map : this.mapCollection.values()) {
             map.saveInstance(saveFile);
@@ -237,7 +249,6 @@ public class Navigator implements Savable{
 
             // Load Player
             player = (new EntityLoader()).load(header, sc);
-            System.out.println("217: " + player == null);
         }catch (SaveLoader.LeaveFunction e){
             // Do nothing, LeaveFunction not applicable here.
         }

@@ -84,12 +84,19 @@ public class MainMenuScene {
             if(name.endsWith(".txt")){
                 Button button = new Button(name.substring(0,name.indexOf(".")));
                 button.setOnAction(e -> {
+                    /*The first attempt feeds the */
                     try {
-                        nav.loadGame(file+"\\"+name);
+                        nav.loadGame(file+"\\" + name);
                         MapScene mapScene = new MapScene();
                         mapScene.start(nav);
                     } catch (FileNotFoundException ex) {
-                        ex.printStackTrace();
+                        try {
+                            nav.loadGame(name);
+                            MapScene mapScene = new MapScene();
+                            mapScene.start(nav);
+                        } catch (FileNotFoundException exc) {
+                            exc.printStackTrace();
+                        }
                     }
                 });
                 layout.getChildren().add(button);
