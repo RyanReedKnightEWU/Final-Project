@@ -11,18 +11,26 @@ import gameobjects.Tile.TileBase;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * Map class which contains the entities.
+ * */
 public abstract class MapBase implements Savable, Comparable<MapBase> {
 
-    private TileBase[][] tileMatrix;
+    /**
+     * Matrix of tiles that make up the map.
+     * */
+    private final TileBase[][] tileMatrix;
+
+    /**
+     * Used to distinguish separate maps
+     * */
     private final String identifier;
 
-    /*
-    private class MapLinks {
-        protected MapBase linkedMap;
-        protected int[] currentMapTileCoordinate;
-        protected int linkedMapTileCoordinate;
-    }*/
-
+    /**
+     * @param rows the number of rows in the map's tile matrix.
+     * @param columns the number of columns in the map's tile matrix.
+     * @param identifier string to identify the map.
+     * */
     protected MapBase(int rows, int columns, String identifier) {
         this.identifier = identifier;
 
@@ -37,13 +45,12 @@ public abstract class MapBase implements Savable, Comparable<MapBase> {
 
     }
 
-    /**Adds tile to specified index
+    /**Adds tile to specified index, used to add LinkTiles.
     * @param tile - tile to be added.
     * @param row - row tile will be added to.
     * @param column - column tile will be added to.
     * @throws IllegalArgumentException if row less than 0 OR row greater than this.rows -1 OR column is less than 0 OR
     *    column is greater than this.columns -1
-    * !!!!DO NOT ENTER THE SAME TILE REFERENCE INTO THIS METHOD MULTIPLE TIMES!!!!
     * **/
     public void addTile(TileBase tile, int row, int column) {
 
@@ -63,79 +70,87 @@ public abstract class MapBase implements Savable, Comparable<MapBase> {
         this.tileMatrix[row][column] = tile;
     }
 
-    public void setMatrix(TileBase[][] matrix) {
-        tileMatrix = matrix;
-    }
+    /**
+     * @return the number of rows in the tile matrix.
+     * */
     public int getRows() {
         return this.tileMatrix.length;
     }
 
+    /**
+     * @return the number of columns in the tile matrix.
+     * */
     public int getColumns() {
         return this.tileMatrix[0].length;
     }
 
+    /**
+     * Returns the tile at the given row and column.
+     * @param row the row the tile is on (index 0).
+     * @param colum the column the tile is on (index 0).
+     * @return tile at the position.
+     * @throws IllegalArgumentException if the bounds are less than 0 or are grater than or equal to outer bounds.
+     * */
     public TileBase getTile(int row, int colum) throws IllegalArgumentException {
-        this.checkBounds(row, colum);
+        checkBounds(row, colum);
 
-        return this.tileMatrix[row][colum];
+        return tileMatrix[row][colum];
     }
 
-    public TileBase getTile(int[] position) {
-        if (position.length != 2) {
-            return null;
-        }
-        else {
-            return this.getTile(position[0],position[1]);
-        }
+   /**
+    * Add an entity to the given index.
+    * @param entity the entity being added.
+    * @param row the row the entity is placed on (index 0).
+    * @param column the column the entity is placed on (index 0).
+    * @throws IllegalArgumentException if bounds are less than 0 or greater than or equal to the outer bounds.
+    * */
+    public void addEntity(Entity entity, int row, int column) throws IllegalArgumentException {
+        checkBounds(row, column);
+        tileMatrix[row][column].setPrimaryOccupant(entity);
     }
 
-
-    public void addEntity(Entity entity, int row, int column) {
-        /*
-        this.checkBounds(row,column);
-
-        if (this.tileMatrix[row][column].getPrimaryOccupant() != null) {
-            throw new Exception("cannot add Entity to occupied tile.");
-        }*/
-        this.tileMatrix[row][column].setPrimaryOccupant(entity);
-    }
+    /**
+     * Used to check the bounds of row and column input in other methods.
+     * @param row the row being checked.
+     * @param column the column being checked.
+     * @throws IllegalAccessException if either param is less than 0, or if row is less than this.row,
+     * or if column is less than this.column.
+     * */
     private void checkBounds(int row, int column) throws IllegalArgumentException {
-        if (row < 0 || row >= this.getRows() || column < 0 || column >= this.getColumns()) {
+        if (row < 0 || row >= getRows() || column < 0 || column >= getColumns()) {
             throw new IllegalArgumentException("bad param addTile, row must be no less than 0 and no greater than " +
-                    Integer.toString(this.getRows() - 1) + ".\ncolumn must be no less than 0 and no greater than " +
-                    Integer.toString(this.getColumns() - 1) + ". (row is " + Integer.toString(row) + "\tcolumn is " + Integer.toString(column) + ").");
+                    (getRows() - 1) + ".\ncolumn must be no less than 0 and no greater than " +
+                    (getColumns() - 1) + ". (row is " + row + "\tcolumn is " + column + ").");
         }
     }
 
+    /**
+     * Fill map with non-null tiles.
+     * */
     private void fillMap() {
 
         int i,j;
         for (i = 0; i < this.getRows(); i++) {
             for (j = 0; j < this.getColumns(); j++) {
-                this.tileMatrix[i][j] = new Tile();
+                tileMatrix[i][j] = new Tile();
             }
         }
 
     }
 
 
-
+    /**
+     * @return identifier
+     * */
     public String getIdentifier() {
         return identifier;
     }
 
-    public void setRow(TileBase[] tileArr, int row) {
-
-        if (row < 0) {
-            row = 0;
-        } else if (row >= getRows()) {
-            row = getRows() - 1;
-        }
-
-        if (getColumns() >= 0) {
-            System.arraycopy(tileArr, 0, tileMatrix[row], 0, getColumns());
-        }
-    }
+    /**
+     * Saves an instance of the map to a text file, which can be reloaded by the MapLoader class.
+     * @param saveFile FileWriter used to save map, NOT CLOSED IN THIS METHOD.
+     * @throws IOException due to FileWriter.
+     * */
     @Override
     public void saveInstance(FileWriter saveFile) throws IOException {
 
@@ -158,51 +173,60 @@ public abstract class MapBase implements Savable, Comparable<MapBase> {
 
             }
             saveFile.write(SaveLoader.getEndArrKey() + "\n");
-            //SaveLoader.saveArray(t,saveFile);
         }
         saveFile.write("END-MAP\n");
     }
 
+    /**
+     * Hashcode used to identify map in aggregating Navigator class.
+     * @return hashcode.
+     * */
     @Override
     public int hashCode() {
         int ret = 0;
         for(int i = 0; i < this.tileMatrix.length; i++){
             for(int j = 0; j < this.tileMatrix[0].length; j++) {
-                /*if (this.tileMatrix[i][j] instanceof LinkTile) {
-                    ret += (j+1)/(1+i)*2;
-                }else*/{
-                    ret += (j+1)/(1+i);
-                }
+                ret += (j+1)/(1+i);
             }
         }
         return ret%100000000;
     }
 
+    /**
+     * Implementation of compareTo method, compares by identifier, rows, columns, and then matrix dimensions.
+     * @param map to compare to.
+     * */
     @Override
     public int compareTo(MapBase map) {
-        if (identifier.equals(map.getIdentifier())) {
-            if (getRows() == map.getRows()) {
-                if (getColumns() == map.getColumns()) {
-                    for (int i = 0; i < tileMatrix.length; i++) {
-                        for (int j = 0; j < tileMatrix[i].length; j++) {
 
-                            if (tileMatrix[i][j].getPrimaryOccupant() != null
-                                    && !tileMatrix[i][j].getPrimaryOccupant().equals(map.tileMatrix[i][j].getPrimaryOccupant())) {
-                                return tileMatrix[i][j].getPrimaryOccupant().compareTo(map.tileMatrix[i][j].getPrimaryOccupant());
-                            } else if (map.tileMatrix[i][j].getPrimaryOccupant() !=
-                                    null && !map.tileMatrix[i][j].getPrimaryOccupant().equals(tileMatrix[i][j].getPrimaryOccupant())) {
-                                return -1*map.tileMatrix[i][j].getPrimaryOccupant().compareTo(tileMatrix[i][j].getPrimaryOccupant());
-                            }
-                        }
-                    }
-                    return 0;
-                }
-                return Integer.compare(getColumns(), map.getColumns());
-            }
-            return Integer.compare(getRows(), map.getRows());
+        if(!identifier.equals(map.identifier)) {
+            return identifier.compareTo(map.identifier);
         }
-       return identifier.compareTo(map.identifier);
+        if(getRows()!= map.getRows()){
+            return Integer.compare(getRows(),map.getRows());
+        }
+        if(getColumns()!=map.getColumns()){
+            return Integer.compare(getColumns(),map.getColumns());
+        }
+
+        for (int i = 0; i < tileMatrix.length; i++) {
+            for (int j = 0; j < tileMatrix[i].length; j++) {
+
+                if (tileMatrix[i][j].getPrimaryOccupant() != null
+                        && !tileMatrix[i][j].getPrimaryOccupant().equals(map.tileMatrix[i][j].getPrimaryOccupant())) {
+                    return tileMatrix[i][j].getPrimaryOccupant().compareTo(map.tileMatrix[i][j].getPrimaryOccupant());
+                } else if (map.tileMatrix[i][j].getPrimaryOccupant() !=
+                        null && !map.tileMatrix[i][j].getPrimaryOccupant().equals(tileMatrix[i][j].getPrimaryOccupant())) {
+                    return -1*map.tileMatrix[i][j].getPrimaryOccupant().compareTo(tileMatrix[i][j].getPrimaryOccupant());
+                }
+            }
+        }
+        return 0;
     }
+    /**
+     * Implementation of equals method.
+     * @param obj to compare.
+     * */
     @Override
     public boolean equals(Object obj){
         if (!(obj instanceof MapBase)) {
@@ -214,7 +238,9 @@ public abstract class MapBase implements Savable, Comparable<MapBase> {
         }
     }
 
-
+    /**
+     * Implementation of toString method.
+     * */
     @Override
     public String toString() {
         StringBuilder ret = new StringBuilder("{\t");

@@ -21,6 +21,7 @@ import java.util.Scanner;
  * Keeps track of the current player, their location on the current map,
  * and which map (out of a group of maps) they are one.
  * Saves and loads games.
+ * Implements Savable interface.
  * */
 public class Navigator implements Savable{
     /**
@@ -353,5 +354,4 @@ public class Navigator implements Savable{
             return fileName;
         }
     }
-
 }
