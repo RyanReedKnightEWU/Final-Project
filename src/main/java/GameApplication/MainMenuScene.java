@@ -84,12 +84,15 @@ public class MainMenuScene {
             if(name.endsWith(".txt")){
                 Button button = new Button(name.substring(0,name.indexOf(".")));
                 button.setOnAction(e -> {
-                    /*The first attempt feeds the */
+                    /*The first attempt feeds load game the absolute path, this method works on Windows*/
                     try {
                         nav.loadGame(file+"\\" + name);
                         MapScene mapScene = new MapScene();
                         mapScene.start(nav);
                     } catch (FileNotFoundException ex) {
+
+                        /*If the first try block fails, it attempts to load again, this time without
+                        * the absolute path, this method works on Linux. */
                         try {
                             nav.loadGame(name);
                             MapScene mapScene = new MapScene();

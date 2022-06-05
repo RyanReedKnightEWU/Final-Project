@@ -23,23 +23,49 @@ import java.util.Scanner;
  * Saves and loads games.
  * */
 public class Navigator implements Savable{
-
+    /**
+     * Single instance of the navigator in use.
+     * */
     private static Navigator uniqueInstance;
+
+    /**
+     * The map currently occupied by the player.
+     * */
     private MapBase currentMap;
+
+    /**
+     * A hashmap of the maps in the game, each map's in the set uses its hashcode as a key. Necessary for loading maps.
+     * */
     private final HashMap<Integer,MapBase> mapCollection;
+
+    /**
+     * Tile on the current map the player occupies.
+     * */
     private TileBase currentTile;
+
+    /**
+     * The coordinates of the player on the map, index 0.
+     * */
     private int row, column;
+
+    /**
+     * The current player.
+     * */
     private Entity player;
 
+    /**
+     * Boolean indicating whether the game is a new game built in the program, or one that has been
+     * loaded from a text file. Necessary in other parts of the program.
+     * */
     public boolean newGame;
 
     /**
-     * Defines Navigator, called in getInstance method if uniqueInstance is not null.
-     *
-     * @param player               - Entity to represent user.
-     * //@param mapArr                  - the current map the player is on.
+     * Defines Navigator, called in setState method.
+     * @param player - Entity to represent user.
+     * @param mapSet - set of maps to be included in this instance of the game.
      * @param playerColumnPosition - horizontal coordinate of tile on tile matrix
-     * @param playerRowPosition    - vertical coordinate of tile on tile matrix
+     * @param playerRowPosition - vertical coordinate of tile on tile matrix
+     *
      **/
     private Navigator(Entity player, ArrayList<MapBase> mapSet,MapBase currentMap, int playerRowPosition, int playerColumnPosition) {
 
@@ -58,28 +84,28 @@ public class Navigator implements Savable{
 
     }
 
-    private void putMapInHashMap(MapBase[] mapArr) {
+    /**
+     * Sets the state of the navigator.
+     * @param player - the player.
+     * @param mapSet - the set of maps to be used in this instance of the game.
+     * @param currentMap - the map the player occupies.
+     * @param column - column the player occupies.
+     * @param row - row the player occupies.
+     * @return Navigator.uniqueInstance.
+     *
+     * */
+    public static Navigator setState(Entity player, ArrayList<MapBase> mapSet,MapBase currentMap, int column, int row) {
 
-
-        for (int i = 0; i < mapArr.length; i++) {
-            mapCollection.put(mapArr[i].hashCode(), mapArr[i]);
-        }
-    }
-    private void putMapInHashMap(MapBase map) {
-
-        //System.out.println(map.getIdentifier() + "\t" + map.hashCode());
-        mapCollection.put(map.hashCode(),map);
-    }
-
-    // Getters and setters.
-    public static Navigator setState(Entity player, ArrayList<MapBase> mapSet,MapBase currentMap, int xCoordinate, int yCoordinate) {
-
-        Navigator.uniqueInstance = new Navigator(player, mapSet,currentMap, xCoordinate, yCoordinate);
+        Navigator.uniqueInstance = new Navigator(player, mapSet,currentMap, column, row);
 
         return Navigator.uniqueInstance;
     }
 
-    //
+    /**
+     * Get the current instance of the navigator, if one has not been defined yet,
+     * define a one with null and dummy values.
+     * @return Navigator.uniqueInstance
+     * */
     public static Navigator getInstance() {
         if(Navigator.uniqueInstance == null) {
             reset();
@@ -87,36 +113,60 @@ public class Navigator implements Savable{
         return Navigator.uniqueInstance;
     }
 
+    /**
+     * @return this.player
+     * */
     public Entity getPlayer() {
         return player;
     }
 
+    /**
+     * @param player - the player.
+     * */
     public void setPlayer(Entity player) {
         this.player = player;
     }
 
+    /**
+     * @return tile the player ocupies.
+     * */
     public TileBase getCurrentTile() {
         return this.currentMap.getTile(this.row, this.column);
     }
 
+    /**
+     * @param currentTile - the tile being set as the current tile.
+     * */
     public void setCurrentTile(TileBase currentTile) {
         this.currentTile = currentTile;
     }
 
-
+    /**
+     * Used when moving from one map to another.
+     * @param map to set to current.
+     * */
     public void setCurrentMap(MapBase map) {
         this.currentMap = map;
     }
-
+    /**
+     * @return this.currentMap, the map the player occupies.
+     * */
     public MapBase getCurrentMap() {
         return this.currentMap;
     }
 
+    /**
+     * @return an array of the row and column which define the players position.
+     * */
     public int[] getPosition() {
         return new int[]{this.row,
                 this.column};
     }
 
+    /**
+     * Get the row (index 0) of the player on the current map.
+     * @return this.row
+     * */
     public int getCurrentRow() {
         return this.row;
     }
@@ -128,9 +178,10 @@ public class Navigator implements Savable{
         return this.column;
     }
     /**
+     * Column and row are index 0. Places player in the new position on the map.
      * @param newRow - row of the position player is moving to.
      * @param newColumn - column of the new position player is moving to.
-     * Column and row are index 0. Places player in the new position on the map.
+     *
      * */
     public void setPosition(int newRow, int newColumn) {
         this.row = newRow;
@@ -180,9 +231,9 @@ public class Navigator implements Savable{
     /**
      * Move player to new tile, does not have any checks (e.g., will move player to tile regardless
      * of range of the new tile or if it has an occupant).
+     * !!! USE WITH CAUTION !!!
      * @param row - row of tile to move to.
      * @param column - column of tile to move to.
-     *               !!! USE WITH CAUTION !!!
      * **/
     public void forceMove (int row, int column) {
         System.out.println(this.getCurrentRow() + " " + this.getCurrentColumn());
@@ -193,7 +244,24 @@ public class Navigator implements Savable{
     }
 
     /**
-     * Save
+     *  Saves the state of the game to a file named saveFileName. Saves the maps which
+     *  the games use. After this, the player is saved, then the hashcode of the map, and
+     *  then the players position on the current map. FileWriter opened and closed in method.
+     * @param saveFileName - name of the file to be saves, method appends a ".txt" suffix if it is not included.
+     * @throws IOException - due to FileWriter.
+     * */
+    public void saveInstance(String saveFileName) throws IOException {
+
+        saveFileName = appendTxtSuffix(saveFileName);
+
+        FileWriter saveFile = new FileWriter(saveFileName);
+        saveInstance(saveFile);
+        saveFile.close();
+    }
+    /**
+     * Other than the parameter, identical to saveFile(String).
+     * @param saveFile - instance of FileWriter, if this method is used it must be closed outside the method.
+     * @throws IOException - due to FileWriter.
      * */
     @Override
     public void saveInstance(FileWriter saveFile) throws IOException {
@@ -208,29 +276,15 @@ public class Navigator implements Savable{
 
     }
 
-    public void saveInstance(String saveFileName) throws IOException {
-
-        // If file name does not have text file suffix, append it.
-        String sfx = ".txt";
-        if (!saveFileName.endsWith(sfx)) {
-            saveFileName += sfx;
-        }
-
-        FileWriter saveFile = new FileWriter(saveFileName);
-
-
-        for(MapBase map : this.mapCollection.values()) {
-            map.saveInstance(saveFile);
-        }
-        player.saveInstance(saveFile);
-        saveFile.write(getCurrentMap().hashCode() + "\n");
-        saveFile.write(row + "\n");
-        saveFile.write(column + "\n");
-
-        saveFile.close();
-    }
-
+    /**
+     * Loads an instance of the game previously saved by saveInstance method.
+     * @param fileName - name of file being loaded.
+     * @throws FileNotFoundException - if file is not found.
+     * */
     public void loadGame(String fileName) throws FileNotFoundException {
+
+
+        fileName = appendTxtSuffix(fileName);
         reset();
         Scanner sc = new Scanner(new File(fileName));
         MapLoader mapLoader = new MapLoader();
@@ -271,6 +325,9 @@ public class Navigator implements Savable{
         // Close scanner
         sc.close();
     }
+    /**
+     * Sets values in navigator to values that are either null, or to placeholder values.
+     * */
     private static void reset() {
         Navigator.uniqueInstance = new Navigator(null,new ArrayList<MapBase>(),
                 new RectangularMap(1,"Dummy Map"),0,0);
@@ -279,4 +336,22 @@ public class Navigator implements Savable{
     public HashMap<Integer, MapBase> getMapCollection() {
         return mapCollection;
     }
+
+    /**
+     * To be used when feeding a method a txt file name,
+     * if there is no txt suffix at the end of the file,
+     * appends it to fileName.
+     * @param fileName - name of file.
+     * */
+    private String appendTxtSuffix(String fileName) {
+
+        // If file name does not have text file suffix, append it.
+        String sfx = ".txt";
+        if (!fileName.endsWith(sfx)) {
+            return fileName + sfx;
+        }else {
+            return fileName;
+        }
+    }
+
 }
