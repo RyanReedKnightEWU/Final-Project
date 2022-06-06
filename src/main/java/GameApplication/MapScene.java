@@ -9,8 +9,10 @@ import gameobjects.Navigator.Navigator;
 import gameobjects.Tile.LinkTile;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -140,8 +142,11 @@ public class MapScene {
      * Saves the game.
      */
     public void setSave(Navigator nav) throws IOException {
-        //String saveName = "save.txt";
-        nav.saveInstance(saveName);
+        Label label = new Label("");
+        TextInputDialog dialogBox = new TextInputDialog("Name your save.");
+        dialogBox.showAndWait();
+        String save = dialogBox.getResult();
+        nav.saveInstance(save);
     }
 
     /**
