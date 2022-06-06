@@ -27,13 +27,18 @@ public class MapScene {
     private BorderPane layout = new BorderPane();
     private GridPane grid = new GridPane();
     private HBox options = new HBox();
-    private Button seeInventory, save, load;
+    private Button seeInventory, save;
+    private String saveName;
 
     Button shop;
     //StoreScene storeScene;
 
-    public void start(Navigator nav) {
-
+    /**
+     * Sets up the map layout.
+     * @param saveName The save file name.
+     */
+    public void start(Navigator nav, String saveName) {
+        this.saveName = saveName;
         StoreScene storeScene = new StoreScene(this,nav);
 
         grid.setPadding(new Insets(20, 20, 20, 20));
@@ -91,6 +96,9 @@ public class MapScene {
         }
     }
 
+    /**
+     * Makes the map and shows it to the player.
+     */
     private void fillGrid(GridPane grid, Navigator nav){
         grid.setAlignment(Pos.CENTER);
         Button b;
@@ -128,24 +136,24 @@ public class MapScene {
         }
     }
 
-
+    /**
+     * Saves the game.
+     */
     public void setSave(Navigator nav) throws IOException {
-        String saveName = "save.txt";
+        //String saveName = "save.txt";
         nav.saveInstance(saveName);
     }
 
+    /**
+     * Moves the player.
+     */
     public void move(Navigator nav, int row, int column){
-
         MoveKey key = nav.moveTile(row, column);
-
 
         if (key == MoveKey.CURRENT_TILE) {
             // To fix bug where player disappears from map when clicked.
             return;
         }else if (key == MoveKey.TILE_OCCUPIED) {
-
-
-
             AttackScene attackScene = new AttackScene(this, nav,row,column);
             attackScene.start((Player) nav.getPlayer(),
                     nav.getCurrentMap().getTile(row, column).getPrimaryOccupant());
@@ -160,7 +168,6 @@ public class MapScene {
 
                 reset(nav);
             }
-
         }
         else if (key == MoveKey.LINK_TO_MAP) {
             // Get link to tile.
@@ -181,28 +188,39 @@ public class MapScene {
 
             nav.setPosition(newMapPLayerCoordinate[0],newMapPLayerCoordinate[1]);
             MapScene newMapScene = new MapScene();
-            newMapScene.start(nav);
+            newMapScene.start(nav, saveName);
         }
         else if (key == MoveKey.MOVE_SUCCESSFUL) {
             reset(nav);
         }
     }
+
+    /**
+     * Resets the map on the screen.
+     */
     public void reset(Navigator nav){
-        MapBase map = nav.getCurrentMap();
         fillGrid(grid,nav);
     }
 
+    /**
+     * Open the inventory screen.
+     */
     public void setSeeInventory(Navigator nav){
         InventoryScene in = new InventoryScene();
         in.start(this, nav.getPlayer());
     }
 
+    /**
+     * Shows the map scene.
+     */
     public void setScene(){
         scene.setRoot(layout);
     }
 
+    /**
+     * Puts an entity's name into the tile if they exist.
+     */
     private String tileDisplay(Entity entity) {
-
         if (entity != null) {
             return entity.getName();
         }

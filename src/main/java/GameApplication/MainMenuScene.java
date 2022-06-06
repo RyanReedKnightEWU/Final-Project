@@ -26,7 +26,7 @@ public class MainMenuScene {
 
     public void start(){
         newGame = new Button("New Game");
-        newGame.setOnAction(e -> basicStartNewGame());
+        newGame.setOnAction(e -> newGame());
 
         loadGame = new Button("Load Game");
         loadGame.setOnAction(e -> loadGame());
@@ -35,7 +35,6 @@ public class MainMenuScene {
         layout.getChildren().add(loadGame);
         layout.setAlignment(Pos.CENTER);
         layout.setSpacing(30);
-        //scene = new Scene(layout, 900, 600);
         scene.setRoot(layout);
 
         gameWindow.setScene(scene);
@@ -74,6 +73,16 @@ public class MainMenuScene {
 
     private void newSave(String name){
         System.out.println("Player entered: "+name);
+        GameMapFactory gameMapFactory = new GameMapFactory();
+        ArrayList<MapBase> mapArr = gameMapFactory.createMapSet(GameMapFactoryKeys.STANDARD_MAP.toString());
+        Navigator nav = Navigator.setState(new Player(100,45,45,"Alex"),
+                mapArr,
+                mapArr.get(0), 0, 3);
+
+        System.out.println(nav.getPlayer()==null);
+
+        MapScene mapScene = new MapScene();
+        mapScene.start(nav, name+".txt");
     }
 
     /**
@@ -99,7 +108,7 @@ public class MainMenuScene {
                     try {
                         nav.loadGame(file+"\\" + name);
                         MapScene mapScene = new MapScene();
-                        mapScene.start(nav);
+                        mapScene.start(nav, name);
                     } catch (FileNotFoundException ex) {
 
                         /*If the first try block fails, it attempts to load again, this time without
@@ -107,7 +116,7 @@ public class MainMenuScene {
                         try {
                             nav.loadGame(name);
                             MapScene mapScene = new MapScene();
-                            mapScene.start(nav);
+                            mapScene.start(nav, name);
                         } catch (FileNotFoundException exc) {
                             exc.printStackTrace();
                         }
@@ -123,10 +132,6 @@ public class MainMenuScene {
         gameWindow.setScene(scene);
     }
 
-    private void readGameFile(String name){
-
-    }
-
     private void basicStartNewGame(){
         GameMapFactory gameMapFactory = new GameMapFactory();
         ArrayList<MapBase> mapArr = gameMapFactory.createMapSet(GameMapFactoryKeys.STANDARD_MAP.toString());
@@ -137,7 +142,7 @@ public class MainMenuScene {
         System.out.println(nav.getPlayer()==null);
 
         MapScene mapScene = new MapScene();
-        mapScene.start(nav);
+        mapScene.start(nav, "save.txt");
     }
 
     private void basicLoadGame() {
@@ -149,6 +154,6 @@ public class MainMenuScene {
         }
 
         MapScene mapScene = new MapScene();
-        mapScene.start(nav);
+        mapScene.start(nav, "save.txt");
     }
 }

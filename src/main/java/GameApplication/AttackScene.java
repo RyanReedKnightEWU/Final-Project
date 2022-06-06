@@ -52,11 +52,10 @@ public class AttackScene {
 
 
     /**
-     * Sets up the attack scene.
-     * @param map
-     * @param nav
-     * @param row
-     * @param column
+     * Sets up the attack scene's layout.
+     * @param map Allows the player to go back to map scene.
+     * @param row Where the enemy is.
+     * @param column Where the enemy is.
      */
     public AttackScene(MapScene map, Navigator nav,int row, int column){
         layout = new BorderPane();
@@ -97,8 +96,8 @@ public class AttackScene {
 
     /**
      * Loads the player and enemy into the attack scene.
-     * @param player
-     * @param badGuy
+     * @param player The player.
+     * @param badGuy The enemy.
      */
     public void start(Player player, Entity badGuy){
         badGuyInfo.setText(badGuy.toString());
@@ -113,8 +112,6 @@ public class AttackScene {
 
     /**
      * Allows the attack inventory scene to switch back to the attack scene.
-     * @param player
-     * @param badGuy
      */
     public void back(Player player, Entity badGuy){
         scene.setRoot(layout);
@@ -125,9 +122,7 @@ public class AttackScene {
     }
 
     /**
-     * Resets the player and enemy's info on the screen.
-     * @param player
-     * @param badGuy
+     * Resets the player and enemy's info on the screen, such as health.
      */
     private void reset(Player player, Entity badGuy){
         badGuyInfo.setText(badGuy.toString());
@@ -136,8 +131,6 @@ public class AttackScene {
 
     /**
      * When the player attacks the enemy it will check if the enemy is alive, if so, they will attack back.
-     * @param player
-     * @param badGuy
      */
     private void attackBadGuy(Player player, Entity badGuy){
         String currentInfo = "";
@@ -176,8 +169,6 @@ public class AttackScene {
 
     /**
      * Adds the enemies inventory to the players inventory. It also tells the player what they got.
-     * @param player
-     * @param badGuy
      */
     private void loot(Player player, Entity badGuy) {
         Popup pop = new Popup();
@@ -204,9 +195,7 @@ public class AttackScene {
 
     /**
      * Allow the enemy to attack the player.
-     * @param player
-     * @param badGuy
-     * @return
+     * @return The damage the enemy did.
      */
     private int badGuyTurn(Player player, Entity badGuy){
         int damage = badGuy.getDamage();
@@ -216,8 +205,6 @@ public class AttackScene {
 
     /**
      * Switches the scene to the attack scene inventory.
-     * @param player
-     * @param badGuy
      */
     private void useConsumables(Player player, Entity badGuy){
         AttackSceneInventory attackSceneInventory = new AttackSceneInventory();
@@ -250,9 +237,7 @@ class AttackSceneInventory{
 
     /**
      * Creates the modified inventory scene.
-     * @param back
-     * @param player
-     * @param badGuy
+     * @param back The attack scene is passed in so the player can go back to it when they are done here.
      */
     public void start(AttackScene back,Player player, Entity badGuy){
         this.attackScene = back;
