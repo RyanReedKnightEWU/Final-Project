@@ -48,8 +48,7 @@ public class MainMenuScene {
      */
     public static void returnToMainMenu(){
         MainMenuScene mainMenuScene = new MainMenuScene();
-        mainMenuScene.layout = new HBox();
-        mainMenuScene.layout.setAlignment(Pos.CENTER);
+        gameWindow.close();
         mainMenuScene.start();
     }
 
