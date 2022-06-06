@@ -39,7 +39,8 @@ public abstract class SaveLoader<E extends Savable> {
     /**
      * Saves an array of classes via there saveInstance
      * @param arr array of Savables to be saved.
-     * @param
+     * @param saveFile FileWriter to save state of game, not closed in method.
+     * @throws IOException due to FileWriter.
      * */
     public static void saveArray(Savable[] arr,FileWriter saveFile) throws IOException {
         for(Savable element : arr) {

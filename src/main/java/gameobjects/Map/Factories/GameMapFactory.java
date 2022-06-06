@@ -106,6 +106,7 @@ public class GameMapFactory extends MapFactoryBase {
             standardArena.addEntity(new Goblin("Marduk"), 2, 2);
             recRoom.addTile(new LinkTile(standardHall, null, 0, 0), 0, 0);
 
+
             ArrayList<MapBase> retList = new ArrayList<>();
             retList.add(standardArena);
             retList.add(standardHall);
