@@ -145,7 +145,9 @@ public class MapScene {
         TextInputDialog dialogBox = new TextInputDialog("Name your save.");
         dialogBox.showAndWait();
         String save = dialogBox.getResult();
-        nav.saveInstance(save);
+        if(save!=null && !save.equals("")) {
+            nav.saveInstance(save);
+        }
     }
 
     /**
