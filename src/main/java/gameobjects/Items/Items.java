@@ -80,7 +80,6 @@ public abstract class Items implements Comparable<Items>, Savable {
 
     /**
      * Allows the game to get the class of the item for saving.
-     * @param saveFile
      * @throws IOException
      */
     @Override

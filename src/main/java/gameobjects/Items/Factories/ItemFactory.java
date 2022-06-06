@@ -96,7 +96,6 @@ public class ItemFactory {
 
     /**
      * Stacks all the consumables in the array that are the same.
-     * @param items
      * @return the new version of the array.
      */
     public Items[] Stacker(Items[] items){

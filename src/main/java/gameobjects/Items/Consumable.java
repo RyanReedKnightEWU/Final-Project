@@ -30,8 +30,6 @@ public class Consumable extends Items{
 
     /**
      * Allows for a nearly empty consumable to be made.
-     * @param name
-     * @param value
      */
     protected Consumable(String name, int value){
         type = "Consumable";
@@ -41,13 +39,6 @@ public class Consumable extends Items{
 
     /**
      * Allows a consumable to be fully defined. Meant for loading a consumable from a save file.
-     * @param name
-     * @param minDamage
-     * @param maxDamage
-     * @param heal
-     * @param value
-     * @param description
-     * @param amount
      */
     public Consumable(String name, int minDamage, int maxDamage, int heal, int value, String description, int amount){
         //used for loading consumables
@@ -63,7 +54,6 @@ public class Consumable extends Items{
     /**
      * Allows for an entity to use the consumable on entity.
      * Will try to deal damage to the entity, and then it will try to heal the entity.
-     * @param entity
      */
     public void use(Entity entity){
         if(amount > 0){
@@ -119,8 +109,6 @@ public class Consumable extends Items{
 
     /**
      * Allows for to items to add their uses together if they are the same consumable.
-     * @param consumable
-     * @return
      */
     public Consumable stack(Consumable consumable){
         if(getName().equals(consumable.getName())){
@@ -133,7 +121,6 @@ public class Consumable extends Items{
 
     /**
      * Makes a string based off of the effects of the consumable.
-     * @return
      */
     public String toString(){
         String value = "";
@@ -163,7 +150,6 @@ public class Consumable extends Items{
 
     /**
      * Creates a save string for saving.
-     * @return
      */
     public String save(){
         String value = "CONSUMABLE\n";

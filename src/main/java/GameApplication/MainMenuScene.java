@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import static FinalProject.Javafx.ApplicationMain.gameWindow;
 import static FinalProject.Javafx.ApplicationMain.scene;
 
+/**
+ * Main menu allows the player to load an old save or make a new save.
+ */
 public class MainMenuScene {
     private HBox layout = new HBox();
     private Button newGame, loadGame;
@@ -42,15 +45,17 @@ public class MainMenuScene {
     }
     /**
      * Used to leave a stage and return to main menu.
-     * */
+     */
     public static void returnToMainMenu(){
-
         MainMenuScene mainMenuScene = new MainMenuScene();
         mainMenuScene.layout = new HBox();
         mainMenuScene.layout.setAlignment(Pos.CENTER);
         mainMenuScene.start();
     }
 
+    /**
+     * Starts a new game.
+     */
     private void newGame(){
         TextField textField;
         textField = new TextField();
@@ -71,6 +76,9 @@ public class MainMenuScene {
         gameWindow.setScene(scene);
     }
 
+    /**
+     * @param name Name of save file.
+     */
     private void newSave(String name){
         System.out.println("Player entered: "+name);
         GameMapFactory gameMapFactory = new GameMapFactory();
@@ -132,6 +140,9 @@ public class MainMenuScene {
         gameWindow.setScene(scene);
     }
 
+    /**
+     * Starts a new game.
+     */
     private void basicStartNewGame(){
         GameMapFactory gameMapFactory = new GameMapFactory();
         ArrayList<MapBase> mapArr = gameMapFactory.createMapSet(GameMapFactoryKeys.STANDARD_MAP.toString());
@@ -145,6 +156,9 @@ public class MainMenuScene {
         mapScene.start(nav, "save.txt");
     }
 
+    /**
+     * Loads save.txt.
+     */
     private void basicLoadGame() {
         Navigator nav = Navigator.getInstance();
         try {

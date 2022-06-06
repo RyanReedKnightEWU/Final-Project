@@ -32,6 +32,9 @@ public class Pistol extends Weapon{
     }
 
     // Fully defined constructor, necessary for load methods (Ryan Knight 21 May 2022)
+    /**
+     * Fully defined constructor, necessary for load methods.
+     */
     public Pistol (String name, int minDamage, int maxDamage, int value, String discription){
         super(name,minDamage,maxDamage,value,discription);
     }

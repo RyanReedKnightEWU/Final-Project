@@ -13,10 +13,6 @@ public class Weapon extends Items{
 
     /**
      * Allows for a basic weapon to be made.
-     * @param name
-     * @param minDamage
-     * @param maxDamage
-     * @param value
      */
     public Weapon(String name, int minDamage, int maxDamage, int value){
         type = "Weapon";
@@ -28,11 +24,6 @@ public class Weapon extends Items{
 
     /**
      * Allows one to fully define a weapon. Meant for loading weapons from a save file.
-     * @param name
-     * @param minDamage
-     * @param maxDamage
-     * @param value
-     * @param discription
      */
     public Weapon(String name, int minDamage, int maxDamage, int value, String discription){
         setName(name);
@@ -44,7 +35,6 @@ public class Weapon extends Items{
 
     /**
      * Allows for weapon duplication.
-     * @param weapon
      */
     public void setWeapon(Weapon weapon){
         setName(weapon.getName());
@@ -60,8 +50,7 @@ public class Weapon extends Items{
     }
 
     /**
-     * Gets a random value between the weapons maximum damage and minim damage.
-     * @return
+     * Gets a random value between the weapons maximum damage and min damage.
      */
     public int getDamage(){
         Random rand = new Random();

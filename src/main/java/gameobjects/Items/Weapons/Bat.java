@@ -31,6 +31,9 @@ public class Bat extends Weapon {
         setDescription(String.format("%s is better than nothing.", getName()));
     }
     // Fully defined constructor, necessary for load methods (Ryan Knight 21 May 2022)
+    /**
+     * Fully defined constructor, necessary for load methods.
+     */
     public Bat (String name, int minDamage, int maxDamage, int value, String discription){
         super(name,minDamage,maxDamage,value,discription);
     }

@@ -44,8 +44,6 @@ public class StoreScene {
 
     /**
      * Sets up the store scene.
-     * @param map
-     * @param nav
      */
     public StoreScene(MapScene map, Navigator nav){
         //Navigator nav = Navigator.getInstance();

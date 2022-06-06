@@ -14,9 +14,6 @@ public class Armor extends Items{
 
     /**
      * Allows for basic construction of armor to be made.
-     * @param name
-     * @param armorValue
-     * @param value
      */
     protected Armor(String name, int armorValue, int value) {
         type = "Armor";
@@ -28,10 +25,6 @@ public class Armor extends Items{
 
     /**
      * Allows one to fully define the armor. For loading purposes.
-     * @param name
-     * @param armorValue
-     * @param value
-     * @param description
      */
     public Armor(String name, int armorValue, int value, String description) {
         //Used for loading armor
@@ -52,7 +45,6 @@ public class Armor extends Items{
 
     /**
      * If the armor is the old version then it will have a decreased armor value, value, and a slightly different name.
-     * @param oldName
      */
     protected void old(String oldName){
         armorValue -= vary;
@@ -64,7 +56,6 @@ public class Armor extends Items{
 
     /**
      * If the armor is the new version then it will have an increased armor value, value, and a slightly different name.
-     * @param cleanName
      */
     protected void clean(String cleanName){
         armorValue += vary;
@@ -103,7 +94,6 @@ public class Armor extends Items{
 
     /**
      * Creates a save string for saving.
-     * @return
      */
     public String save(){
         String value = "ARMOR\n";

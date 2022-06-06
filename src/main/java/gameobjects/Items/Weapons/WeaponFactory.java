@@ -16,7 +16,7 @@ public class WeaponFactory extends WeaponFactoryBase{
      * @param minDamage   - minDamage field in Weapon instance.
      * @param maxDamage   - maxDamage field in Weapon instance.
      * @param value       - value field in Weapon instance.
-     * @param discription - discription field in Weapon instance.
+     * @param discription - description field in Weapon instance.
      **/
     @Override
     public Weapon createWeapon(String key, String name, int minDamage, int maxDamage,
