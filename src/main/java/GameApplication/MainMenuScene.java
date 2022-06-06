@@ -82,7 +82,7 @@ public class MainMenuScene {
         System.out.println("Player entered: "+name);
         GameMapFactory gameMapFactory = new GameMapFactory();
         ArrayList<MapBase> mapArr = gameMapFactory.createMapSet(GameMapFactoryKeys.STANDARD_MAP.toString());
-        Navigator nav = Navigator.setState(new Player(100,45,45,"Alex"),
+        Navigator nav = Navigator.setState(new Player(100,5,5,"Alex"),
                 mapArr,
                 mapArr.get(0), 0, 3);
 
