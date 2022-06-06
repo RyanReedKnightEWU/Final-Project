@@ -142,7 +142,6 @@ public class MapScene {
      * Saves the game.
      */
     public void setSave(Navigator nav) throws IOException {
-        Label label = new Label("");
         TextInputDialog dialogBox = new TextInputDialog("Name your save.");
         dialogBox.showAndWait();
         String save = dialogBox.getResult();
