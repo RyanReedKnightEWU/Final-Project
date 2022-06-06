@@ -15,8 +15,16 @@ import gameobjects.Tile.Tile;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Factory to build maps and sets of maps for the game.
+ * */
 public class GameMapFactory extends MapFactoryBase {
 
+    /**
+     * Create an instance of MapBase.
+     * @param height number of rows.
+     * @param width number of columns.
+     * */
     @Override
     public MapBase createMap(int height, int width, String indentifier) {
 

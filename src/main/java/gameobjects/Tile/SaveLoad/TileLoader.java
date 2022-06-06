@@ -12,8 +12,17 @@ import javafx.print.PageLayout;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+/**
+ * Loader for tiles, extends SaveLoader.
+ * */
 public class TileLoader extends SaveLoader<TileBase> {
 
+    /**
+     * Rebuild tile saved with its saveInstance method.
+     * @param header which contains the result of getClass().getName() from the object before it was saved.
+     * @param  sc Scanner used to read file, not closed in this method.
+     * @return rebuilt tile
+     * */
     public TileBase load(String header, Scanner sc) {
 
         if (header.startsWith(Tile.class.getName())) {
@@ -31,11 +40,21 @@ public class TileLoader extends SaveLoader<TileBase> {
         }
     }
 
+    /**
+     * Rebuild tile saved with its saveInstance method.
+     * @param  sc Scanner used to read file, not closed in this method.
+     * @return rebuilt tile
+     * */
     @Override
     public TileBase load(Scanner sc) {
        return load(sc.nextLine(),sc);
     }
 
+    /**
+     * Load an array of tiles.
+     * @param sc scanner used to read file, not closed in this method.
+     * @return array of rebuilt tiles.
+     * */
     @Override
     public TileBase[] loadArray(Scanner sc) {
 
