@@ -58,7 +58,7 @@ public class MainMenuScene {
     private void newGame(){
         TextField textField;
         textField = new TextField();
-        Label label = new Label("Enter name of save: ");
+        Label label = new Label("Enter name of your character: ");
 
         layout = new HBox();
         layout.getChildren().add(label);
@@ -69,6 +69,14 @@ public class MainMenuScene {
         scene.setOnKeyPressed(e -> {
             if(e.getCode() == KeyCode.ENTER){
                 newSave(textField.getText());
+                ArrayList<MapBase> maps = (new GameMapFactory()).createMapSet(GameMapFactoryKeys.STANDARD_MAP.toString());
+                Navigator nav = Navigator.setState(new Player(100,5,5,textField.getText()),
+                        maps,
+                        maps.get(0),
+                        0,
+                        3);
+                MapScene mapScene = new MapScene();
+                mapScene.start(nav,"new_game");
             }
         });
         scene.setRoot(layout);

@@ -6,6 +6,6 @@ public enum GameMapFactoryKeys {
     DUNGEONS("dungeons"), STANDARD_MAP("full map");
 
 
-    GameMapFactoryKeys(String dungeons) {
+    GameMapFactoryKeys(String s) {
     }
 }

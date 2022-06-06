@@ -294,19 +294,17 @@ public class Navigator implements Savable{
         String header = sc.nextLine();
         System.out.println("205 "+header);
 
-        try {
-            while (header.equals("START-MAP")) {
-                MapBase map = mapLoader.load(header, sc);
-                mapCollection.put(map.hashCode(), map);
-                sc.nextLine(); // Catch "END-MAP"
-                header = sc.nextLine();
-            }
 
-            // Load Player
-            player = (new EntityLoader()).load(header, sc);
-        }catch (SaveLoader.LeaveFunction e){
-            // Do nothing, LeaveFunction not applicable here.
+        while (header.equals("START-MAP")) {
+            MapBase map = mapLoader.load(header, sc);
+            mapCollection.put(map.hashCode(), map);
+            sc.nextLine(); // Catch "END-MAP"
+            header = sc.nextLine();
         }
+
+        // Load Player
+        player = (new EntityLoader()).load(header, sc);
+
 
         // Load current map
         currentMap = mapCollection.get(Integer.parseInt(sc.nextLine()));

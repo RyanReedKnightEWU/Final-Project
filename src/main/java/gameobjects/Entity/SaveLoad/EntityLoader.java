@@ -38,12 +38,10 @@ public class EntityLoader extends SaveLoader<Entity> {
         //ArrayList<Items> inventory = new ArrayList<Items>(List.of(arr));
         Weapon weapon;
         Armor armor;
-        try {
-            weapon = (Weapon) itemLoader.load(sc);
-            armor = (Armor) itemLoader.load(sc);
-        } catch (LeaveFunction e) {
-            throw new RuntimeException(e);
-        }
+
+        weapon = (Weapon) itemLoader.load(sc);
+        armor = (Armor) itemLoader.load(sc);
+
 
 
         // Remove equipped weapon and armor, these will be added in he constructor, so if they

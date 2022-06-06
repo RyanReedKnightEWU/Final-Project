@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class ItemLoader extends SaveLoader<Items> {
 
-    public Items load(Scanner sc) throws LeaveFunction {
+    public Items load(Scanner sc) {
         return load(sc,sc.nextLine());
     }
     public Items load(Scanner sc, String subclass){

@@ -12,15 +12,23 @@ import gameobjects.Tile.TileBase;
 
 import java.util.Scanner;
 /**
- *
+ * Loads maps which have been saved via the saveInstance method.
  * */
 public class MapLoader extends SaveLoader<MapBase> {
+
+    /**
+     * Loads and builds map given a scanner.
+     * @return map
+     * */
     @Override
-    public MapBase load(Scanner sc) throws LeaveFunction {
+    public MapBase load(Scanner sc)  {
         return load(sc.nextLine(),sc);
     }
-
-    public MapBase load(String mapHeader, Scanner sc) throws LeaveFunction {
+    /**
+     * Loads and builds map given the map headr "START-MAP".
+     * @return map
+     * */
+    public MapBase load(String mapHeader, Scanner sc) {
 
         // Loaders
         TileLoader tileLoader = new TileLoader();

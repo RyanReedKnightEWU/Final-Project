@@ -119,23 +119,5 @@ public class GameMapFactory extends MapFactoryBase {
         }
     }
 
-    @Override
-    public MapBase load(Scanner sc) throws LeaveFunction {
-        MapBase map = new RectangularMap(Integer.parseInt(sc.nextLine()),Integer.parseInt(sc.nextLine()),sc.nextLine());
 
-        for(int i = 0; i < map.getRows(); i++) {
-            Entity[] entityArr = (new EntityLoader()).loadArray(sc);
-
-            for(int j = 0; j < map.getColumns(); j++) {
-                //map.addTile();
-            }
-
-        }
-        return null;
-    }
-
-    @Override
-    public MapBase[] loadArray(Scanner sc) {
-        return new MapBase[0];
-    }
 }

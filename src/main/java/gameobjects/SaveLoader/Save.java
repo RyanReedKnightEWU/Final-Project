@@ -1,6 +1,6 @@
 package gameobjects.SaveLoader;
 
-public class Save extends Main {
+public class Save {
 /*
     Writer writer = null;
 

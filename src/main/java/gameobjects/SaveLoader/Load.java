@@ -1,6 +1,6 @@
 package gameobjects.SaveLoader;
 
-public class Load extends Main {}/*
+public class Load {}/*
 
     Scanner scanner = null;
 
