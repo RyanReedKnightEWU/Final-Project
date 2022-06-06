@@ -12,6 +12,7 @@ import gameobjects.Navigator.Navigator;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -27,13 +28,14 @@ import javafx.stage.Popup;
 import java.lang.annotation.Target;
 import java.util.ArrayList;
 
+import static FinalProject.Javafx.ApplicationMain.gameWindow;
 import static FinalProject.Javafx.ApplicationMain.scene;
 
 /**
  * Allows the player and enemy to interact.
  */
 public class AttackScene {
-    private static BorderPane layout = new BorderPane();
+    private BorderPane layout;
     private HBox options = new HBox();
     private VBox info = new VBox();
     private static Button attack;
@@ -48,6 +50,7 @@ public class AttackScene {
     private Navigator nav;
     private int row, column;
 
+
     /**
      * Sets up the attack scene.
      * @param map
@@ -56,6 +59,7 @@ public class AttackScene {
      * @param column
      */
     public AttackScene(MapScene map, Navigator nav,int row, int column){
+        layout = new BorderPane();
         this.map = map;
         attack = new Button("Attack");
         consumables = new Button("Use Consumable");
@@ -143,6 +147,10 @@ public class AttackScene {
         consume = true;
         currentInfo += player.getName()+" did "+damage+" damage to "+badGuy.getName();
 
+        if(player.getHealth() <=0) {
+            playerIsDeadAlert();
+        }
+
         if(badGuy.getHealth() <= 0){
             badGuy.setAlive(false);
             System.out.println("You looted the bad guy");
@@ -154,6 +162,16 @@ public class AttackScene {
             currentInfo += "\n"+badGuy.getName()+" did "+damage+" damage to "+player.getName();
         }
         damageInfo.setText(currentInfo);
+    }
+
+    /**
+     * Inform the player of their death and return to main menu.
+     * */
+    public void playerIsDeadAlert() {
+        String message = "Regrettably, you have died.";
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,message);
+        alert.showAndWait();
+        MainMenuScene.returnToMainMenu();
     }
 
     /**
@@ -303,7 +321,12 @@ class AttackSceneInventory{
                     playerReset();
                     makeButtons();
                     used = true;
-                    exit();
+
+                    if (player.getHealth() <= 0) {
+                        attackScene.playerIsDeadAlert();
+                    }else {
+                        exit();
+                    }
                 });
                 items.getChildren().add(b);
             }

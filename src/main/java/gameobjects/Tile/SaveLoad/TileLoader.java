@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class TileLoader extends SaveLoader<TileBase> {
 
-    public TileBase load(String header, Scanner sc) throws LeaveFunction {
+    public TileBase load(String header, Scanner sc) {
 
         if (header.startsWith(Tile.class.getName())) {
             Entity ent = (new EntityLoader()).load(sc);
@@ -26,32 +26,28 @@ public class TileLoader extends SaveLoader<TileBase> {
             int[] position = new int[]{Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine())};
             return new LinkTile(entity, position,hash);
 
-        } else if (header.equals("END-ARR")){
-            throw new LeaveFunction();
-        }else {
+        } else {
             return null;
         }
     }
 
     @Override
-    public TileBase load(Scanner sc) throws LeaveFunction {
+    public TileBase load(Scanner sc) {
        return load(sc.nextLine(),sc);
     }
 
     @Override
-    public TileBase[] loadArray(Scanner sc) throws LeaveFunction {
+    public TileBase[] loadArray(Scanner sc) {
 
         LinkedList<TileBase> tileLst = new LinkedList<>();
         String header = sc.nextLine();
         TileBase[] tileArr;
 
-        try {
-            while (true) {
-                tileLst.add(load(sc));
-            }
-        }catch (LeaveFunction e){
-            tileArr = new TileBase[tileLst.size()];
+        while(!header.equals(SaveLoader.getEndArrKey())) {
+            tileLst.add(load(header,sc));
         }
+
+        tileArr = new TileBase[tileLst.size()];
         return tileLst.toArray(tileArr);
     }
 

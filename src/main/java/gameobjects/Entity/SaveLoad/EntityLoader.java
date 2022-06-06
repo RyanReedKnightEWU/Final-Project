@@ -79,14 +79,5 @@ public class EntityLoader extends SaveLoader<Entity> {
         }
         Entity[] arr = new Entity[entityList.size()];
         return entityList.toArray(arr);
-        /*try {
-            entityList.add(load(sc));
-            while(true) {
-                entityList.add(load(sc));
-            }
-        } catch (LeaveFunction e) {
-            Entity[] arr = new Entity[entityList.size()];
-            return entityList.toArray(arr);
-        }*/
     }
 }

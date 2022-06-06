@@ -33,7 +33,7 @@ public class MapScene {
     //StoreScene storeScene;
 
     public void start(Navigator nav) {
-        MapBase map = nav.getCurrentMap();
+
         StoreScene storeScene = new StoreScene(this,nav);
 
         grid.setPadding(new Insets(20, 20, 20, 20));
@@ -128,21 +128,10 @@ public class MapScene {
         }
     }
 
-    /*private void newMap() {
-        start(nav);
-        s
-    }*/
 
     public void setSave(Navigator nav) throws IOException {
         String saveName = "save.txt";
         nav.saveInstance(saveName);
-        /*try (FileWriter saveFile = new FileWriter(saveName)) {
-            //saveItemArray(new Items[]{ new throwingKnife(), new Clothes(4), new PlateArmor(6),
-            // new Pistol()},saveFile);
-            nav.saveInstance(saveFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
     }
 
     public void move(Navigator nav, int row, int column){
@@ -183,19 +172,10 @@ public class MapScene {
                     nav.getCurrentColumn()).setPrimaryOccupant(null);
 
             // Set current map in Navigator to new map.
-            System.out.println(nav.getMapCollection().keySet());
-            System.out.println("Hash code at 186 " + toMove.getNewMapHashValue());
-            System.out.println("187 NULL?"+nav.getMapCollection().get(toMove.getNewMapHashValue()));
             nav.setCurrentMap(nav.getMapCollection().get(toMove.getNewMapHashValue()));
 
 
-            System.out.println(nav.getMapCollection().get(toMove.getNewMapHashValue()) == null);
             // Add player to link's corresponding position on new map.
-
-            System.out.println(nav.getCurrentMap() == null);
-            System.out.println("Keys: " + nav.getMapCollection().keySet());
-            System.out.println("Values: " + nav.getMapCollection().values());
-
             nav.getCurrentMap().addEntity(nav.getPlayer(), newMapPLayerCoordinate[0],
                         newMapPLayerCoordinate[1]);
 

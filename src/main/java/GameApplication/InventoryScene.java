@@ -124,6 +124,11 @@ public class InventoryScene {
                     player.removeConsumable(con);
                     playerReset();
                     makeButtons();
+
+                    if(player.getHealth() <=0) {
+                        MainMenuScene.returnToMainMenu();
+                    }
+
                 });
             }
 

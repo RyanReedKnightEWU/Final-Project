@@ -11,7 +11,9 @@ import gameobjects.Tile.Tile;
 import gameobjects.Tile.TileBase;
 
 import java.util.Scanner;
-
+/**
+ *
+ * */
 public class MapLoader extends SaveLoader<MapBase> {
     @Override
     public MapBase load(Scanner sc) throws LeaveFunction {

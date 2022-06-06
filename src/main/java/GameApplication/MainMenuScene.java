@@ -40,6 +40,16 @@ public class MainMenuScene {
         gameWindow.setScene(scene);
         gameWindow.show();
     }
+    /**
+     * Used to leave a stage and return to main menu.
+     * */
+    public static void returnToMainMenu(){
+
+        MainMenuScene mainMenuScene = new MainMenuScene();
+        mainMenuScene.layout = new HBox();
+        mainMenuScene.layout.setAlignment(Pos.CENTER);
+        mainMenuScene.start();
+    }
 
     private void newGame(){
         TextField textField;
