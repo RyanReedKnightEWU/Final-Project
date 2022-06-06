@@ -30,31 +30,14 @@ public class ApplicationMain extends Application {
         launch();
     }
 
+    /**
+     * Starts the GUI.
+     */
     @Override
     public void start(Stage stage) throws IOException {
         gameWindow = stage;
         stage.setTitle("Final Project Game");
         MainMenuScene mainMenuScene = new MainMenuScene();
         mainMenuScene.start();
-        //stage.show();
-
-        /*
-        GameMapFactory gameMapFactory = new GameMapFactory();
-        ArrayList<MapBase> mapArr = gameMapFactory.createMapSet(GameMapFactoryKeys.STANDARD_MAP.toString());
-        Navigator nav = Navigator.setState(new Player(100,45,45,"Alex"),
-                mapArr,
-                mapArr.get(0), 0, 3);
-
-        System.out.println(nav.getPlayer()==null);
-
-        nav.loadGame("save.txt");
-
-        //nav.setCurrentMap((new GameMapFactory()).createMap(Sa));
-
-        MainMenuScene mainMenuScene = new MainMenuScene();
-        MapScene mapScene = new MapScene();
-        //mapScene.start(nav);
-        //mainMenuScene.start(nav.getCurrentMap());
-         */
     }
 }

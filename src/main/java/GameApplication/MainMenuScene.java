@@ -35,7 +35,8 @@ public class MainMenuScene {
         layout.getChildren().add(loadGame);
         layout.setAlignment(Pos.CENTER);
         layout.setSpacing(30);
-        scene = new Scene(layout, 900, 600);
+        //scene = new Scene(layout, 900, 600);
+        scene.setRoot(layout);
 
         gameWindow.setScene(scene);
         gameWindow.show();
