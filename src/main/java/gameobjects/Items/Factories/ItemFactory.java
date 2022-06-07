@@ -125,26 +125,3 @@ public class ItemFactory {
         return back;
     }
 }
-
-    /*
-    public Items[] Stacker(Items[] items){
-        ArrayList<Items> stuff = new ArrayList<Items>(Arrays.asList(items));
-        int count = 0;
-        do {
-            for(int i = 0; i < stuff.size(); i++){
-                if(stuff.get(count).getName().equals(stuff.get(i).getName())&& i != count){
-                    if(stuff.get(i).getType().equals("Consumable")){
-                        stuff.set(count, ((Consumable)stuff.get(i)).stack((Consumable) stuff.get(count)));
-                        stuff.remove(i);
-                        count = 0;
-                    }
-                    break;
-                }
-            }
-            count++;
-        } while (count < stuff.size());
-        Items[] back = stuff.toArray(new Items[0]);
-        System.out.println("Done stacking");
-        return back;
-    }
-     */
