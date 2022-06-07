@@ -140,10 +140,6 @@ public class AttackScene {
         consume = true;
         currentInfo += player.getName()+" did "+damage+" damage to "+badGuy.getName();
 
-        if(player.getHealth() <=0) {
-            playerIsDeadAlert();
-        }
-
         if(badGuy.getHealth() <= 0){
             badGuy.setAlive(false);
             System.out.println("You looted the bad guy");
@@ -153,6 +149,11 @@ public class AttackScene {
             damage = badGuyTurn(player, badGuy);
             reset(player, badGuy);
             currentInfo += "\n"+badGuy.getName()+" did "+damage+" damage to "+player.getName();
+        }
+
+        if(player.getHealth() <=0) {
+            playerIsDeadAlert();
+            return;
         }
         damageInfo.setText(currentInfo);
     }
