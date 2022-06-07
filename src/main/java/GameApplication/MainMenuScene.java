@@ -69,7 +69,7 @@ public class MainMenuScene {
         scene.setOnKeyPressed(e -> {
             if(e.getCode() == KeyCode.ENTER){
                 newSave(textField.getText());
-                ArrayList<MapBase> maps = (new GameMapFactory()).createMapSet(GameMapFactoryKeys.STANDARD_MAP.toString());
+                ArrayList<MapBase> maps = (new GameMapFactory()).createMapSet(GameMapFactoryKeys.STANDARD_MAP_SET.toString());
                 Navigator nav = Navigator.setState(new Player(100,5,5,textField.getText()),
                         maps,
                         maps.get(0),
@@ -89,7 +89,7 @@ public class MainMenuScene {
     private void newSave(String name){
         System.out.println("Player entered: "+name);
         GameMapFactory gameMapFactory = new GameMapFactory();
-        ArrayList<MapBase> mapArr = gameMapFactory.createMapSet(GameMapFactoryKeys.STANDARD_MAP.toString());
+        ArrayList<MapBase> mapArr = gameMapFactory.createMapSet(GameMapFactoryKeys.STANDARD_MAP_SET.toString());
         Navigator nav = Navigator.setState(new Player(100,5,5,"Alex"),
                 mapArr,
                 mapArr.get(0), 0, 3);

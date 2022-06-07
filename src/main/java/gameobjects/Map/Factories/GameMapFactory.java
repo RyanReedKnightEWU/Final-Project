@@ -43,6 +43,12 @@ public class GameMapFactory extends MapFactoryBase {
         return map;
     }
 
+    /**
+     * Create a map which corresponds to the given key, the key should be taken from an enum in
+     * the GameMapFactoryKeys class.
+     * @param key from an enum in GameMapFactoryKeys (use the toString method).
+     * @return map which corresponds to the given key.
+     * */
     @Override
     public MapBase createMap(String key) {
 
@@ -87,9 +93,14 @@ public class GameMapFactory extends MapFactoryBase {
         return map;
     }
 
+    /**
+     * Creates the ArrayList of maps which correspond to the given key.
+     * @param key from an enum in GameMapFactoryKeys (use the toString method).
+     * @return set of maps that correspond to the given key.
+     * */
     @Override
     public ArrayList<MapBase> createMapSet(String key) {
-        if (key.equals(GameMapFactoryKeys.STANDARD_MAP.toString())) {
+        if (key.equals(GameMapFactoryKeys.STANDARD_MAP_SET.toString())) {
 
             Entity azog = new Goblin("Azog"), marduk = new Goblin("Marduk"), baal =  new Goblin("Baal"),
                     // Mutants

@@ -10,6 +10,8 @@ import gameobjects.Tile.SaveLoad.TileLoader;
 import gameobjects.Tile.Tile;
 import gameobjects.Tile.TileBase;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Scanner;
 /**
  * Loads maps which have been saved via the saveInstance method.
@@ -53,8 +55,21 @@ public class MapLoader extends SaveLoader<MapBase> {
         return map;
     }
 
+    /**
+     * Rebuilds an array of maps.
+     * @param sc Scanner, not closed within this method.
+     * @return array of maps.
+     * */
     @Override
     public MapBase[] loadArray(Scanner sc) {
-        return new MapBase[0];
+
+        String header = sc.nextLine();
+        LinkedList<MapBase> list = new LinkedList<>();
+
+        while(header.equals(SaveLoader.getEndArrKey())) {
+            list.add(load(header,sc));
+            header = sc.nextLine();
+        }
+        return list.toArray(new MapBase[0]);
     }
 }
