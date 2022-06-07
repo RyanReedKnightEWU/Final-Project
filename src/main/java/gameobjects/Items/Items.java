@@ -79,8 +79,9 @@ public abstract class Items implements Comparable<Items>, Savable {
     }
 
     /**
-     * Allows the game to get the class of the item for saving.
-     * @throws IOException
+     * Saves the state of this instance of Items to a text file, which can be reloaded by ItemLoader.load(Scanner)
+     * @param saveFile FileWriter used to write file to text file. Not closed in this method.
+     * @throws IOException due to FileWriter.
      */
     @Override
     public void saveInstance(FileWriter saveFile) throws IOException {
@@ -88,6 +89,11 @@ public abstract class Items implements Comparable<Items>, Savable {
         saveFile.write(this.save());
     }
 
+    /**
+     * Compares by class name, name, value, and then minDamage.
+     * @param item item to be compared.
+     * @return integer.
+     * */
     @Override
     public int compareTo(Items item) {
         if (item == null) {
@@ -95,27 +101,26 @@ public abstract class Items implements Comparable<Items>, Savable {
         } else if (item == this) {
             return 0;
         }
-        if(this.getClass().getName().equals(item.getClass().getName())) {
 
-            if (this.getName().equals(item.getName())) {
-
-                if (this.value.equals(item.getValue())) {
-
-                    return this.minDamage.compareTo(item.minDamage);
-
-                }else {
-                    return this.getValue().compareTo(item.getValue());
-                }
-
-            }else{
-                return this.getName().compareTo(item.getName());
-            }
-
-        }else{
-            return this.getClass().getName().compareTo(item.getClass().getName());
+        if (!getClass().getName().equals(item.getClass().getName())) {
+            return getClass().getName().compareTo(item.getClass().getName());
         }
-
+        if (!getName().equals(item.getName())) {
+            return getName().compareTo(item.getName());
+        }
+        if (!value.equals(item.getValue())) {
+            return getValue().compareTo(item.getValue());
+        }
+        if(!minDamage.equals(item.minDamage)) {
+            return minDamage.compareTo(item.minDamage);
+        }
+        return 0;
     }
+
+    /**
+     * @param obj object being compared.
+     * @return boolean indicating whether obj is equal to this item.
+     * */
     @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof Items)) {
