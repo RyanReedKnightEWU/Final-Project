@@ -1,12 +1,11 @@
 package gameobjects.Map.Factories;
 
-import gameobjects.Entity.Entity;
-import gameobjects.Entity.Goblin;
-import gameobjects.Entity.Murderbot;
-import gameobjects.Entity.Mutant;
+import gameobjects.Entity.*;
 import gameobjects.Entity.SaveLoad.EntityLoader;
 import gameobjects.Items.Armors.Clothes;
+import gameobjects.Items.Armors.LeatherArmor;
 import gameobjects.Items.Weapons.Pistol;
+import gameobjects.Items.Weapons.Rifle;
 import gameobjects.Map.MapBase;
 import gameobjects.Map.RectangularMap;
 import gameobjects.Tile.LinkTile;
@@ -84,9 +83,6 @@ public class GameMapFactory extends MapFactoryBase {
             // Store keeper/match maker will be added here.
             map = new RectangularMap(4,2,"Rectangular gameobjects.Map");
         }else {
-            /*String spc = ", ";
-            throw new IllegalArgumentException("bad param createMap(String), select one of the follwing keys: "
-                + firstArena + spc + secondArena + spc + hall + spc + dungeons);*/
             map = standardArena;
         }
 
@@ -100,6 +96,9 @@ public class GameMapFactory extends MapFactoryBase {
      * */
     @Override
     public ArrayList<MapBase> createMapSet(String key) {
+
+        ArrayList<MapBase> retList = new ArrayList<>();
+
         if (key.equals(GameMapFactoryKeys.STANDARD_MAP_SET.toString())) {
 
             Entity azog = new Goblin("Azog"), marduk = new Goblin("Marduk"), baal =  new Goblin("Baal"),
@@ -119,24 +118,70 @@ public class GameMapFactory extends MapFactoryBase {
 
             standardArena.addEntity(new Murderbot("Lary",new Pistol(),new Clothes(5)),1,1);
             standardArena.addTile(arenaToHallLink, 0, 3);
+
             standardHall.addTile(hallToArenaLink, 3, 0);
             standardHall.addTile(new LinkTile(recRoom, null, 0, 0), 0, 0);
+
             standardArena.addEntity(new Goblin("Azog"), 3, 0);
             standardArena.addEntity(new Goblin("Marduk"), 2, 2);
+
             recRoom.addTile(new LinkTile(standardHall, null, 0, 0), 0, 0);
 
+            MapBase dungeon1 = new RectangularMap(7,2,"dungeon1");
 
-            ArrayList<MapBase> retList = new ArrayList<>();
+
+
             retList.add(standardArena);
             retList.add(standardHall);
             retList.add(recRoom);
 
+        }else if(key.equals(GameMapFactoryKeys.MAP_SET_2.toString())) {
 
-            return retList;
+            MapBase startMap = new RectangularMap(9,3,"start hall");
+            startMap.addEntity(new Goblin("Azog"),4,0);
+            startMap.addEntity(new Goblin("Marduk"),6,1);
+            retList.add(startMap);
 
-        }else {
-            return null;
+            MapBase leftBranch = new RectangularMap(3,7,"left branch");
+            leftBranch.addEntity(new Mutant("Leif the Mutant",new Rifle(),
+                    new LeatherArmor(1)),0,1);
+            leftBranch.addEntity(new Mutant("Patrik the Mutant",new Pistol(),
+                    new LeatherArmor(1)),2,1);
+
+            // Create link between startMap and leftBranch.
+            /*int[] startMapToLeftBranchCoor = new int[] {1,6}, leftBranchToStartUpMapCoor = new int[] {1,0};
+            LinkTile startMapToLeftBranch = new LinkTile(leftBranch,null,startMapToLeftBranchCoor),
+                leftBranchToStartMap = new LinkTile(startMap,null,leftBranchToStartUpMapCoor);
+            startMap.addTile(startMapToLeftBranch,leftBranchToStartUpMapCoor[0],leftBranchToStartUpMapCoor[1]);
+            leftBranch.addTile(leftBranchToStartMap,startMapToLeftBranchCoor[0],startMapToLeftBranchCoor[1]);
+            */
+            linkTwoMaps(startMap,leftBranch,new int[] {1,0}, new int[]{1,6});
+            retList.add(leftBranch);
+
+            MapBase upperMap = new RectangularMap(9,3,"top map");
+            upperMap.addEntity(new Murderbot("Alfred the MurderBot"),4,0);
+            upperMap.addEntity(new Murderbot("Greg the MurderBot"),3,2);
+            upperMap.addEntity(new Murderbot("Evil Walee the MurderBot"),3,1);
+
+            // Create link between leftBranch and upperMap
+            linkTwoMaps(leftBranch,upperMap,new int[]{1,0},new int[]{1,2});
+            retList.add(upperMap);
+
+            MapBase rightBranch = new RectangularMap(3,7,"right branch");
+            rightBranch.addEntity(new Zombie("zombie 1"),0,3);
+            rightBranch.addEntity(new Zombie("zombie 2"),1,4);
+            rightBranch.addEntity(new Zombie("zombie 3"),2,3);
+
+            // Create link between
+
         }
+        return retList;
+    }
+    private void linkTwoMaps(MapBase mapA, MapBase mapB, int[] linkCoorOnA, int[] linkCoorOnB) {
+        LinkTile mapAToMapB = new LinkTile(mapB,null,linkCoorOnB),
+        mapBToMapA = new LinkTile(mapA,null,linkCoorOnA);
+        mapA.addTile(mapAToMapB,linkCoorOnA);
+        mapB.addTile(mapBToMapA, linkCoorOnB);
     }
 
 

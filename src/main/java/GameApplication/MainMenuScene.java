@@ -26,6 +26,7 @@ import static FinalProject.Javafx.ApplicationMain.scene;
 public class MainMenuScene {
     private HBox layout = new HBox();
     private Button newGame, loadGame;
+    private final String mapKey = GameMapFactoryKeys.MAP_SET_2.toString();
 
     public void start(){
         newGame = new Button("New Game");
@@ -68,13 +69,14 @@ public class MainMenuScene {
 
         scene.setOnKeyPressed(e -> {
             if(e.getCode() == KeyCode.ENTER){
-                newSave(textField.getText());
-                ArrayList<MapBase> maps = (new GameMapFactory()).createMapSet(GameMapFactoryKeys.STANDARD_MAP_SET.toString());
+
+                ArrayList<MapBase> maps = (new GameMapFactory()).createMapSet(mapKey);
                 Navigator nav = Navigator.setState(new Player(100,5,5,textField.getText()),
                         maps,
                         maps.get(0),
-                        0,
-                        3);
+                        4,
+                        2);
+                newSave(nav);
                 MapScene mapScene = new MapScene();
                 mapScene.start(nav,"new_game");
             }
@@ -86,18 +88,31 @@ public class MainMenuScene {
     /**
      * @param name Name of save file.
      */
-    private void newSave(String name){
+    private void newSave(String name) {
         System.out.println("Player entered: "+name);
         GameMapFactory gameMapFactory = new GameMapFactory();
-        ArrayList<MapBase> mapArr = gameMapFactory.createMapSet(GameMapFactoryKeys.STANDARD_MAP_SET.toString());
-        Navigator nav = Navigator.setState(new Player(100,5,5,"Alex"),
+        ArrayList<MapBase> mapArr = gameMapFactory.createMapSet(mapKey);
+        Navigator nav = Navigator.setState(
+                new Player(100,5,5,name),
                 mapArr,
-                mapArr.get(0), 0, 3);
+                mapArr.get(0),
+                4,
+                2);
 
         System.out.println(nav.getPlayer()==null);
 
         MapScene mapScene = new MapScene();
         mapScene.start(nav, name+".txt");
+    }
+
+    private void newSave(Navigator nav) {
+        System.out.println("Player entered: "+ nav.getPlayer().getName());
+        GameMapFactory gameMapFactory = new GameMapFactory();
+        ArrayList<MapBase> mapArr = gameMapFactory.createMapSet(mapKey);
+        System.out.println(nav.getPlayer()==null);
+
+        MapScene mapScene = new MapScene();
+        mapScene.start(nav, "newgame.txt");
     }
 
     /**

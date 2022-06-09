@@ -69,6 +69,15 @@ public abstract class MapBase implements Savable, Comparable<MapBase> {
         }
         this.tileMatrix[row][column] = tile;
     }
+    /**Adds tile to specified index, used to add LinkTiles.
+     * @param tile tile to be added.
+     * @param coordinates the row and column the tile is to be added to inside an int array.
+     * @throws IllegalArgumentException if row less than 0 OR row greater than this.rows -1 OR column is less than 0 OR
+     *    column is greater than this.columns -1
+     * **/
+    public void addTile(TileBase tile, int[] coordinates){
+        addTile(tile,coordinates[0],coordinates[1]);
+    }
 
     /**
      * @return the number of rows in the tile matrix.
@@ -189,7 +198,7 @@ public abstract class MapBase implements Savable, Comparable<MapBase> {
                 ret += (j+1)/(1+i);
             }
         }
-        return ret%100000000;
+        return (identifier.hashCode()+ret)%100000000;
     }
 
     /**

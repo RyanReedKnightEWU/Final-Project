@@ -146,6 +146,9 @@ public class MapScene {
         dialogBox.setContentText("Save: ");
         dialogBox.showAndWait();
         String save = dialogBox.getResult();
+        char [] forbidonChars = new char[] {'!','@','#','$','%','^','&','*','(',')'};
+
+
         if(save!=null && !save.equals("")) {
             nav.saveInstance(save);
         }

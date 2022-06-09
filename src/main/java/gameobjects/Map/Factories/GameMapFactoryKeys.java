@@ -6,7 +6,8 @@ package gameobjects.Map.Factories;
 public enum GameMapFactoryKeys {
 
     FIRST_ARENA("first arena"), SECOND_ARENA("second arena"), HALL("hall"),
-    DUNGEONS("dungeons"), STANDARD_MAP("full map"), STANDARD_MAP_SET("standard map set");
+    DUNGEONS("dungeons"), STANDARD_MAP("full map"), STANDARD_MAP_SET("standard map set"),
+    MAP_SET_2("map set 2");
 
 
     GameMapFactoryKeys(String s) {
