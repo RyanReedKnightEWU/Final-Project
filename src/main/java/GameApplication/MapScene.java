@@ -90,12 +90,6 @@ public class MapScene {
 
         scene.setRoot(layout);
         gameWindow.setScene(scene);
-
-        if (nav.newGame) {
-            nav.getPlayer().addItem(new Pistol());
-            nav.getPlayer().addConsumable(new AttackBottle(12));
-            nav.getPlayer().addItem(new CombatArmor(1));
-        }
     }
 
     /**
@@ -146,8 +140,6 @@ public class MapScene {
         dialogBox.setContentText("Save: ");
         dialogBox.showAndWait();
         String save = dialogBox.getResult();
-        char [] forbidonChars = new char[] {'!','@','#','$','%','^','&','*','(',')'};
-
 
         if(save!=null && !save.equals("")) {
             nav.saveInstance(save);

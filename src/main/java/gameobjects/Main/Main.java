@@ -17,12 +17,8 @@ import gameobjects.Navigator.MoveKey;
 import java.util.ArrayList;
 
 
-public class Main{
-
+public class Main {
     public static void main(String[] args) {
-
         ApplicationMain.main(args);
-
     }
-
 }

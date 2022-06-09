@@ -1,6 +1,9 @@
 package GameApplication;
 
 import gameobjects.Entity.Player;
+import gameobjects.Items.Armors.CombatArmor;
+import gameobjects.Items.Consumables.AttackBottle;
+import gameobjects.Items.Weapons.Pistol;
 import gameobjects.Map.Factories.GameMapFactory;
 import gameobjects.Map.Factories.GameMapFactoryKeys;
 import gameobjects.Map.MapBase;
@@ -76,6 +79,9 @@ public class MainMenuScene {
                         maps.get(0),
                         4,
                         2);
+                nav.getPlayer().addItem(new Pistol());
+                nav.getPlayer().addConsumable(new AttackBottle(12));
+                nav.getPlayer().addItem(new CombatArmor(1));
                 newSave(nav);
                 MapScene mapScene = new MapScene();
                 mapScene.start(nav,"new_game");

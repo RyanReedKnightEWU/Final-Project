@@ -143,10 +143,15 @@ public class GameMapFactory extends MapFactoryBase {
             retList.add(startMap);
 
             MapBase leftBranch = new RectangularMap(3,7,"left branch");
-            leftBranch.addEntity(new Mutant("Leif the Mutant",new Rifle(),
-                    new LeatherArmor(1)),0,1);
-            leftBranch.addEntity(new Mutant("Patrik the Mutant",new Pistol(),
-                    new LeatherArmor(1)),2,1);
+            Mutant leif = new Mutant("Leif the Mutant",new Rifle(),
+                    new LeatherArmor(1)), patrik = new Mutant("Patrik the Mutant",new Pistol(),
+                    new LeatherArmor(1));
+
+            leif.addGold(50);
+            patrik.addGold(50);
+
+            leftBranch.addEntity(leif,0,1);
+            leftBranch.addEntity(patrik,2,1);
 
             // Create link between startMap and leftBranch.
             /*int[] startMapToLeftBranchCoor = new int[] {1,6}, leftBranchToStartUpMapCoor = new int[] {1,0};
@@ -159,24 +164,56 @@ public class GameMapFactory extends MapFactoryBase {
             retList.add(leftBranch);
 
             MapBase upperMap = new RectangularMap(9,3,"top map");
-            upperMap.addEntity(new Murderbot("Alfred the MurderBot"),4,0);
-            upperMap.addEntity(new Murderbot("Greg the MurderBot"),3,2);
-            upperMap.addEntity(new Murderbot("Evil Walee the MurderBot"),3,1);
+
+            Murderbot alfred = new Murderbot("Alfred the MurderBot"),
+                    greg = new Murderbot("Greg the MurderBot"),
+                    evilWallE = new Murderbot("Evil Wall-E the MurderBot");
+
+            alfred.addGold(200);
+            greg.addGold(200);
+            evilWallE.addGold(200);
+
+            upperMap.addEntity(alfred,4,0);
+            upperMap.addEntity(greg,3,2);
+            upperMap.addEntity(evilWallE,3,1);
 
             // Create link between leftBranch and upperMap
             linkTwoMaps(leftBranch,upperMap,new int[]{1,0},new int[]{1,2});
             retList.add(upperMap);
 
-            MapBase rightBranch = new RectangularMap(3,7,"right branch");
-            rightBranch.addEntity(new Zombie("zombie 1"),0,3);
-            rightBranch.addEntity(new Zombie("zombie 2"),1,4);
-            rightBranch.addEntity(new Zombie("zombie 3"),2,3);
+            Zombie zombie1 = new Zombie("Zombie 1"),
+            zombie2 = new Zombie("Zombie 2"), zombie3 = new Zombie("zombie 3");
 
-            // Create link between
+            zombie1.addGold(50);
+            zombie2.addGold(50);
+            zombie3.addGold(50);
+
+            MapBase rightBranch = new RectangularMap(3,7,"right branch");
+            rightBranch.addEntity(zombie1,0,3);
+            rightBranch.addEntity(zombie2,1,4);
+            rightBranch.addEntity(zombie3,2,3);
+
+            // Create link between upperMap and rightBranch
+            linkTwoMaps(upperMap,rightBranch,new int[]{7,2},new int[]{1,0});
+            retList.add(rightBranch);
+
+            // Create link between rightBranch and startMap
+            linkTwoMaps(rightBranch,startMap,new int[]{1,6},new int[] {7,0});
 
         }
         return retList;
     }
+
+    /**
+     * Private method used to create a link between two maps (mapA and mapB). The link tile displays the text "Doorway",
+     * if the player moves onto this tile, they will exit the current map and emerge on the corresponding link on
+     * the map being linked to.
+     * @param mapA the first map.
+     * @param mapB the second map.
+     * @param linkCoorOnA the coordinates of the link on mapA.
+     * @param linkCoorOnB the coordinates of the corresponding link on mapB.
+     *
+     * */
     private void linkTwoMaps(MapBase mapA, MapBase mapB, int[] linkCoorOnA, int[] linkCoorOnB) {
         LinkTile mapAToMapB = new LinkTile(mapB,null,linkCoorOnB),
         mapBToMapA = new LinkTile(mapA,null,linkCoorOnA);
